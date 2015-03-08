@@ -1,0 +1,19 @@
+//
+//  AppDelegate.h
+//  shangxiang
+//
+//  Created by 倾慕 on 15/1/10.
+//  Copyright (c) 2015年 倾慕. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "WeiboSDK.h"
+#import "WXApi.h"
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic,copy)NSString* wbtoken;//微博token
+
+@end
+

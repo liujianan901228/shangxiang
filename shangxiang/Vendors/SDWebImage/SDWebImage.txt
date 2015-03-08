@@ -1,0 +1,9 @@
+
+
+取自github，版本号3.7.1
+
+
+相对于原版，有以下修改:(主要是GIF支持相关)
+UIImage+GIF 替换内部方法，解析GIF
+SDWebImageDecoder 替换内部方法，解析GIF
+SDWebImageCompat 修改image初始化时的scale算法

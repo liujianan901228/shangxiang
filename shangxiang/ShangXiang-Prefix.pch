@@ -1,0 +1,40 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "BaseRequest.h"
+    #import "EnumMarco.h"
+    #import "AppMarco.h"
+    #import "LUtility.h"
+    #import "BaseViewController.h"
+    #import "AppDelegate.h"
+    #import "UserOperationHelper.h"
+    #import "BaseTableViewDataSource.h"
+    #import "UserGlobalSetting.h"
+    #import "ToolsHelper.h"
+    #import "AppStartup.h"
+    #import "SXCategory.h"
+    #import "YYKit.h"
+    #import "AppNotificationMarco.h"
+
+    #define kAppKey         @"2392815987"
+    #define KAllAPPKey      @"wb2392815987"
+    #define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
+
+//    #define kAppKey         @"2548841269"
+//    #define KAllAPPKey      @"wb2548841269"
+//    #define kRedirectURI    @"http://www.laifeng.com/oauth2/callback.html"
+    #define KWeixinAppKey       @"wx3f87a4ecbf40adcd"
+    #define KWeixinAppSecret   @"840d18550a41a9dfdd038b62cd8c689b"
+#endif
