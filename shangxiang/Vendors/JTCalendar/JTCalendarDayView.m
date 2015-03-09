@@ -280,7 +280,7 @@ static NSString *kJTCalendarDaySelected = @"kJTCalendarDaySelected";
             }
         }
         else{
-            circleView.color = [self.calendarManager.calendarAppearance dayTextColorOtherMonth];
+//            circleView.color = [self.calendarManager.calendarAppearance dayTextColorOtherMonth];
             textLabelSmall.textColor = str ? [UIColor redColor] : [self.calendarManager.calendarAppearance daySmallTextColorOtherMonth];
             dotView.color = [self.calendarManager.calendarAppearance dayDotColorOtherMonth];
         }
@@ -297,7 +297,7 @@ static NSString *kJTCalendarDaySelected = @"kJTCalendarDaySelected";
             textLabelSmall.textColor = str ? [UIColor redColor] : [self.calendarManager.calendarAppearance daySmallTextColor];
         }
         else{
-            circleView.color = [self.calendarManager.calendarAppearance dayCircleColorTodayOtherMonth];
+//            circleView.color = [self.calendarManager.calendarAppearance dayCircleColorTodayOtherMonth];
             textLabel.textColor = str ? [UIColor redColor] : [self.calendarManager.calendarAppearance dayTextColorTodayOtherMonth];
             dotView.color = [self.calendarManager.calendarAppearance dayDotColorTodayOtherMonth];
             textLabelSmall.textColor = str ? [UIColor redColor] : [self.calendarManager.calendarAppearance dayDotColorTodayOtherMonth];

@@ -2266,8 +2266,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (DHYPESD3QC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (DHYPESD3QC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xu Dong Wang (GUU9M6HSRA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xu Dong Wang (GUU9M6HSRA)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2294,7 +2294,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "870e6cf0-b9bd-4b19-8a22-10db84327b56";
+				PROVISIONING_PROFILE = "5dd81514-0436-4c1d-b586-1d126838edb3";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};
@@ -2306,8 +2306,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (DHYPESD3QC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (DHYPESD3QC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Xu Dong Wang (GUU9M6HSRA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xu Dong Wang (GUU9M6HSRA)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2334,7 +2334,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "870e6cf0-b9bd-4b19-8a22-10db84327b56";
+				PROVISIONING_PROFILE = "5dd81514-0436-4c1d-b586-1d126838edb3";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};

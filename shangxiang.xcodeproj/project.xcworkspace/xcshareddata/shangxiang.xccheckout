@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A6A2E1CC-0727-481F-8193-EA919C132F2E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>shangxiang</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CEFD21FE266CE799D3B4D6440B112F82984868F3</key>
+		<string>https://github.com/liujianan901228/shangxiang.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>shangxiang.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CEFD21FE266CE799D3B4D6440B112F82984868F3</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/liujianan901228/shangxiang.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CEFD21FE266CE799D3B4D6440B112F82984868F3</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CEFD21FE266CE799D3B4D6440B112F82984868F3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>shangxiangGitHub</string>
+		</dict>
+	</array>
+</dict>
+</plist>

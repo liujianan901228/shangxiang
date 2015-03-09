@@ -42,9 +42,9 @@
     [self setDayDotColorForAll:UIColorFromRGB(0xf56d01)];
     [self setDayTextColorForAll:UIColorFromRGB(0x737574)];
     
-    self.dayTextColorOtherMonth = [UIColor clearColor];
-    self.dayDotColorOtherMonth = [UIColor clearColor];
-    self.daySmallTextColorOtherMonth = [UIColor clearColor];
+    self.dayTextColorOtherMonth = [UIColor colorWithRed:205./256. green:205./256. blue:205./256. alpha:1];
+    self.dayDotColorOtherMonth = [UIColor colorWithRed:205./256. green:205./256. blue:205./256. alpha:1];
+    self.daySmallTextColorOtherMonth = [UIColor colorWithRed:205./256. green:205./256. blue:205./256. alpha:1];
     self.daySmallTextColor = [UIColor colorWithRed:207./256. green:147./256. blue:75./256. alpha:1];
     
     self.dayCircleColorSelected = [UIColor colorWithRed:221./256. green:221./256. blue:221./256. alpha:1];
@@ -59,9 +59,9 @@
     self.dayTextColorToday = UIColorFromRGB(0xff1c00);
     self.dayDotColorToday = UIColorFromRGB(0xf56d01);
     
-    self.dayCircleColorTodayOtherMonth = [UIColor clearColor];
-    self.dayTextColorTodayOtherMonth = [UIColor clearColor];
-    self.dayDotColorTodayOtherMonth = [UIColor clearColor];
+    self.dayCircleColorTodayOtherMonth = [UIColor colorWithRed:205./256. green:205./256. blue:205./256. alpha:1];
+    self.dayTextColorTodayOtherMonth = [UIColor colorWithRed:205./256. green:205./256. blue:205./256. alpha:1];
+    self.dayDotColorTodayOtherMonth = [UIColor colorWithRed:205./256. green:205./256. blue:205./256. alpha:1];
 }
 
 - (NSCalendar *)calendar

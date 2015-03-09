@@ -70,8 +70,8 @@
 
     self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom, self.view.frame.size.width*3/5., 50)];
     self.detailView.backgroundColor = UIColorFromRGB(0xf6f8f7);
-    self.detailView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
-    self.detailView.layer.borderWidth = 0.8f;
+//    self.detailView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
+//    self.detailView.layer.borderWidth = 0.8f;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy年MM月dd日 EEE"];
     self.detailView.yangli = [formatter stringFromDate:self.calendar.currentDate];
@@ -98,11 +98,21 @@
     addBirLabel.font = addFont;
     addBirLabel.textColor = [UIColor colorWithRed:223./255. green:88./255. blue:20./255. alpha:1];
     addBirLabel.textAlignment = NSTextAlignmentLeft;
-    addBirthdayView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
-    addBirthdayView.layer.borderWidth = 0.8f;
+//    addBirthdayView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
+//    addBirthdayView.layer.borderWidth = 0.8f;
     
     [addBirthdayView addSubview:addBirImageView];
     [addBirthdayView addSubview:addBirLabel];
+    
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
+    lineLabel.backgroundColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1];
+    [self.detailView addSubview:lineLabel];
+    
+    lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.detailView.frame.size.width, 5, 1, self.detailView.frame.size.height-10)];
+    lineLabel.backgroundColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1];
+    [self.detailView addSubview:lineLabel];
+    
+    
 
     UITapGestureRecognizer *tapAddBir = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushAddBirthday)];
     [addBirthdayView addGestureRecognizer:tapAddBir];

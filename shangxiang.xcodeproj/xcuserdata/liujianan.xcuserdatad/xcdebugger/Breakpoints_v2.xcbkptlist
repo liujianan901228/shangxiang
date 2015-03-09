@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "shangxiang/Calendar/controllers/CalendarViewController.m"
-            timestampString = "445244789.23441"
+            timestampString = "447569777.371767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "shangxiang/Calendar/controllers/CalendarViewController.m"
-            timestampString = "445244789.23441"
+            timestampString = "447569777.371767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -186,12 +186,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "shangxiang/Calendar/controllers/CalendarViewController.m"
-            timestampString = "445244789.23441"
+            timestampString = "447569777.371767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "-viewDidAppear:"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "-buttonScroll:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "shangxiang/Calendar/controllers/CalendarViewController.m"
-            timestampString = "445244789.23441"
+            timestampString = "447569777.371767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "-pushAddBirthday"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,13 +330,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "shangxiang/Calendar/controllers/CalendarViewController.m"
-            timestampString = "445256530.014243"
+            timestampString = "447569777.371767"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
-            landmarkName = "-tapRemindView"
-            landmarkType = "5">
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
