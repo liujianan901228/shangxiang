@@ -54,6 +54,7 @@
     
     UIButton* leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 30, 60, 30)];
     [leftButton setImage:[UIImage imageForKey:@"left_arrow"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageForKey:@"left_arrow"] forState:UIControlStateHighlighted];
     leftButton.tag = 10096;
     leftButton.center = CGPointMake(self.view.frame.size.width*.25, self.calendarMenuView.centerY);
     [leftButton addTarget:self action:@selector(buttonScroll:) forControlEvents:UIControlEventTouchUpInside];
@@ -61,6 +62,7 @@
     
     UIButton* rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 60, 30)];
     [rightButton setImage:[UIImage imageForKey:@"right_arrow"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageForKey:@"right_arrow"] forState:UIControlStateHighlighted];
     rightButton.tag = 10097;
     rightButton.center = CGPointMake(self.view.frame.size.width*.75, self.calendarMenuView.centerY);
     [rightButton addTarget:self action:@selector(buttonScroll:) forControlEvents:UIControlEventTouchUpInside];
@@ -68,7 +70,7 @@
     
 
 
-    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom, self.view.frame.size.width*3/5., 50)];
+    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom + 8, self.view.frame.size.width*3/5., 50)];
     self.detailView.backgroundColor = UIColorFromRGB(0xf6f8f7);
 //    self.detailView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
 //    self.detailView.layer.borderWidth = 0.8f;
