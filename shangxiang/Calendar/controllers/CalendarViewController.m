@@ -328,7 +328,8 @@
     [UIView animateWithDuration:.5
                      animations:^{
                          self.calendarContentViewHeight.constant = newHeight;
-                         if (self.calendar.calendarAppearance.isWeekMode) {
+                         if (self.calendar.calendarAppearance.isWeekMode)
+                         {
                              self.calendarContentView.frame = CGRectMake(0, self.calendarMenuView.bottom, self.view.frame.size.width, 75);
                          }
                          else
@@ -355,9 +356,28 @@
                      }];
 }
 
+//- (void)setDetailAndBgFrame:(BOOL)isWeekMode
+//{
+//    float orgin_y = self.calendarContentView.bottom;
+//    
+//    self.detailView.frame = CGRectMake(0, orgin_y,  self.view.frame.size.width*3/5., 50);
+//    UIView *addBirView = [self.view viewWithTag:10084];
+//    addBirView.frame = CGRectMake(self.view.frame.size.width*3/5., orgin_y, self.view.frame.size.width*2/5., 50);
+//    
+//    UIView *holidayView = [self.view viewWithTag:10085];
+//    UIImageView *folibg = (UIImageView *)[self.view viewWithTag:10086];
+//    
+//    holidayView.frame = CGRectMake(0, self.detailView.frame.size.height+self.detailView.frame.origin.y, self.view.frame.size.width, 40);
+//    folibg.frame = CGRectMake(0, holidayView.bottom, self.view.frame.size.width, self.view.height-holidayView.bottom +40);
+//}
+
 - (void)setDetailAndBgFrame:(BOOL)isWeekMode
 {
-    float orgin_y = self.calendarContentView.bottom;
+    float orgin_y = 320;
+    if (isWeekMode)
+    {
+        orgin_y = 135;
+    }
     
     self.detailView.frame = CGRectMake(0, orgin_y,  self.view.frame.size.width*3/5., 50);
     UIView *addBirView = [self.view viewWithTag:10084];
@@ -367,7 +387,14 @@
     UIImageView *folibg = (UIImageView *)[self.view viewWithTag:10086];
     
     holidayView.frame = CGRectMake(0, self.detailView.frame.size.height+self.detailView.frame.origin.y, self.view.frame.size.width, 40);
-    folibg.frame = CGRectMake(0, holidayView.bottom, self.view.frame.size.width, self.view.height-holidayView.bottom +40);
+    if (orgin_y == 135) {
+        folibg.frame = CGRectMake(0, folibg.frame.origin.y-(320-135), self.view.frame.size.width, self.view.frame.size.height-175);
+    }
+    else
+    {
+        folibg.frame = CGRectMake(0, folibg.frame.origin.y+(320-135), self.view.frame.size.width, self.view.frame.size.height-175);
+    }
+    
 }
 
 #pragma mark - selectDelegate

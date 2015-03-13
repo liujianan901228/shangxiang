@@ -162,11 +162,13 @@
     [lineView setBackgroundColor:UIColorFromRGB(COLOR_LINE_NORMAL)];
     [_scrollView addSubview:lineView];
     
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, lineView.bottom + 20, 100, 40)];
+    CGFloat width = (_scrollView.width - 100)/ 2.0;
+    
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, lineView.bottom + 20, width, 40)];
     [imageView setImage:[UIImage imageForKey:@"alipay"]];
     [_scrollView addSubview:imageView];
     
-    UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 125, lineView.bottom + 20, 100, 40)];
+    UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 25 - width, lineView.bottom + 20, width, 40)];
     [buttonSubmitCreateOrder setTitle:@"支付" forState:UIControlStateNormal];
     [buttonSubmitCreateOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
     [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
