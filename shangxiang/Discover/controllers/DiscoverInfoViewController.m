@@ -96,6 +96,7 @@
         templeObject.templeProvince = infoObject.province;
         templeObject.templeSmallUrl = infoObject.templeThumb;
         templeObject.attacheName = infoObject.builddhistName;
+        templeObject.attacheId = infoObject.builddhistId;
         templeObject.attacheSmallUrl = infoObject.builddHistThumb;
         CreateOrderViewController* viewController = [[CreateOrderViewController alloc] init];
         viewController.templeObject = templeObject;
