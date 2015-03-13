@@ -122,6 +122,8 @@
     UIView *holidayView = [[UIView alloc] initWithFrame:CGRectMake(0, self.detailView.frame.size.height+self.detailView.frame.origin.y, self.view.frame.size.width, 40)];
     holidayView.backgroundColor = UIColorFromRGB(0xf6f8f7);
     holidayView.tag = 10085;
+    holidayView.layer.borderWidth = 0.8;
+    holidayView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
     UIImage *buddImage = [UIImage imageForKey:@"budd"];
     UIImageView *buddImageView = [[UIImageView alloc] initWithImage:buddImage];
     [buddImageView setContentMode:UIViewContentModeScaleAspectFit];
