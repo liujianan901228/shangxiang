@@ -20,6 +20,10 @@
     self.title = @"佛历";
     isFirstRead = YES;
     self.view.backgroundColor = UIColorFromRGB(0xf6f8f7);
+    if ([[UIDevice currentDevice] systemVersion].floatValue>=7.0)
+    {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     self.calendar = [JTCalendar new];
     
     // All modifications on calendarAppearance have to be done before setMenuMonthsView and setContentView
@@ -70,7 +74,7 @@
     
 
 
-    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom + 8, self.view.frame.size.width*3/5., 50)];
+    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom, self.view.frame.size.width*3/5., 50)];
     self.detailView.backgroundColor = UIColorFromRGB(0xf6f8f7);
 //    self.detailView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
 //    self.detailView.layer.borderWidth = 0.8f;
@@ -87,6 +91,7 @@
     UIView *addBirthdayView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*3/5., self.calendarContentView.bottom, self.view.frame.size.width*2/5., 50)];
     addBirthdayView.tag = 10084;
     
+    
     NSString *addStr = @"添加亲友生日";
     UIFont *addFont = [UIFont systemFontOfSize:15.];
     float addStrWidth = [addStr sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:addFont,NSFontAttributeName, nil]].width;
@@ -95,7 +100,7 @@
     UIImageView *addBirImageView = [[UIImageView alloc] initWithFrame:CGRectMake(addOrign_x, 0, addBirImage.size.width, addBirImage.size.height)];
     addBirImageView.center = CGPointMake(addBirImageView.center.x, addBirthdayView.height/2.);
     addBirImageView.image = addBirImage;
-    UILabel *addBirLabel = [[UILabel alloc] initWithFrame:CGRectMake(addBirImageView.frame.size.width+addOrign_x, 0, addStrWidth, 50)];
+    UILabel *addBirLabel = [[UILabel alloc] initWithFrame:CGRectMake(addBirImageView.frame.size.width+addOrign_x + 3, 0, addStrWidth, 50)];
     addBirLabel.text = addStr;
     addBirLabel.font = addFont;
     addBirLabel.textColor = [UIColor colorWithRed:223./255. green:88./255. blue:20./255. alpha:1];
@@ -255,7 +260,8 @@
 
 - (NSString *)calendarHaveEvent:(JTCalendar *)calendar date:(NSDate *)date WithDay:(NSInteger)day WithMonth:(NSInteger)month
 {
-    return [LUtility getBuildListName:month day:day];
+    NSLog(@"%@",date);
+    return [LUtility getBuildListName:date.month day:date.day];
 }
 
 - (NSString *)calendarHaveRemind:(JTCalendar *)calendar date:(NSDate *)date
