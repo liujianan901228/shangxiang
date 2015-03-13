@@ -261,7 +261,7 @@
 - (NSString *)calendarHaveEvent:(JTCalendar *)calendar date:(NSDate *)date WithDay:(NSInteger)day WithMonth:(NSInteger)month
 {
     NSLog(@"%@",date);
-    return [LUtility getBuildListName:date.month day:date.day];
+    return [LUtility getBuildListName:month day:day];
 }
 
 - (NSString *)calendarHaveRemind:(JTCalendar *)calendar date:(NSDate *)date
