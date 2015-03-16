@@ -96,7 +96,6 @@
     }
     [_scrollView addSubview:_redeemTableview];
     
-    [self loadData];
     
 }
 
@@ -178,7 +177,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSLog(@"sfd");
+    [self loadData];
 }
 
 #pragma mark UITableView delegate

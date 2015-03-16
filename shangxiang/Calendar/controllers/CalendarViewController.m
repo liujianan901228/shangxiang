@@ -74,7 +74,7 @@
     
 
 
-    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom, self.view.frame.size.width*3/5., 50)];
+    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom + 8, self.view.frame.size.width*3/5., 50)];
     self.detailView.backgroundColor = UIColorFromRGB(0xf6f8f7);
 //    self.detailView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
 //    self.detailView.layer.borderWidth = 0.8f;
@@ -88,7 +88,7 @@
     self.detailView.riqi = [NSString stringWithFormat:@"%ld",(long)self.calendar.currentDate.day];
     [self.view addSubview:self.detailView];
     
-    UIView *addBirthdayView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*3/5., self.calendarContentView.bottom, self.view.frame.size.width*2/5., 50)];
+    UIView *addBirthdayView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*3/5., self.calendarContentView.bottom + 8, self.view.frame.size.width*2/5., 50)];
     addBirthdayView.tag = 10084;
     
     
@@ -381,10 +381,10 @@
 
 - (void)setDetailAndBgFrame:(BOOL)isWeekMode
 {
-    float orgin_y = 320;
+    float orgin_y = 328;
     if (isWeekMode)
     {
-        orgin_y = 135;
+        orgin_y = 143;
     }
     
     self.detailView.frame = CGRectMake(0, orgin_y,  self.view.frame.size.width*3/5., 50);
@@ -395,12 +395,12 @@
     UIImageView *folibg = (UIImageView *)[self.view viewWithTag:10086];
     
     holidayView.frame = CGRectMake(0, self.detailView.frame.size.height+self.detailView.frame.origin.y, self.view.frame.size.width, 40);
-    if (orgin_y == 135) {
-        folibg.frame = CGRectMake(0, folibg.frame.origin.y-(320-135), self.view.frame.size.width, self.view.frame.size.height-175);
+    if (orgin_y == 143) {
+        folibg.frame = CGRectMake(0, folibg.frame.origin.y-(328-143), self.view.frame.size.width, self.view.frame.size.height-175);
     }
     else
     {
-        folibg.frame = CGRectMake(0, folibg.frame.origin.y+(320-135), self.view.frame.size.width, self.view.frame.size.height-175);
+        folibg.frame = CGRectMake(0, folibg.frame.origin.y+(328-143), self.view.frame.size.width, self.view.frame.size.height-175);
     }
     
 }
