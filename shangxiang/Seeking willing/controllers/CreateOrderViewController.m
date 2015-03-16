@@ -14,6 +14,7 @@
 #import "UserBirthdayObject.h"
 #import "PayInfoViewController.h"
 
+
 NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
 
 @interface CreateOrderViewController ()<UITextFieldDelegate,UIPickerViewDelegate>
@@ -338,9 +339,10 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     [weakSelf showChrysanthemumHUD:YES];
     [ListTempleManager postOrderInfo:self.wishType wishText:[_commonTextFiled getContentText] wishName:_fieldOtherDesirer.text wishGrade:self.gradeInfoObject.gradeVal buddhaDate:self.birthObj.transBirthDayToString wishPlace:_fieldPositionDesirer.text tid:self.templeObject.templeId aid:self.templeObject.attacheId userId:USEROPERATIONHELP.currentUser.userId mobile:iphoneNumber alsoWish:0 orderId:nil successBlock:^(id obj) {
         [weakSelf removeAllHUDViews:YES];
-        NSString* orderId = [obj stringForKey:@"orderid" withDefault:@""];
+        long long orderId = [obj longLongForKey:@"orderid" withDefault:0];
+        
         PayInfoViewController* payInfoViewController = [[PayInfoViewController alloc] init];
-        payInfoViewController.orderId = orderId;
+        payInfoViewController.orderId = [NSString stringWithFormat:@"%lld",orderId];
         payInfoViewController.price = weakSelf.gradeInfoObject.gradePrice;
         [weakSelf.navigationController pushViewController:payInfoViewController animated:YES];
         

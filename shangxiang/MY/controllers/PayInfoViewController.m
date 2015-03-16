@@ -55,7 +55,7 @@
     [orderNumberLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     [orderNumberLabel setFont:[UIFont systemFontOfSize:14]];
     [orderNumberLabel setTextColor:UIColorFromRGB(0xbababa)];
-    [orderNumberLabel setText:[NSString stringWithFormat:@"订单号 : %@",self.infoObject.orderId]];
+    [orderNumberLabel setText:[NSString stringWithFormat:@"订单号 : %@",self.infoObject.orderLongId]];
     [_scrollView addSubview:orderNumberLabel];
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, orderNumberLabel.bottom + 5, self.view.width - 40, 20)];
@@ -203,7 +203,7 @@
     /*============================================================================*/
     NSString *partner = @"2088811642353234";
     NSString *seller = @"nanjingshangxiang@qq.com";
-    NSString *privateKey = @"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMt8tZKMTk9zpxox6/SYVPWExWSdOZIhj2B5MEqkSM5WcoqQvgJkp9X3acNYD7W/65o4iS1P5AcFyzb/7dV9AQCUxs2xZNVUVoenleessDNTtUO6Ngah4xit/zRaslHRa0KMFLxDBerJeVNDR05YSXMYSRhBH3CZh6ZDYwdmUOwjAgMBAAECgYEAhaEqJEkbjDWpARzTlVcMRAejEYXmrr53R6WOPxZP8aD3q2OOREgRqAPIYs5L0tFsSWTjQOx8FNiLMV00tMRYiPnxTlb4xKqDr+NJPxW58kNOrA361VXN5ctKCmUxaeHik3FdS6aRIuOeWL2HBH8EdOeywqEc16q2sjl/JcdxcjECQQD72M/23jaPZE90Bmi65f0SJv7mxKgV1sbwBV7GEs8Ynjyge+I/vEU4qFbjCqKn9HmI6CypSfXcopEfrIOrCWgPAkEAzte+OUCWfl/Or5YYoQ3qLsD2poEvDXZg8E+S8O3LfB1Bwoat/yq1D/JOQpGTWTJSJvEIN3zShkap51SKI+bGrQJBANNf1KQRO1+8REdQPcRn1bDPk+9hrOWvfwbiqvm5vaGe5amYcHsn7D0yZMJoIb6vnPXAUAPB9J26v+0CoPwDiBcCQAYt/+rp+RURe7VXQKkfJ036SeQzm9pFHSRQ3E0Cbb/ph9tt9qjW983gKWJnwwU5MackMGCoBAoq9kyJBA+Kh4kCQAyT8A0icweqKwKCgd8K0xQjr1BLb1Vkah06qMkhW7GFkk9FmHdusu5KKgjpxF+GSH6fCa2NXPoTS6QpMmmcc28=";
+    NSString *privateKey = @"MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALiv1aT/Ufu23AikcNYPySLNBguuJ/FI6OCKhfBz7Wvfewo7nuS2LF5QCegCVoyw1KYTkP0Zb5B7NZUQ4gILIFSiqoVOezAeQHTSM/1ghdwdAZzUMkh2HM6Jjs+a+FgUXfXNSbSHh4VK6b8zJHCDrgXK9Na8T1Qv1R3mOMJd9wL7AgMBAAECgYEAlcHPBcobGnc+mKtu68VFHbkOS+5eaSLr4xewYDhArxY6WSPbRi4KcDeKsN0kfVTuOfTnvrQfaRLfcg6MlYecIGPfo+5UjMZ89B2AY+PtMQQVaNvLhbHk2UG0LgGAfWOucQMrbIe2K1OlCzkB8BXSJpyRzNE4jRHr017fwexyuNECQQDlKZ54zaQuTZqwsKUPUr1b49MbLj19BEwhonFlAJMtCoMzluJHtx104NGo7sGk/+fu+ABOmgczN51UQ39B3sElAkEAzlDRCCQ10Y2Krp5TH2S23kwipNlL+Hn8gwI/34O3bwUdhPjz5bfIx6r/EJ2sXbN7I0CmDGlq4WwUkDVxmuvJnwJASTh/FgI+zzykjIgkdTzunAmzTh/8LZHN8YFB0g/Y9q9BNJ6lNlzf4JRk6SFAZkQOC2DaWEMGweqnLmFSq+1MsQJAGXiaxfGKf2uFEpfTVU3e0cT+hfGZ0nxk81ukvRiK3fb4tQDzQ4oUDKqMwOVmcU8GRczmcyPUoS3xv/gJJYI0qwJAZH3IAZzgvLshvqjP0kRU1F9ToTrkYprKfc3QaGwUxLCHhhkduYJgAL4im7a5Wd+BILp0N8V3bNADZXuKFkC8kA==";
     /*============================================================================*/
     /*============================================================================*/
     /*============================================================================*/
@@ -215,7 +215,7 @@
     Order *order = [[Order alloc] init];
     order.partner = partner;
     order.seller = seller;
-    order.tradeNO = self.orderId; //订单ID（由商家自行制定）
+    order.tradeNO = self.infoObject.orderLongId; //订单ID（由商家自行制定）
     order.productName = @"上香"; //商品标题
     order.productDescription = @"上香"; //商品描述
     order.amount = [NSString stringWithFormat:@"%.2f",self.price]; //商品价格
