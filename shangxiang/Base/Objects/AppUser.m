@@ -74,10 +74,10 @@
     return self;
 }
 
-- (void)setJregid:(NSString *)jregid
+- (void)setIsLogined:(BOOL)isLogined
 {
-    _jregid = jregid;
-    if(USEROPERATIONHELP.currentUser && USEROPERATIONHELP.currentUser.isLogined && _jregid && _jregid.length > 0)
+    _isLogined = isLogined;
+    if(_isLogined && _jregid)
     {
         [APService setTags:nil alias:_jregid callbackSelector:nil object:nil];
     }

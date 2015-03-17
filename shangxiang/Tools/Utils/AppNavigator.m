@@ -83,10 +83,11 @@
     [viewAlert show];
 }
 
--(void)switchToLivingTab
+-(void)switchToLivingTab:(NSInteger)index
 {
-    [self.homeTabBarController setSelectedIndex:0];
-    self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
+    [self.currentContentNav popToRootViewControllerAnimated:NO];
+    [self.homeTabBarController setSelectedIndex:index];
+    self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:index];
 }
 
 - (void)turnToOrderRecordPage

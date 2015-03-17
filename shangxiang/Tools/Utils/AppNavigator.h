@@ -32,5 +32,7 @@
 //日历跳转求愿页面
 - (void)calendarTurnWillingGuide;
 
+-(void)switchToLivingTab:(NSInteger)index;
+
 @end
 

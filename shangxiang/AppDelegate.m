@@ -11,7 +11,9 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "APService.h"
 
-@interface AppDelegate ()<WeiboSDKDelegate>
+#define TAG_Alert 3567  //alert标示
+
+@interface AppDelegate ()<WeiboSDKDelegate,UIAlertViewDelegate>
 
 @end
 
@@ -40,6 +42,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     [APPNAVGATOR openDefaultMainViewController];
+    
 
     [self.window makeKeyAndVisible];
     // Override point for customization after application launch.
@@ -185,12 +188,34 @@ fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
+    NSInteger msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"您收到一条消息" message:nil delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
+    alertView.tag = TAG_Alert;
+    [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
+    [alertView show];
+    
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
     [APService showLocalNotificationAtFront:notification identifierKey:nil];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == TAG_Alert && buttonIndex == 1)
+    {
+        NSInteger msgtype = [[alertView getAssociatedValueForKey:@"msgtype"] integerValue];
+        if(msgtype == 1 || msgtype == 2)
+        {
+            [APPNAVGATOR switchToLivingTab:2];
+        }
+        else if(msgtype == 3)
+        {
+            [APPNAVGATOR switchToLivingTab:0];
+        }
+    }
 }
 
 // log NSSet with UTF8

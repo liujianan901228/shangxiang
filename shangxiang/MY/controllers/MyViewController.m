@@ -386,7 +386,6 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if(actionSheet.tag == TAG_ACTIONSHEET && buttonIndex == 0)
     {
-        [USEROPERATIONHELP.currentUser setJregid:nil];
         USEROPERATIONHELP.currentUser.isLogined = NO;
         [UserGlobalSetting setCurrentUser:nil];
         USEROPERATIONHELP.currentUser = nil;
