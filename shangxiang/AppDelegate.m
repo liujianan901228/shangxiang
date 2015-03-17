@@ -11,9 +11,10 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "APService.h"
 
-#define TAG_Alert 3567  //alert标示
 
 @interface AppDelegate ()<WeiboSDKDelegate,UIAlertViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray* alertViewArray;
 
 @end
 
@@ -188,11 +189,27 @@ fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
-    NSInteger msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"您收到一条消息" message:nil delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
-    alertView.tag = TAG_Alert;
-    [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
-    [alertView show];
+    
+    if(application.applicationState == UIApplicationStateActive)
+    {
+    
+        if(!_alertViewArray) _alertViewArray = [[NSMutableArray alloc] init];
+        
+        if(_alertViewArray.count > 0)
+        {
+            for(UIAlertView* alerView in _alertViewArray)
+            {
+                [alerView dismissWithClickedButtonIndex:[alerView cancelButtonIndex] animated:YES];
+            }
+            [_alertViewArray removeAllObjects];
+        }
+        
+        NSInteger msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"您收到一条消息" message:nil delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
+        [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
+        [_alertViewArray addObject:alertView];
+        [alertView show];
+    }
     
     completionHandler(UIBackgroundFetchResultNewData);
 }
@@ -204,7 +221,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(alertView.tag == TAG_Alert && buttonIndex == 1)
+    if(buttonIndex == 1)
     {
         NSInteger msgtype = [[alertView getAssociatedValueForKey:@"msgtype"] integerValue];
         if(msgtype == 1 || msgtype == 2)
