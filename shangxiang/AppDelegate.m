@@ -99,6 +99,22 @@
             [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ShareSuccessNotification object:nil];
         }
     }
+    else if([resp isKindOfClass:[PayResp class]])
+    {
+        PayResp *response = (PayResp *)resp;
+        switch (response.errCode)
+        {
+            case WXSuccess:
+            {
+            }
+                break;
+            default:
+            {
+                
+            }
+            break;
+        }
+    }
 }
 
 

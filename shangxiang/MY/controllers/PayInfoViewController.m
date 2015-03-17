@@ -19,6 +19,9 @@
 #import "APAuthV2Info.h"
 #import "DataVerifier.h"
 
+#import "WXApiObject.h"
+#import "MyRequestManager.h"
+
 @interface PayInfoViewController ()
 
 @property (nonatomic, strong) UIScrollView* scrollView;
@@ -175,7 +178,50 @@
     [buttonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
     [buttonSubmitCreateOrder addTarget:self action:@selector(submitCreateOrder) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:buttonSubmitCreateOrder];
+    
+    UIImageView* weixinImageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, buttonSubmitCreateOrder.bottom + 20, width, 40)];
+    [weixinImageView setImage:[UIImage imageForKey:@"alipay"]];
+    [_scrollView addSubview:weixinImageView];
+    
+    UIButton* weixinButtonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 25 - width, buttonSubmitCreateOrder.bottom + 20, width, 40)];
+    [weixinButtonSubmitCreateOrder setTitle:@"支付" forState:UIControlStateNormal];
+    [weixinButtonSubmitCreateOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+    [weixinButtonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
+    [weixinButtonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
+    [weixinButtonSubmitCreateOrder addTarget:self action:@selector(weixinButtonCreateOrder) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:weixinButtonSubmitCreateOrder];
         
+}
+
+
+- (void)weixinButtonCreateOrder
+{
+    if(self.price == 0)
+    {
+        ShareViewController* shareViewController = [[ShareViewController alloc] init];
+        shareViewController.orderId = self.orderId;
+        [self.navigationController pushViewController:shareViewController animated:YES];
+    }
+    else
+    {
+        [self showChrysanthemumHUD:YES];
+        __weak typeof(self) weakSelf = self;
+        [MyRequestManager getWeixinAccessToken:^(id obj)
+        {
+            [weakSelf removeAllHUDViews:YES];
+            PayReq *request = [[PayReq alloc] init];
+            request.partnerId = KWeixinPayPartnerID;
+            request.prepayId= [obj objectForKey:@"prepayid"];
+            request.package = [obj objectForKey:@"package"];
+            request.nonceStr= [obj objectForKey:@"noncestr"];
+            request.timeStamp= [[obj objectForKey:@"timestamp"] intValue];
+            request.sign= [obj objectForKey:@"sign"];
+            [WXApi sendReq:request];
+        } failed:^(id error) {
+            [weakSelf removeAllHUDViews:YES];
+            [weakSelf dealWithError:error];
+        }];
+    }
 }
 
 - (void)submitCreateOrder

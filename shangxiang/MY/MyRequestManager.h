@@ -56,4 +56,8 @@
 + (BaseRequest*)getNotificationList: (RequestSuccessBlock)successBlock
                           failed:(RequestErrorBlock)errorBlock;
 
+//获取微信支付token
++ (BaseRequest*)getWeixinAccessToken: (RequestSuccessBlock)successBlock
+                              failed:(RequestErrorBlock)errorBlock;
+
 @end

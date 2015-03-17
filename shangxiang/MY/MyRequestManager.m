@@ -233,4 +233,25 @@
     return request;
 }
 
+//获取微信支付token
++ (BaseRequest*)getWeixinAccessToken: (RequestSuccessBlock)successBlock
+                              failed:(RequestErrorBlock)errorBlock
+{
+    RequestSuccessBlock successBlockCopy = [successBlock copy];
+    RequestErrorBlock errorBlockCopy = [errorBlock copy];
+    
+    BaseRequest* request = [BaseRequest sendGetOtherUrl:@"http://demo123.shangxiang.com/api/app_weixinpay/index.php" parameters:nil CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+        if(errorMsg)
+        {
+            EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
+        }
+        else
+        {
+            EXECUTE_BLOCK_SAFELY(successBlockCopy,info);
+        }
+    }];
+    
+    return request;
+}
+
 @end
