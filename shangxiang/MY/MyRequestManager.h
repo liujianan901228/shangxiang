@@ -57,7 +57,8 @@
                           failed:(RequestErrorBlock)errorBlock;
 
 //获取微信支付token
-+ (BaseRequest*)getWeixinAccessToken: (RequestSuccessBlock)successBlock
++ (BaseRequest*)getWeixinAccessToken:(NSString*)orderPrice productName:(NSString*)productName orderNo:(NSString*)orderNo
+                             success: (RequestSuccessBlock)successBlock
                               failed:(RequestErrorBlock)errorBlock;
 
 @end

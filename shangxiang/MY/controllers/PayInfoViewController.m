@@ -206,8 +206,8 @@
     {
         [self showChrysanthemumHUD:YES];
         __weak typeof(self) weakSelf = self;
-        [MyRequestManager getWeixinAccessToken:^(id obj)
-        {
+        
+        [MyRequestManager getWeixinAccessToken:[NSString stringWithFormat:@"%.2f",self.price] productName:@"上香" orderNo:self.infoObject.orderLongId success:^(id obj) {
             [weakSelf removeAllHUDViews:YES];
             PayReq *request = [[PayReq alloc] init];
             request.partnerId = KWeixinPayPartnerID;
