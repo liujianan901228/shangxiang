@@ -61,6 +61,7 @@
 		5ACE41641A67968400BB312E /* DiscoverPopViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACE41631A67968400BB312E /* DiscoverPopViewDataSource.m */; };
 		5ACE41671A6796AF00BB312E /* DiscoverPopViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACE41661A6796AF00BB312E /* DiscoverPopViewCell.m */; };
 		5ACE416A1A6796F400BB312E /* TempleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACE41691A6796F400BB312E /* TempleObject.m */; };
+		5AD33C651AB94AFA0027E18F /* BlessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD33C641AB94AFA0027E18F /* BlessViewController.m */; };
 		5AD5C7AC1A7F234400AFB671 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD5C7A91A7F234400AFB671 /* libWeiboSDK.a */; };
 		5AD5C7AD1A7F234400AFB671 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5AD5C7AA1A7F234400AFB671 /* WeiboSDK.bundle */; };
 		5AD5C7B61A7F244800AFB671 /* libiconv.2.4.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD5C7B51A7F244800AFB671 /* libiconv.2.4.0.dylib */; };
@@ -350,6 +351,8 @@
 		5ACE41661A6796AF00BB312E /* DiscoverPopViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverPopViewCell.m; sourceTree = "<group>"; };
 		5ACE41681A6796F400BB312E /* TempleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempleObject.h; sourceTree = "<group>"; };
 		5ACE41691A6796F400BB312E /* TempleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempleObject.m; sourceTree = "<group>"; };
+		5AD33C631AB94AFA0027E18F /* BlessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlessViewController.h; sourceTree = "<group>"; };
+		5AD33C641AB94AFA0027E18F /* BlessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlessViewController.m; sourceTree = "<group>"; };
 		5AD5C7A91A7F234400AFB671 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		5AD5C7AA1A7F234400AFB671 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
 		5AD5C7AB1A7F234400AFB671 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
@@ -1049,6 +1052,8 @@
 				63C554DF1A7CEA06002FCA24 /* ShareViewController.m */,
 				5A516A891A888EF6006CC739 /* NotificationViewController.h */,
 				5A516A8A1A888EF6006CC739 /* NotificationViewController.m */,
+				5AD33C631AB94AFA0027E18F /* BlessViewController.h */,
+				5AD33C641AB94AFA0027E18F /* BlessViewController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -2023,6 +2028,7 @@
 				63C9FD4A1A714C9700F718AE /* DiscoverInfoDataSource.m in Sources */,
 				63360AA01A7DE58F00AD43E7 /* JTCalendarDayView.m in Sources */,
 				63C8EB7B1A6B9F1C00767A1C /* GradeInfoObject.m in Sources */,
+				5AD33C651AB94AFA0027E18F /* BlessViewController.m in Sources */,
 				5ACE41591A678FC700BB312E /* HomeViewController.m in Sources */,
 				63360A9F1A7DE58F00AD43E7 /* JTCalendarContentView.m in Sources */,
 				63DBA9F61A68082100A8C619 /* UITextField+YYAdd.m in Sources */,
@@ -2197,8 +2203,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2218,7 +2224,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "1bd60f72-5e12-4e1f-8a28-bd7a568cd408";
+				PROVISIONING_PROFILE = "9cd5916f-0d7e-4413-a593-ee0ea17ec776";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2240,8 +2246,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2254,7 +2260,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "1bd60f72-5e12-4e1f-8a28-bd7a568cd408";
+				PROVISIONING_PROFILE = "9cd5916f-0d7e-4413-a593-ee0ea17ec776";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2266,8 +2272,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2294,7 +2300,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1bd60f72-5e12-4e1f-8a28-bd7a568cd408";
+				PROVISIONING_PROFILE = "9cd5916f-0d7e-4413-a593-ee0ea17ec776";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};
@@ -2306,8 +2312,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2334,7 +2340,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1bd60f72-5e12-4e1f-8a28-bd7a568cd408";
+				PROVISIONING_PROFILE = "9cd5916f-0d7e-4413-a593-ee0ea17ec776";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};

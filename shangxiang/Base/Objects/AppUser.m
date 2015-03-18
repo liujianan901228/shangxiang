@@ -28,6 +28,7 @@
     [aCoder encodeObject:@(self.receivedBlessings) forKey:@"receivedBlessings"];
     [aCoder encodeObject:self.mobile forKey:@"mobile"];
     [aCoder encodeObject:self.jregid forKey:@"jregid"];
+    [aCoder encodeObject:[NSNumber numberWithBool:self.isRemind] forKey:@"isRemind"];
 }
 
 
@@ -49,6 +50,7 @@
         self.doBlessings = [[aDecoder decodeObjectForKey:@"receivedBlessings"] integerValue];
         self.mobile = [aDecoder decodeObjectForKey:@"mobile"];
         self.jregid = [aDecoder decodeObjectForKey:@"jregid"];
+        self.isRemind = [aDecoder decodeObjectForKey:@"isRemind"];
     }
     return self;
 }
@@ -70,6 +72,8 @@
         self.doBlessings = [dic intForKey:@"do_blessings" withDefault:0];
         self.mobile = [dic stringForKey:@"mobile" withDefault:@""];
         self.jregid = [dic stringForKey:@"jpushregid" withDefault:@""];
+        
+        self.isRemind = [[dic objectForKey:@"isflremind"] integerValue] == 1 ? YES : NO;
     }
     return self;
 }

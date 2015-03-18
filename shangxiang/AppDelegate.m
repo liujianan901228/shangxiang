@@ -102,18 +102,15 @@
     else if([resp isKindOfClass:[PayResp class]])
     {
         PayResp *response = (PayResp *)resp;
-        switch (response.errCode)
-        {
-            case WXSuccess:
-            {
-            }
-                break;
-            default:
-            {
-                
-            }
-            break;
-        }
+        NSString *strTitle = [NSString stringWithFormat:@"支付结果"];
+        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", response.errCode];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle
+                                                        message:strMsg
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 

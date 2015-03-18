@@ -6,10 +6,9 @@
 #import "SettingsViewController.h"
 #import "FeedbackViewController.h"
 #import "LoginRequestManager.h"
-#import "DiscoverViewController.h"
 #import "NotificationViewController.h"
 #import "Reachability.h"
-
+#import "BlessViewController.h"
 #define TAG_ACTIONSHEET 523
 
 
@@ -427,9 +426,8 @@
             }
             else if(USEROPERATIONHELP.isLogin)
             {
-                vcTarget = [[DiscoverViewController alloc] init];
-                ((DiscoverViewController*)vcTarget).blessType = BelssType_Dobless;
-                ((DiscoverViewController*)vcTarget).isNoFilter = YES;
+                vcTarget = [[BlessViewController alloc] init];
+                ((BlessViewController*)vcTarget).index = 0;
             }
             else
             {
@@ -447,9 +445,8 @@
             }
             else if(USEROPERATIONHELP.isLogin)
             {
-                vcTarget = [[DiscoverViewController alloc] init];
-                ((DiscoverViewController*)vcTarget).blessType = BelssType_Receive;
-                ((DiscoverViewController*)vcTarget).isNoFilter = YES;
+                vcTarget = [[BlessViewController alloc] init];
+                 ((BlessViewController*)vcTarget).index = 1;
             }
             else
             {
@@ -493,7 +490,22 @@
         }
             break;
         case 5:
-            vcTarget = [[SettingsViewController alloc] init];
+        {
+            if([[Reachability reachabilityWithHostName:@"www.shangxiang.com"] currentReachabilityStatus] == kNotReachable)
+            {
+                [self showTimedHUD:YES message:@"当前无网络连接，请检查您的网络"];
+                return;
+            }
+            else if(USEROPERATIONHELP.isLogin)
+            {
+                vcTarget = [[SettingsViewController alloc] init];
+            }
+            else
+            {
+                [APPNAVGATOR turnToLoginGuide];
+                return;
+            }
+        }
             break;
         case 7:
         {

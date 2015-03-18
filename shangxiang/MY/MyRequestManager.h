@@ -61,4 +61,9 @@
                              success: (RequestSuccessBlock)successBlock
                               failed:(RequestErrorBlock)errorBlock;
 
+//获取佛历提醒
++ (BaseRequest*)getFoliRemind:(BOOL)isRemind
+                      success:(RequestSuccessBlock)successBlock
+                       failed:(RequestErrorBlock)errorBlock;
+
 @end

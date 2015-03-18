@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "shangxiang/AppDelegate.m"
-            timestampString = "448283706.15894"
+            filePath = "shangxiang/MY/controllers/PayInfoViewController.m"
+            timestampString = "448344346.487972"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "-onResp:"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
+            landmarkName = "-WxPayNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

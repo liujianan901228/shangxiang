@@ -40,6 +40,7 @@
     [self setupForDismissKeyboard];
     
     [self loadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WxPayNotification:) name:@"payNotification" object:nil];
 }
 
 - (void)setup
@@ -180,7 +181,7 @@
     [_scrollView addSubview:buttonSubmitCreateOrder];
     
     UIImageView* weixinImageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, buttonSubmitCreateOrder.bottom + 20, width, 40)];
-    [weixinImageView setImage:[UIImage imageForKey:@"alipay"]];
+    [weixinImageView setImage:[UIImage imageForKey:@"wxpay"]];
     [_scrollView addSubview:weixinImageView];
     
     UIButton* weixinButtonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 25 - width, buttonSubmitCreateOrder.bottom + 20, width, 40)];
@@ -207,15 +208,16 @@
         [self showChrysanthemumHUD:YES];
         __weak typeof(self) weakSelf = self;
         
-        [MyRequestManager getWeixinAccessToken:[NSString stringWithFormat:@"%.2f",self.price] productName:@"上香" orderNo:self.infoObject.orderLongId success:^(id obj) {
+        [MyRequestManager getWeixinAccessToken:[NSString stringWithFormat:@"%.0f",self.price] productName:self.productName orderNo:self.infoObject.orderLongId success:^(id obj) {
             [weakSelf removeAllHUDViews:YES];
             PayReq *request = [[PayReq alloc] init];
+            request.openID = [obj stringForKey:@"appid" withDefault:@""];
             request.partnerId = KWeixinPayPartnerID;
-            request.prepayId= [obj objectForKey:@"prepayid"];
-            request.package = [obj objectForKey:@"package"];
-            request.nonceStr= [obj objectForKey:@"noncestr"];
+            request.prepayId= [obj stringForKey:@"prepayid" withDefault:@""];
+            request.package = [obj stringForKey:@"package" withDefault:@""];
+            request.nonceStr= [obj stringForKey:@"noncestr" withDefault:@""];
             request.timeStamp= [[obj objectForKey:@"timestamp"] intValue];
-            request.sign= [obj objectForKey:@"sign"];
+            request.sign= [obj stringForKey:@"sign" withDefault:@""];
             [WXApi sendReq:request];
         } failed:^(id error) {
             [weakSelf removeAllHUDViews:YES];
@@ -262,8 +264,8 @@
     order.partner = partner;
     order.seller = seller;
     order.tradeNO = self.infoObject.orderLongId; //订单ID（由商家自行制定）
-    order.productName = @"上香"; //商品标题
-    order.productDescription = @"上香"; //商品描述
+    order.productName = self.productName; //商品标题
+    order.productDescription = self.productName; //商品描述
     order.amount = [NSString stringWithFormat:@"%.2f",self.price]; //商品价格
     order.notifyURL =  @"http://demo123.shangxiang.com/api/app_alipay/notify_url.php"; //回调URL
     
@@ -362,6 +364,16 @@
 - (void)goBack
 {
     [APPNAVGATOR turnToOrderRecordPage];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)WxPayNotification:(NSNotification*)notification
+{
+    NSLog(@"fdsfds");
 }
 
 @end

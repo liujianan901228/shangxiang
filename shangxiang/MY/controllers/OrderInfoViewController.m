@@ -22,7 +22,7 @@
 @property (nonatomic, strong) OrderInfoObject* infoObject;
 @property (nonatomic, strong) SingLineImageCollectionView* viewHallThumb;
 @property (nonatomic, strong) UILabel* wishGradeLabel;
-@property (nonatomic, assign) CGFloat gradePrice;
+@property (nonatomic, strong) GradeInfoObject* gradeInfo;
 
 @end
 
@@ -217,12 +217,13 @@
     else if([self.infoObject.status isEqualToString:@"未支付"])
     {
         UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(20, lineView.bottom + 20, self.view.width - 40, 40)];
-        [buttonSubmitCreateOrder setTitle:@"支付" forState:UIControlStateNormal];
+        [buttonSubmitCreateOrder setTitle:@"继续支付" forState:UIControlStateNormal];
         [buttonSubmitCreateOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
         [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
         [buttonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
         [buttonSubmitCreateOrder addTarget:self action:@selector(pay) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:buttonSubmitCreateOrder];
+
     }
     else
     {
@@ -292,7 +293,7 @@
                 [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, self.infoObject.wishGrade.length)];
                 [wishGradeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, self.infoObject.wishGrade.length)];
                 [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[text rangeOfString:[NSString stringWithFormat:@"￥%zd",info.gradePrice]]];
-                weakSelf.gradePrice = info.gradePrice;
+                weakSelf.gradeInfo = info;
                 [weakSelf.wishGradeLabel setAttributedText:wishGradeString];
             }
         }
@@ -305,7 +306,8 @@
 {
     PayInfoViewController* viewController = [[PayInfoViewController alloc] init];
     viewController.orderId = self.infoObject.orderId;
-    viewController.price = self.gradePrice;
+    viewController.price = self.gradeInfo.gradePrice;
+    viewController.productName = self.gradeInfo.gradeName;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

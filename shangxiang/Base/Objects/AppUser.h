@@ -24,6 +24,7 @@
 @property(nonatomic, assign) NSInteger doBlessings;//我的加持数量
 @property(nonatomic, copy) NSString* mobile;
 @property(nonatomic, copy) NSString* jregid;
+@property(nonatomic, assign) BOOL isRemind;//是否提醒
 
 - (instancetype)initWithDic:(NSDictionary*)dic;
 

@@ -40,6 +40,7 @@
 @property (nonatomic, strong) NSDate* birthDate;
 @property (nonatomic, strong) GradeInfoObject* gradeInfoObject;
 @property (nonatomic, strong) NSString* choice;//精选暂存
+@property (nonatomic, strong) NSDate* minDate;
 
 @end
 
@@ -70,6 +71,9 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.view addSubview:_scrollView];
+    
+    NSTimeInterval  interval = 24*60*60;
+    _minDate = [[NSDate alloc] initWithTimeIntervalSinceNow:interval];
     
     [self initWithTempleInfo];
     [self setupPickerView];
@@ -169,7 +173,7 @@
     [_fieldOtherDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldOtherDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldOtherDesirer.layer setCornerRadius:5.0f];
-    [_fieldOtherDesirer setPlaceholder:@"请输入"];
+    [_fieldOtherDesirer setText:@"齐天大圣"];
     [_fieldOtherDesirer.layer setMasksToBounds:YES];
     [_fieldOtherDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldOtherDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
@@ -195,7 +199,7 @@
     [_fieldPositionDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldPositionDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldPositionDesirer.layer setCornerRadius:5.0f];
-    [_fieldPositionDesirer setPlaceholder:@"请输入"];
+    [_fieldPositionDesirer setText:@"广东-广州"];
     [_fieldPositionDesirer.layer setMasksToBounds:YES];
     [_fieldPositionDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldPositionDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
@@ -245,7 +249,12 @@
     [_fieldTimeDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldTimeDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldTimeDesirer.layer setCornerRadius:5.0f];
-    [_fieldTimeDesirer setPlaceholder:@"请输入"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateString = [dateFormatter stringFromDate:_minDate];
+    [_fieldTimeDesirer setText:dateString];
     [_fieldTimeDesirer.layer setMasksToBounds:YES];
     [_fieldTimeDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldTimeDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
@@ -312,6 +321,7 @@
         PayInfoViewController* payInfoViewController = [[PayInfoViewController alloc] init];
         payInfoViewController.orderId = orderId;
         payInfoViewController.price = weakSelf.gradeInfoObject.gradePrice;
+        payInfoViewController.productName = weakSelf.gradeInfoObject.gradeName;
         [weakSelf.navigationController pushViewController:payInfoViewController animated:YES];
         
     } failed:^(id error) {
@@ -458,19 +468,12 @@
     [self.birthdayPicker setDatePickerMode:UIDatePickerModeDate];
     self.birthdayPicker.locale = [NSLocale currentLocale];
     
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setYear:[NSDate date].year];
-    [components setMonth:[NSDate date].month];
-    [components setDay:[NSDate date].day];
-    
-    NSDate *minDate = [gregorian dateFromComponents:components];
-    self.birthdayPicker.minimumDate = minDate;
+    self.birthdayPicker.minimumDate = _minDate;
     
     self.birthObj = [[UserBirthdayObject alloc] init];
-    self.birthObj.year = [NSNumber numberWithInteger:[NSDate date].year];
-    self.birthObj.month = [NSNumber numberWithInteger:[NSDate date].month];
-    self.birthObj.day = [NSNumber numberWithInteger:[NSDate date].day];
+    self.birthObj.year = [NSNumber numberWithInteger:_minDate.year];
+    self.birthObj.month = [NSNumber numberWithInteger:_minDate.month];
+    self.birthObj.day = [NSNumber numberWithInteger:_minDate.day];
     
     [self.birthdayPicker addTarget:self action:@selector(birthdayPickerValueChange:) forControlEvents:UIControlEventValueChanged];
     
