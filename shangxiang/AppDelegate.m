@@ -59,10 +59,15 @@
                                          }];
         return YES;
     }
-    return ([WeiboSDK handleOpenURL:url delegate:self]
-            || [WXApi handleOpenURL:url delegate:self]
-            );
-
+    else if([[[url scheme]lowercaseString] isEqualToString:@"wx3f87a4ecbf40adcd"])
+    {
+        return [WXApi handleOpenURL:url delegate:self];
+    }
+    else if([url.scheme isEqualToString:@"wb2392815987"])
+    {
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }
+    return NO;
 }
 
 
