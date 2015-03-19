@@ -55,7 +55,7 @@
     [orderNumberLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     [orderNumberLabel setFont:[UIFont systemFontOfSize:14]];
     [orderNumberLabel setTextColor:UIColorFromRGB(0x808080)];
-    [orderNumberLabel setText:[NSString stringWithFormat:@"订单号 : %@",self.infoObject.orderId]];
+    [orderNumberLabel setText:[NSString stringWithFormat:@"订单号 : %@",self.infoObject.orderLongId]];
     [_scrollView addSubview:orderNumberLabel];
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, orderNumberLabel.bottom + 5, self.view.width - 40, 20)];

@@ -59,7 +59,7 @@
                                          }];
         return YES;
     }
-    else if([[[url scheme]lowercaseString] isEqualToString:@"wx3f87a4ecbf40adcd"])
+    else if([[[url scheme]lowercaseString] isEqualToString:@"wx078a2a02ec9b0ac4"])
     {
         return [WXApi handleOpenURL:url delegate:self];
     }
@@ -107,15 +107,10 @@
     else if([resp isKindOfClass:[PayResp class]])
     {
         PayResp *response = (PayResp *)resp;
-        NSString *strTitle = [NSString stringWithFormat:@"支付结果"];
-        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", response.errCode];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle
-                                                        message:strMsg
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil, nil];
-        [alert show];
+        if(response)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:@"payNotification" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",response.errCode],@"errCode", nil]];
+        }
     }
 }
 

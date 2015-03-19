@@ -102,7 +102,7 @@
     [super setObject:object];
     WillingObject* willingObject = (WillingObject*)object;
     [self.labelOrderTitle setText:[NSString stringWithFormat:@"%@(%@)",willingObject.templeName,willingObject.buddhistName]];
-    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderId,willingObject.buddhaDate]];
+    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderNumber,willingObject.buddhaDate]];
     [self.labelStatus setText:willingObject.status];
 }
 

@@ -25,6 +25,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
+    
     
     _segmenControl = [[UIView alloc] initWithFrame:CGRectMake(0, 10, self.view.width, 40)];
     [_segmenControl setBackgroundColor:[UIColor clearColor]];

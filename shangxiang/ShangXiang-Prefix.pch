@@ -35,10 +35,8 @@
 //    #define kAppKey         @"2548841269"
 //    #define KAllAPPKey      @"wb2548841269"
 //    #define kRedirectURI    @"http://www.laifeng.com/oauth2/callback.html"
-    #define KWeixinAppKey       @"wx3f87a4ecbf40adcd"
-    #define KWeixinAppSecret   @"840d18550a41a9dfdd038b62cd8c689b"
-
+    #define KWeixinAppKey       @"wx078a2a02ec9b0ac4"
+    #define KWeixinAppSecret   @"edf598917c1f9932de0d152e50a1bdd2"
     #define KWeixinPayPartnerID @"1233292701"
-    #define KWeixinPayAppKey @"wx078a2a02ec9b0ac4"
-    #define KWeixinPayAppSecret @"edf598917c1f9932de0d152e50a1bdd2"
+
 #endif

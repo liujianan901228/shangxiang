@@ -373,7 +373,20 @@
 
 - (void)WxPayNotification:(NSNotification*)notification
 {
-    NSLog(@"fdsfds");
+    NSDictionary* info = notification.userInfo;
+    NSString* errCode = [info objectForKey:@"errCode"];
+    if(errCode && [errCode integerValue] == 0)
+    {
+        //支付成功
+        ShareViewController* shareViewController = [[ShareViewController alloc] init];
+        shareViewController.orderId = self.orderId;
+        [self.navigationController pushViewController:shareViewController animated:YES];
+    }
+    else
+    {
+        //支付失败
+        [self showTimedHUD:YES message:@"交易失败"];
+    }
 }
 
 @end
