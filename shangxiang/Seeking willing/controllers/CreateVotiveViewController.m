@@ -173,7 +173,7 @@
     [_fieldOtherDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldOtherDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldOtherDesirer.layer setCornerRadius:5.0f];
-    [_fieldOtherDesirer setText:@"齐天大圣"];
+     [_fieldOtherDesirer setText:USEROPERATIONHELP.currentUser.nickName];
     [_fieldOtherDesirer.layer setMasksToBounds:YES];
     [_fieldOtherDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldOtherDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
@@ -199,7 +199,8 @@
     [_fieldPositionDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldPositionDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldPositionDesirer.layer setCornerRadius:5.0f];
-    [_fieldPositionDesirer setText:@"广东-广州"];
+    if(USEROPERATIONHELP.currentUser.area) [_fieldPositionDesirer setText:USEROPERATIONHELP.currentUser.area];
+    else [_fieldPositionDesirer setPlaceholder:@"请输入"];
     [_fieldPositionDesirer.layer setMasksToBounds:YES];
     [_fieldPositionDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldPositionDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
