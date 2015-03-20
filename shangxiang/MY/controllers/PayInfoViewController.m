@@ -346,13 +346,13 @@
         {
             if([info.gradeName isEqualToString:weakSelf.infoObject.wishGrade])
             {
-                NSString* text = [NSString stringWithFormat:@"香烛: %@  ￥%zd",weakSelf.infoObject.wishGrade,info.gradePrice];
+                NSString* text = [NSString stringWithFormat:@"香烛: %@  ￥%.2f",weakSelf.infoObject.wishGrade,info.gradePrice];
                 NSMutableAttributedString* wishGradeString = [[NSMutableAttributedString alloc] initWithString:text];
                 [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xbababa) range:NSRangeMake(0, 4)];
                 [wishGradeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSRangeMake(0, 4)];
                 [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, self.infoObject.wishGrade.length)];
                 [wishGradeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, self.infoObject.wishGrade.length)];
-                [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[text rangeOfString:[NSString stringWithFormat:@"￥%zd",info.gradePrice]]];
+                [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[text rangeOfString:[NSString stringWithFormat:@"￥%.2f",info.gradePrice]]];
                 [weakSelf.wishGradeLabel setAttributedText:wishGradeString];
             }
         }

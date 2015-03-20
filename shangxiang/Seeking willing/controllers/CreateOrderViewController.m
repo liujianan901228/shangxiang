@@ -663,9 +663,9 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
             GradeInfoObject* infoObject = [self.gradeInfoArray objectAtIndex:0];
             self.gradeInfoObject = infoObject;
         }
-        NSString* typeText = [NSString stringWithFormat:@"%@       %zd",self.gradeInfoObject.gradeName,self.gradeInfoObject.gradePrice];
+        NSString* typeText = [NSString stringWithFormat:@"%@       %.2f",self.gradeInfoObject.gradeName,self.gradeInfoObject.gradePrice];
         NSMutableAttributedString* typeStringText = [[NSMutableAttributedString alloc] initWithString:typeText];
-        [typeStringText setAttributeKey:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[typeText rangeOfString:[NSString stringWithFormat:@"%zd",self.gradeInfoObject.gradePrice]]];
+        [typeStringText setAttributeKey:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[typeText rangeOfString:[NSString stringWithFormat:@"%.2f",self.gradeInfoObject.gradePrice]]];
         [_fieldTypeDesirer setAttributedText:typeStringText];
     }
     else if(_choicePicker.superview)
@@ -731,7 +731,7 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
         if(self.gradeInfoArray && self.gradeInfoArray.count > 0)
         {
             GradeInfoObject* infoObject = [self.gradeInfoArray objectAtIndex:row];
-            return [NSString stringWithFormat:@"%@              %zd",infoObject.gradeName,infoObject.gradePrice];
+            return [NSString stringWithFormat:@"%@              %.2f",infoObject.gradeName,infoObject.gradePrice];
         }
     }
     else if([pickerView isEqual:self.choicePicker])

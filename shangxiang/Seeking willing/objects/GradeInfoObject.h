@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString* gradeName;//香烛名字
 @property (nonatomic, assign) NSInteger gradeVal;//香烛等级
 @property (nonatomic, copy) NSString* gradeDescription;//描述
-@property (nonatomic, assign) NSInteger gradePrice;
+@property (nonatomic, assign) CGFloat gradePrice;
 
 - (instancetype)initWithDic:(NSDictionary*)dic;
 

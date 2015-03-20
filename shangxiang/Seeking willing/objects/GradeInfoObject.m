@@ -16,7 +16,7 @@
     {
         self.gradeName = [dic stringForKey:@"name" withDefault:@""];
         self.gradeDescription = [dic stringForKey:@"desc" withDefault:@""];
-        self.gradePrice = [dic intForKey:@"price" withDefault:0];
+        self.gradePrice = [dic floatForKey:@"price" withDefault:0.00];
         self.gradeVal = [dic intForKey:@"val" withDefault:0];
     }
     return self;
