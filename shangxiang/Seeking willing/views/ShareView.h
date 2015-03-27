@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSInteger,WxType)
 {
     WxType_Friend = 0 ,
-    WxType_Single = 1
+    WxType_Single = 1 ,
+    WxType_Weibo = 2
 };
 
 typedef void(^ShareBlock)(WxType type, NSString* shareText);

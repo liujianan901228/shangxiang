@@ -36,7 +36,7 @@
     self.frame = CGRectMake(0, 0, window.width, window.height);
     
     
-    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(10, (window.height - 200)/2.0, window.width - 20, 200)];
+    self.contentView = [[UIView alloc] initWithFrame:CGRectMake(10, (window.height - 245)/2.0, window.width - 20, 245)];
     [self.contentView.layer setCornerRadius:5];
     [self.contentView setBackgroundColor:UIColorFromRGB(0xf9f9f9)];
     
@@ -71,7 +71,25 @@
     [singButton addTarget:self action:@selector(shareSingleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:singButton];
     
+    
     lineView = [[UIView alloc] initWithFrame:CGRectMake(0, singButton.bottom, self.contentView.width, 0.5)];
+    [lineView setBackgroundColor:UIColorFromRGB(COLOR_LINE_NORMAL)];
+    [self.contentView addSubview:lineView];
+    
+    UIButton* weiboButton = [[UIButton alloc] initWithFrame:CGRectMake(0, lineView.bottom, self.contentView.width, 45)];
+    [weiboButton setTitle:@"分享到新浪微博" forState:UIControlStateNormal];
+    [weiboButton setTitleColor:UIColorFromRGB(COLOR_LINE_NORMAL) forState:UIControlStateNormal];
+    [weiboButton setImage:[UIImage imageForKey:@"shareto_weibo"] forState:UIControlStateNormal];
+    [weiboButton setImageEdgeInsets:UIEdgeInsetsMake((45 - 35)/2, 15, (45 - 35)/2, 0)];
+    [weiboButton setTitleEdgeInsets:UIEdgeInsetsMake(14, 20, 10, 0)];
+    [weiboButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [weiboButton setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
+    [weiboButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [weiboButton setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
+    [weiboButton addTarget:self action:@selector(shareWeiboButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:weiboButton];
+    
+    lineView = [[UIView alloc] initWithFrame:CGRectMake(0, weiboButton.bottom, self.contentView.width, 0.5)];
     [lineView setBackgroundColor:UIColorFromRGB(COLOR_LINE_NORMAL)];
     [self.contentView addSubview:lineView];
     
@@ -131,6 +149,14 @@
     }
 }
 
+- (void)shareWeiboButtonClick:(UIButton*)button
+{
+    if(self.shareBlock)
+    {
+        self.shareBlock(WxType_Weibo,_textView.text);
+    }
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -153,10 +179,10 @@
 - (void)keyBoardWillShow:(NSNotification *)notification
 {
     CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    if(self.contentView.top != (self.height - 200 - keyboardSize.height))
+    if(self.contentView.top != (self.height - 245 - keyboardSize.height))
     {
         [UIView animateWithDuration:0.3 animations:^{
-            [self.contentView setTop:self.height - 200 - keyboardSize.height];
+            [self.contentView setTop:self.height - 245 - keyboardSize.height];
             self.isShowKeyBoard = YES;
         }];
     }
@@ -166,19 +192,19 @@
 {
     NSDictionary* info = [notification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    if(self.contentView.top != (self.height - 200 - keyboardSize.height))
+    if(self.contentView.top != (self.height - 245 - keyboardSize.height))
     {
-        [self.contentView setTop:self.height - 200 - keyboardSize.height];
+        [self.contentView setTop:self.height - 245 - keyboardSize.height];
         self.isShowKeyBoard = YES;
     }
 }
 
 - (void)keyBoardWillHide:(NSNotification *)notification
 {
-    if(self.contentView.top != ((self.height - 200)/2.0))
+    if(self.contentView.top != ((self.height - 245)/2.0))
     {
         [UIView animateWithDuration:0.3 animations:^{
-            [self.contentView setTop:(self.height - 200)/2.0];
+            [self.contentView setTop:(self.height - 245)/2.0];
             self.isShowKeyBoard = NO;
         }];
     }
@@ -188,10 +214,10 @@
 {
     NSDictionary* info = [notification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    if(self.contentView.top != (self.height - 200 - keyboardSize.height) && self.isShowKeyBoard)
+    if(self.contentView.top != (self.height - 245 - keyboardSize.height) && self.isShowKeyBoard)
     {
         [UIView animateWithDuration:0.3 animations:^{
-            [self.contentView setTop:self.height - 200 - keyboardSize.height];
+            [self.contentView setTop:self.height - 245 - keyboardSize.height];
         }];
     }
 }

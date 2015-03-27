@@ -74,7 +74,14 @@
         }
         else
         {
-            [weakSelf sendLinkContent:type text:shareText];
+            if(type == WxType_Weibo)
+            {
+                [weakSelf sendWeiboContent:shareText];
+            }
+            else
+            {
+                [weakSelf sendLinkContent:type text:shareText];
+            }
         }
     };
     
@@ -94,6 +101,43 @@
     [_shareView close];
 }
 
+
+- (void)sendWeiboContent:(NSString*)text
+{
+    AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
+    authRequest.redirectURI = kRedirectURI;
+    authRequest.scope = @"all";
+    
+    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:[self messageToShare:text]];
+    request.message = [self messageToShare:text];
+    request.userInfo = @{@"ShareMessageFrom": @"SendMessageToWeiboViewController",
+                         @"Other_Info_1": [NSNumber numberWithInt:123],
+                         @"Other_Info_2": @[@"obj1", @"obj2"],
+                         @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+    //    request.shouldOpenWeiboAppInstallPageIfNotInstalled = NO;
+    [WeiboSDK sendRequest:request];
+}
+
+
+- (WBMessageObject *)messageToShare:(NSString*)text
+{
+    WBMessageObject *message = [WBMessageObject message];
+    
+
+
+    WBWebpageObject *webpage = [WBWebpageObject object];
+    webpage.objectID = @"identifier1";
+    webpage.title = text;
+    webpage.description = @"上香";
+    webpage.thumbnailData = UIImageJPEGRepresentation([UIImage imageForKey:@"logo"], 0.7);
+    webpage.webpageUrl = @"http://shangxiang.com";
+    message.mediaObject = webpage;
+    
+    
+    return message;
+}
 
 - (void)sendLinkContent:(WxType)type text:(NSString*)shareText
 {
