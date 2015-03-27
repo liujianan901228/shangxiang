@@ -10,6 +10,8 @@
 #import "CalendarDataSource.h"
 #import "AddBirthdayViewController.h"
 
+#define TAG_Date    1174
+
 @interface editRemindViewController ()<UIAlertViewDelegate>
 {
     NSString *remindName;
@@ -69,6 +71,7 @@
     
     label = [[UILabel alloc] initWithFrame:CGRectMake(timeImageView.right + 5, orgin_y, self.view.frame.size.width-15 - timeImageView.right, 30)];
     label.text = remindDate;
+    label.tag = TAG_Date;
     label.font = [UIFont systemFontOfSize:18.];
     label.textColor = [UIColor colorWithRed:170./255. green:170./255. blue:170./255. alpha:1];
     [self.view addSubview:label];
@@ -111,6 +114,8 @@
     [btn setTintColor:[UIColor colorWithRed:235./255. green:235./255. blue:235./255. alpha:1]];
     [btn addTarget:self action:@selector(btnPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCalendar:) name:@"reloadCalendar" object:nil];
     
 }
 
@@ -169,14 +174,24 @@
         }
     }
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)reloadCalendar:(NSNotification*)notification
+{
+    NSDate* date = notification.object;
+    if(!date) return;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy年MM月dd日"];
+    remindDate = [formatter stringFromDate:date];
+    UILabel* label = (UILabel*)[self.view viewWithTag:TAG_Date];
+    label.text = remindDate;
+    self.selectDate = date;
+    
 }
-*/
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

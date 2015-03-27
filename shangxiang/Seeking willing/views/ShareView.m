@@ -11,7 +11,6 @@
 @interface ShareView ()<UITextViewDelegate>
 
 @property (nonatomic, strong) UIView* contentView;
-@property (nonatomic, strong) UITextView* textView;
 @property (nonatomic, assign) BOOL isShowKeyBoard;
 
 @end
@@ -30,7 +29,7 @@
     return self;
 }
 
-- (void)showInWindow:(UIWindow*)window
+- (void)showInWindow:(UIWindow*)window orderText:(NSString*)orderText
 {
     if(!window || self.superview) return;
     
@@ -89,6 +88,7 @@
     [_textView setScrollEnabled:YES];
     [_textView setKeyboardType:UIKeyboardTypeDefault];
     _textView.returnKeyType = UIReturnKeyDone;
+    _textView.text = orderText;
     _textView.delegate = self;
     [self.contentView addSubview:_textView];
     

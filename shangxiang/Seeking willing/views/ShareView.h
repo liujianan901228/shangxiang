@@ -19,8 +19,9 @@ typedef void(^ShareBlock)(WxType type, NSString* shareText);
 @interface ShareView : UIView
 
 @property (nonatomic, copy) ShareBlock shareBlock;
+@property (nonatomic, strong) UITextView* textView;
 
-- (void)showInWindow:(UIWindow*)window;
+- (void)showInWindow:(UIWindow*)window orderText:(NSString*)orderText;
 - (void)close;
 
 @end

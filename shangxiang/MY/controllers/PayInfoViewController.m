@@ -201,6 +201,7 @@
     {
         ShareViewController* shareViewController = [[ShareViewController alloc] init];
         shareViewController.orderId = self.orderId;
+        shareViewController.orderContentText = self.orderContentText;
         [self.navigationController pushViewController:shareViewController animated:YES];
     }
     else
@@ -208,7 +209,7 @@
         [self showChrysanthemumHUD:YES];
         __weak typeof(self) weakSelf = self;
         
-        [MyRequestManager getWeixinAccessToken:[NSString stringWithFormat:@"%.0f",self.price] productName:self.productName orderNo:self.infoObject.orderLongId success:^(id obj) {
+        [MyRequestManager getWeixinAccessToken:[NSString stringWithFormat:@"%.2f",self.price] productName:self.productName orderNo:self.infoObject.orderLongId success:^(id obj) {
             [weakSelf removeAllHUDViews:YES];
             PayReq *request = [[PayReq alloc] init];
             request.openID = [obj stringForKey:@"appid" withDefault:@""];
@@ -232,6 +233,7 @@
     {
         ShareViewController* shareViewController = [[ShareViewController alloc] init];
         shareViewController.orderId = self.orderId;
+        shareViewController.orderContentText = self.orderContentText;
         [self.navigationController pushViewController:shareViewController animated:YES];
     }
     else
@@ -267,7 +269,7 @@
     order.productName = self.productName; //商品标题
     order.productDescription = self.productName; //商品描述
     order.amount = [NSString stringWithFormat:@"%.2f",self.price]; //商品价格
-    order.notifyURL =  @"http://demo123.shangxiang.com/api/app_alipay/notify_url.php"; //回调URL
+    order.notifyURL =  @"http://app.shangxiang.com/api/app_alipay/notify_url.php"; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";
@@ -300,6 +302,7 @@
             {
                 ShareViewController* shareViewController = [[ShareViewController alloc] init];
                 shareViewController.orderId = weakSelf.orderId;
+                shareViewController.orderContentText = weakSelf.orderContentText;
                 [weakSelf.navigationController pushViewController:shareViewController animated:YES];
             }
             else if (statusCode == 4000)
@@ -380,6 +383,7 @@
         //支付成功
         ShareViewController* shareViewController = [[ShareViewController alloc] init];
         shareViewController.orderId = self.orderId;
+         shareViewController.orderContentText = self.orderContentText;
         [self.navigationController pushViewController:shareViewController animated:YES];
     }
     else

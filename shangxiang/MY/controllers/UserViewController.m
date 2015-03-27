@@ -17,6 +17,7 @@
 
 #define TAG_ACTIONSHEET_Image   4123//修改头像actionSheet
 #define TAG_ACTIONSHEET_Gender  4124//男女
+#define TAG_ACTIONSHEET 523
 
 @interface UserViewController ()<UIActionSheetDelegate,UIPickerViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,CropImageContenViewProtocol>
 {
@@ -53,6 +54,9 @@
     self.title = @"个人资料";
     self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
     [self setupDismissKeyboard];
+    
+    UIBarButtonItem *rightItem = [UIBarButtonItem rsBarButtonItemWithTitle:@"退出登录" image:nil heightLightImage:nil disableImage:nil target:self action:@selector(closeButtonclicked)];
+    [self setRightBarButtonItem:rightItem];
     
     viewMain = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     [viewMain setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
@@ -425,6 +429,14 @@
             }];
         }
     }
+    else if(actionSheet.tag == TAG_ACTIONSHEET && buttonIndex == 0)
+    {
+        USEROPERATIONHELP.currentUser.isLogined = NO;
+        [UserGlobalSetting setCurrentUser:nil];
+        USEROPERATIONHELP.currentUser = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:AppUserLogoutNotification object:nil];
+        [self goBack];
+    }
 }
 
 - (void)setupPickerView
@@ -661,7 +673,7 @@
     
     //修改头像
     [self showChrysanthemumHUD:YES];
-    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://demo123.shangxiang.com/api/app/hfupload.php"]];
+    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://app.shangxiang.com/hfupload.php"]];
 
     [request addPostValue:USEROPERATIONHELP.currentUser.userId forKey:@"mid"];
     [request addPostValue:@"1" forKey:@"uploadimage"];
@@ -769,6 +781,13 @@
 {
     //此method会将self.view里所有的subview的first responder都resign掉
     [self.view endEditing:YES];
+}
+
+- (void)closeButtonclicked
+{
+    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];
+    actionsheet.tag = TAG_ACTIONSHEET;
+    [actionsheet showInView:APPDELEGATE.window];
 }
 
 

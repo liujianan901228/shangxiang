@@ -104,6 +104,14 @@
     [self.labelOrderTitle setText:[NSString stringWithFormat:@"%@(%@)",willingObject.templeName,willingObject.buddhistName]];
     [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderNumber,willingObject.buddhaDate]];
     [self.labelStatus setText:willingObject.status];
+    if([willingObject.status isEqualToString:@"未支付"])
+    {
+        _scrollView.scrollEnabled = YES;
+    }
+    else
+    {
+        _scrollView.scrollEnabled = NO;
+    }
 }
 
 - (void)handleTapgesture:(UITapGestureRecognizer*)gesture

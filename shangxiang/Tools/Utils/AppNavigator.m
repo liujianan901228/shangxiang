@@ -43,12 +43,17 @@
 
 - (void)calendarTurnWillingGuide
 {
+    NSInteger preIndex = self.homeTabBarController.selectedIndex;
     [self.homeTabBarController setSelectedIndex:0];
     self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
 
-    UINavigationController* threeNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:2];
-    [threeNavigationController popToRootViewControllerAnimated:NO];
+    if(preIndex != 0)
+    {
+        UINavigationController* threeNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:preIndex];
+        [threeNavigationController popToRootViewControllerAnimated:NO];
+    }
 }
+
 
 - (void)turnToLoginGuide
 {

@@ -64,9 +64,11 @@
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, selectView.bottom, self.view.width, self.view.height - selectView.bottom - 64)];
     [_scrollView setBackgroundColor:[UIColor clearColor]];
     [_scrollView setAlwaysBounceVertical:NO];
+    [_scrollView setAlwaysBounceHorizontal:NO];
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.showsVerticalScrollIndicator = NO;
     [_scrollView setPagingEnabled:NO];
+    _scrollView.scrollEnabled = NO;
     [_scrollView setContentSize:CGSizeMake(_scrollView.width * 2, _scrollView.height)];
     [self.view addSubview:_scrollView];
 
@@ -88,6 +90,7 @@
     [_redeemTableview setBackgroundColor:[UIColor clearColor]];
     _redeemDataSouce = [[ORderRecorderDataSource alloc] init];
     _redeemDataSouce.cellDelegate = self;
+    _redeemTableview.delegate = self;
     _redeemTableview.dataSource = _redeemDataSouce;
     _redeemTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     if ([_redeemTableview respondsToSelector:@selector(setSeparatorInset:)])

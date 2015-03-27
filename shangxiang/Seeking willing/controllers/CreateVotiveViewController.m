@@ -316,13 +316,15 @@
     
     __weak typeof(self) weakSelf = self;
     [weakSelf showChrysanthemumHUD:YES];
-    [ListTempleManager postOrderInfo:[LUtility getWishType:self.infoObject.wishType] wishText:[_commonTextFiled getContentText] wishName:_fieldOtherDesirer.text wishGrade:self.gradeInfoObject.gradeVal buddhaDate:self.birthObj.transBirthDayToString wishPlace:_fieldPositionDesirer.text tid:self.infoObject.tid aid:self.infoObject.builddhistId userId:USEROPERATIONHELP.currentUser.userId mobile:nil alsoWish:1 orderId:self.infoObject.orderId successBlock:^(id obj) {
+    NSString* userId = (USEROPERATIONHELP.currentUser && USEROPERATIONHELP.currentUser.userId) ? USEROPERATIONHELP.currentUser.userId : @"";
+    [ListTempleManager postOrderInfo:[LUtility getWishType:self.infoObject.wishType] wishText:[_commonTextFiled getContentText] wishName:_fieldOtherDesirer.text wishGrade:self.gradeInfoObject.gradeVal buddhaDate:self.birthObj.transBirthDayToString wishPlace:_fieldPositionDesirer.text tid:self.infoObject.tid aid:self.infoObject.builddhistId userId:userId mobile:nil alsoWish:1 orderId:self.infoObject.orderId successBlock:^(id obj) {
         [weakSelf removeAllHUDViews:YES];
         NSString* orderId = [obj stringForKey:@"orderid" withDefault:@""];
         PayInfoViewController* payInfoViewController = [[PayInfoViewController alloc] init];
         payInfoViewController.orderId = orderId;
         payInfoViewController.price = weakSelf.gradeInfoObject.gradePrice;
         payInfoViewController.productName = weakSelf.gradeInfoObject.gradeName;
+        payInfoViewController.orderContentText = [weakSelf.commonTextFiled getContentText];
         [weakSelf.navigationController pushViewController:payInfoViewController animated:YES];
         
     } failed:^(id error) {

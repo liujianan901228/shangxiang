@@ -11,5 +11,6 @@
 @interface ShareViewController : BaseViewController
 
 @property (nonatomic, copy) NSString* orderId;
+@property (nonatomic, copy) NSString* orderContentText;//祈福内容
 
 @end

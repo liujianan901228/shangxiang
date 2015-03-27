@@ -83,7 +83,7 @@
     _isLogined = isLogined;
     if(_isLogined && _jregid)
     {
-        [APService setTags:nil alias:_jregid callbackSelector:nil object:nil];
+        [APService setTags:nil alias:_userId callbackSelector:nil object:nil];
     }
     else
     {

@@ -330,15 +330,15 @@
     labelAbout.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
     [buttonAbout addSubview:labelAbout];
     
-    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(-1, buttonAbout.bottom, self.view.width + 2, 44)];
-    button.backgroundColor = UIColorFromRGB(COLOR_BG_HIGHLIGHT);
-    button.layer.borderColor = UIColorFromRGB(COLOR_LINE_NORMAL).CGColor;
-    button.layer.borderWidth = 0.5;
-    [button setTitle:@"退出登录" forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(COLOR_FONT_NORMAL) forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [_contentScollView addSubview:button];
+//    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(-1, buttonAbout.bottom, self.view.width + 2, 44)];
+//    button.backgroundColor = UIColorFromRGB(COLOR_BG_HIGHLIGHT);
+//    button.layer.borderColor = UIColorFromRGB(COLOR_LINE_NORMAL).CGColor;
+//    button.layer.borderWidth = 0.5;
+//    [button setTitle:@"退出登录" forState:UIControlStateNormal];
+//    [button setTitleColor:UIColorFromRGB(COLOR_FONT_NORMAL) forState:UIControlStateNormal];
+//    [button setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
+//    [button addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
+//    [_contentScollView addSubview:button];
     
     _contentScollView.contentSize = CGSizeMake(fltViewWidth, fltBegin + fltCellHeight);
     _contentScollView.contentOffset = CGPointMake(0, 0);
@@ -535,7 +535,7 @@
             else
             {
                 vcTarget = [[BrowserViewController alloc] init];
-                ((BrowserViewController*)vcTarget).url = @"http://demo123.shangxiang.com/app_aboutus.html";
+                ((BrowserViewController*)vcTarget).url = @"http://app.shangxiang.com/app_aboutus.html";
             }
         }
             break;

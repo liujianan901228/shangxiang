@@ -348,7 +348,8 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     
     __weak typeof(self) weakSelf = self;
     [weakSelf showChrysanthemumHUD:YES];
-    [ListTempleManager postOrderInfo:self.wishType wishText:[_commonTextFiled getContentText] wishName:_fieldOtherDesirer.text wishGrade:self.gradeInfoObject.gradeVal buddhaDate:self.birthObj.transBirthDayToString wishPlace:_fieldPositionDesirer.text tid:self.templeObject.templeId aid:self.templeObject.attacheId userId:USEROPERATIONHELP.currentUser.userId mobile:iphoneNumber alsoWish:0 orderId:nil successBlock:^(id obj) {
+    NSString* userId = (USEROPERATIONHELP.currentUser && USEROPERATIONHELP.currentUser.userId) ? USEROPERATIONHELP.currentUser.userId : @"";
+    [ListTempleManager postOrderInfo:self.wishType wishText:[_commonTextFiled getContentText] wishName:_fieldOtherDesirer.text wishGrade:self.gradeInfoObject.gradeVal buddhaDate:self.birthObj.transBirthDayToString wishPlace:_fieldPositionDesirer.text tid:self.templeObject.templeId aid:self.templeObject.attacheId userId:userId mobile:iphoneNumber alsoWish:0 orderId:nil successBlock:^(id obj) {
         [weakSelf removeAllHUDViews:YES];
         long long orderId = [obj longLongForKey:@"orderid" withDefault:0];
         
@@ -356,6 +357,7 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
         payInfoViewController.orderId = [NSString stringWithFormat:@"%lld",orderId];
         payInfoViewController.price = weakSelf.gradeInfoObject.gradePrice;
         payInfoViewController.productName = weakSelf.gradeInfoObject.gradeName;
+        payInfoViewController.orderContentText = [weakSelf.commonTextFiled getContentText];
         [weakSelf.navigationController pushViewController:payInfoViewController animated:YES];
         
     } failed:^(id error) {

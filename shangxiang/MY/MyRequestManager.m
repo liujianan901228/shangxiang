@@ -241,7 +241,7 @@
     RequestSuccessBlock successBlockCopy = [successBlock copy];
     RequestErrorBlock errorBlockCopy = [errorBlock copy];
     
-    BaseRequest* request = [BaseRequest sendGetOtherUrl:@"http://demo123.shangxiang.com/api/app_weixinpay/index.php" parameters:@{@"order_price":orderPrice,@"product_name":productName,@"order_no":orderNo} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+    BaseRequest* request = [BaseRequest sendGetOtherUrl:@"http://app.shangxiang.com/api/app_weixinpay/index.php" parameters:@{@"order_price":orderPrice,@"product_name":productName,@"order_no":orderNo} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
         if(errorMsg)
         {
             EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);

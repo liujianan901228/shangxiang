@@ -170,6 +170,7 @@
         [sectionObject.items addObjectsFromArray:obj];
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.taleviw reloadData];
+            [weakSelf.taleviw scrollToTopAnimated:NO];
         });
     } failed:^(id error) {
         [weakSelf removeAllHUDViews:YES];

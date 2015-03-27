@@ -275,7 +275,15 @@
         [CalendarDataSource modifyCalendarRemindDo:0 WithRname:name Rdate:[NSString stringWithFormat:@"%zd-%.2zd-%.2zd",selectYear,selectMonth,selectDay] Rtime:selectRemind Crid:[self.rid intValue] success:^(id obj)
         {
                 [self alertShow:[obj objectForKey:@"msg"]];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCalendar" object:nil];
+                NSDateComponents *comp = [[NSDateComponents alloc]init];
+                [comp setMonth:selectMonth];
+                [comp setDay:selectDay];
+                [comp setYear:selectYear];
+                NSCalendar *myCal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+                NSDate *myDate1 = [myCal dateFromComponents:comp];
+                NSLog(@"myDate1 = %@",myDate1);
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCalendar" object:myDate1];
         } failed:^(ExError* error) {
             [self alertShow:error.titleForError];
         }];

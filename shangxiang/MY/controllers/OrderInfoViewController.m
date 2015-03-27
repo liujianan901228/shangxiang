@@ -85,7 +85,7 @@
     [_scrollView addSubview:templeNameLabel];
     
     
-    UILabel* attchNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 120, lineView.bottom + 10, 100, 20)];
+    UILabel* attchNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 150, lineView.bottom + 10, 100, 20)];
     [attchNameLabel setNumberOfLines:1];
     [attchNameLabel setBackgroundColor:[UIColor clearColor]];
     [attchNameLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -116,17 +116,21 @@
     [_scrollView addSubview:_wishGradeLabel];
     
     
-    UILabel* dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 120, templeNameLabel.bottom + 5, 100, 20)];
+    UILabel* dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 150, templeNameLabel.bottom + 5, 150, 20)];
     [dateLabel setNumberOfLines:1];
     [dateLabel setBackgroundColor:[UIColor clearColor]];
     [dateLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     [dateLabel setFont:[UIFont systemFontOfSize:14]];
     
-    NSMutableAttributedString* dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间: %@",self.infoObject.wishDate]];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:self.infoObject.retime];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy年MM月dd日"];
+
+    NSMutableAttributedString* dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间: %@",[formatter stringFromDate:confromTimesp]]];
     [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xbababa) range:NSRangeMake(0, 4)];
     [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSRangeMake(0, 4)];
-    [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, self.infoObject.wishDate.length)];
-    [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, self.infoObject.wishDate.length)];
+    [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, [formatter stringFromDate:confromTimesp].length)];
+    [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, [formatter stringFromDate:confromTimesp].length)];
     
     [dateLabel setAttributedText:dateString];
     [_scrollView addSubview:dateLabel];
@@ -307,6 +311,7 @@
     PayInfoViewController* viewController = [[PayInfoViewController alloc] init];
     viewController.orderId = self.infoObject.orderId;
     viewController.price = self.gradeInfo.gradePrice;
+    viewController.orderContentText = self.infoObject.wishText;
     viewController.productName = self.gradeInfo.gradeName;
     [self.navigationController pushViewController:viewController animated:YES];
 }

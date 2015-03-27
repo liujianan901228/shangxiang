@@ -13,6 +13,7 @@
 #import "OrderObject.h"
 #import "ShareView.h"
 #import "OrderInfoViewController.h"
+#import "OrderInfoObject.h"
 
 @interface ShareViewController ()<UITableViewDelegate,LookOrderDelegate>
 
@@ -124,7 +125,7 @@
 
 - (void)shareButtonClicked:(UIButton*)button
 {
-    [_shareView showInWindow:self.view.window];
+    [_shareView showInWindow:self.view.window orderText:self.orderContentText];
 }
 
 - (void)loadData
@@ -187,7 +188,7 @@
 #pragma LookDelegate
 - (void)shareText:(LookOrderViewCell*)cell
 {
-    [_shareView showInWindow:self.view.window];
+    [_shareView showInWindow:self.view.window orderText:((OrderInfoObject*)cell.object).wishText];
 }
 
 - (void)dealloc
@@ -199,7 +200,14 @@
 
 - (void)goBack
 {
-    [APPNAVGATOR turnToOrderRecordPage];
+    if(USEROPERATIONHELP.isLogin)
+    {
+        [APPNAVGATOR turnToOrderRecordPage];
+    }
+    else
+    {
+        [APPNAVGATOR calendarTurnWillingGuide];
+    }
 }
 
 @end

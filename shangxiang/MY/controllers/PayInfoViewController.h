@@ -13,5 +13,6 @@
 @property (nonatomic, copy) NSString* orderId;
 @property (nonatomic, assign) CGFloat price;
 @property (nonatomic, copy) NSString* productName;
+@property (nonatomic, copy) NSString* orderContentText;//祈福内容
 
 @end
