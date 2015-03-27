@@ -9,6 +9,9 @@
 #import "RootNavigationViewController.h"
 #import "AddBirthdayViewController.h"
 #import "editRemindViewController.h"
+#import "OrderRecordViewController.h"
+#import "ListTempleViewController.h"
+#import "DiscoverInfoViewController.h"
 
 @interface RootNavigationViewController ()
 
@@ -67,9 +70,16 @@
         [self.navigationBar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
     }
     
-    if (self.viewControllers.count)
+    if(self.viewControllers.count)
     {
-        viewController.hidesBottomBarWhenPushed = YES;
+        if([viewController isKindOfClass:[OrderRecordViewController class]] || [viewController isKindOfClass:[ListTempleViewController class]] || [viewController isKindOfClass:[DiscoverInfoViewController class]])
+        {
+            viewController.hidesBottomBarWhenPushed = NO;
+        }
+        else
+        {
+            viewController.hidesBottomBarWhenPushed = YES;
+        }
     }
     [super pushViewController:viewController animated:animated];
 }

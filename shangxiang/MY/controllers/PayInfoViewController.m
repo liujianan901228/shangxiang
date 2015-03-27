@@ -197,49 +197,49 @@
 
 - (void)weixinButtonCreateOrder
 {
-    //if(self.price == 0)
+    if(self.price == 0)
     {
         ShareViewController* shareViewController = [[ShareViewController alloc] init];
         shareViewController.orderId = self.orderId;
         shareViewController.orderContentText = self.orderContentText;
         [self.navigationController pushViewController:shareViewController animated:YES];
     }
-//    else
-//    {
-//        [self showChrysanthemumHUD:YES];
-//        __weak typeof(self) weakSelf = self;
-//        
-//        [MyRequestManager getWeixinAccessToken:[NSString stringWithFormat:@"%.2f",self.price] productName:self.productName orderNo:self.infoObject.orderLongId success:^(id obj) {
-//            [weakSelf removeAllHUDViews:YES];
-//            PayReq *request = [[PayReq alloc] init];
-//            request.openID = [obj stringForKey:@"appid" withDefault:@""];
-//            request.partnerId = KWeixinPayPartnerID;
-//            request.prepayId= [obj stringForKey:@"prepayid" withDefault:@""];
-//            request.package = [obj stringForKey:@"package" withDefault:@""];
-//            request.nonceStr= [obj stringForKey:@"noncestr" withDefault:@""];
-//            request.timeStamp= [[obj objectForKey:@"timestamp"] intValue];
-//            request.sign= [obj stringForKey:@"sign" withDefault:@""];
-//            [WXApi sendReq:request];
-//        } failed:^(id error) {
-//            [weakSelf removeAllHUDViews:YES];
-//            [weakSelf dealWithError:error];
-//        }];
-//    }
+    else
+    {
+        [self showChrysanthemumHUD:YES];
+        __weak typeof(self) weakSelf = self;
+        
+        [MyRequestManager getWeixinAccessToken:[NSString stringWithFormat:@"%.2f",self.price] productName:self.productName orderNo:self.infoObject.orderLongId success:^(id obj) {
+            [weakSelf removeAllHUDViews:YES];
+            PayReq *request = [[PayReq alloc] init];
+            request.openID = [obj stringForKey:@"appid" withDefault:@""];
+            request.partnerId = KWeixinPayPartnerID;
+            request.prepayId= [obj stringForKey:@"prepayid" withDefault:@""];
+            request.package = [obj stringForKey:@"package" withDefault:@""];
+            request.nonceStr= [obj stringForKey:@"noncestr" withDefault:@""];
+            request.timeStamp= [[obj objectForKey:@"timestamp"] intValue];
+            request.sign= [obj stringForKey:@"sign" withDefault:@""];
+            [WXApi sendReq:request];
+        } failed:^(id error) {
+            [weakSelf removeAllHUDViews:YES];
+            [weakSelf dealWithError:error];
+        }];
+    }
 }
 
 - (void)submitCreateOrder
 {
-    //if(self.price == 0)
+    if(self.price == 0)
     {
         ShareViewController* shareViewController = [[ShareViewController alloc] init];
         shareViewController.orderId = self.orderId;
         shareViewController.orderContentText = self.orderContentText;
         [self.navigationController pushViewController:shareViewController animated:YES];
     }
-//    else
-//    {
-//        [self pay];
-//    }
+    else
+    {
+        [self pay];
+    }
 }
 
 - (void)pay

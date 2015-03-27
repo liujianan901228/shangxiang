@@ -61,7 +61,7 @@
     [self.view addSubview:selectView];
     
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, selectView.bottom, self.view.width, self.view.height - selectView.bottom - 64)];
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, selectView.bottom, self.view.width, self.view.height - selectView.bottom - 64 - 49)];
     [_scrollView setBackgroundColor:[UIColor clearColor]];
     [_scrollView setAlwaysBounceVertical:NO];
     [_scrollView setAlwaysBounceHorizontal:NO];
