@@ -104,7 +104,6 @@
 
 - (void)sendWeiboContent:(NSString*)text
 {
-    AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
     
     WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
     authRequest.redirectURI = kRedirectURI;
