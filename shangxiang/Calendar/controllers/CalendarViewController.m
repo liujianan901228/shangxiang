@@ -5,6 +5,7 @@
 #import "editRemindViewController.h"
 #import "UIImageView+WebCache.h"
 #import "Reachability.h"
+#import "JTCalendarMonthWeekDaysView.h"
 
 @interface CalendarViewController ()
 {
@@ -171,6 +172,12 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRemindView)];
     [label addGestureRecognizer:tap];
     [self reloadCalendar];
+    
+    JTCalendarMonthWeekDaysView* weekdaysView = [[JTCalendarMonthWeekDaysView alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 30)];
+    weekdaysView.backgroundColor = self.view.backgroundColor;
+    [JTCalendarMonthWeekDaysView beforeReloadAppearance];
+    [weekdaysView reloadAppearance];
+    [self.view addSubview:weekdaysView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
