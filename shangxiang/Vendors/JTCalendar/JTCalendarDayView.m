@@ -354,10 +354,10 @@ static NSString *kJTCalendarDaySelected = @"kJTCalendarDaySelected";
         dotView.hidden = NO;
         dotView.remindStr = [[NSString alloc] initWithString:remindStr];
         
-        NSDate *now = [NSDate date];
-        if ((self.date.year == now.year) && (self.date.month == now.month) && (self.date.day == now.day)) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectHoliday" object:dotView.remindStr];
-        }
+//        NSDate *now = [NSDate date];
+//        if ((self.date.year == now.year) && (self.date.month == now.month) && (self.date.day == now.day)) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectHoliday" object:dotView.remindStr];
+//        }
         
         
     }
@@ -371,10 +371,10 @@ static NSString *kJTCalendarDaySelected = @"kJTCalendarDaySelected";
         textLabelSmall.text = str;
         textLabelSmall.textColor = [UIColor redColor];
         
-        NSDate *now = [NSDate date];
-        if ((self.date.year == now.year) && (self.date.month == now.month) && (self.date.day == now.day)) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectHoliday" object:str];
-        }
+//        NSDate *now = [NSDate date];
+//        if ((self.date.year == now.year) && (self.date.month == now.month) && (self.date.day == now.day)) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"selectHoliday" object:str];
+//        }
     }
     
     BOOL selected = [self isSameDate:[self.calendarManager currentDateSelected]];

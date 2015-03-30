@@ -50,7 +50,7 @@
         self.doBlessings = [[aDecoder decodeObjectForKey:@"receivedBlessings"] integerValue];
         self.mobile = [aDecoder decodeObjectForKey:@"mobile"];
         self.jregid = [aDecoder decodeObjectForKey:@"jregid"];
-        self.isRemind = [aDecoder decodeObjectForKey:@"isRemind"];
+        self.isRemind = [[aDecoder decodeObjectForKey:@"isRemind"] boolValue];
     }
     return self;
 }

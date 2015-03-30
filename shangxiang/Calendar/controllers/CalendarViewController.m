@@ -267,7 +267,6 @@
 
 - (NSString *)calendarHaveEvent:(JTCalendar *)calendar date:(NSDate *)date WithDay:(NSInteger)day WithMonth:(NSInteger)month
 {
-    NSLog(@"%@",date);
     return [LUtility getBuildListName:month day:day];
 }
 
@@ -323,7 +322,6 @@
 
 - (void)transitionExample:(UISwipeGestureRecognizer *)ges
 {
-
     if ((ges.direction == UISwipeGestureRecognizerDirectionUp) && (self.calendar.calendarAppearance.isWeekMode)) {
         return;
     }
@@ -361,7 +359,20 @@
                      }
                      completion:^(BOOL finished) {
                          [self.calendar reloadAppearance];
-                         
+                         if(self.calendar.currentDateSelected)
+                         {
+                             [self.calendar setCurrentDate:self.calendar.currentDateSelected];
+                         }
+                         else
+                         {
+                             NSDateComponents *dayComponent = [NSDateComponents new];
+                             dayComponent.month = self.calendar.currentDate.month;
+                             dayComponent.year = self.calendar.currentDate.year;
+                             dayComponent.day = 1;
+                             NSCalendar *myCal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+                             NSDate *myDate1 = [myCal dateFromComponents:dayComponent];
+                             [self.calendar setCurrentDate:myDate1];
+                         }
                          [UIView animateWithDuration:.25
                                           animations:^{
                                               self.calendarContentView.layer.opacity = 1;
@@ -369,6 +380,7 @@
                                               
                                           }];
                      }];
+    [self unSelectHoliday];
 }
 
 //- (void)setDetailAndBgFrame:(BOOL)isWeekMode
