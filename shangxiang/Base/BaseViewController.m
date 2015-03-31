@@ -38,11 +38,6 @@
     self.navigationController.navigationBarHidden = NO;
     
 
-    CGFloat errorHeight = self.view.height - 64;
-    if(![LUtility isHigherIOS7]) {
-        errorHeight = self.view.height - 44;
-    }
-
     // 返回按钮
     NSInteger x = [self.navigationController.viewControllers count];
     
