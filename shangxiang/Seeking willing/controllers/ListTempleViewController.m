@@ -26,7 +26,7 @@
 {
     if(!_tableView)
     {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - NaiviagationHeight - TarbarHeight)];
         [_tableView setBackgroundColor:[UIColor clearColor]];
         _listTempleDataSource = [[ListTempleViewDataSource alloc] init];
         _listTempleDataSource.cellDelegate = self;

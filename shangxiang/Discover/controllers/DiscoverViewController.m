@@ -57,6 +57,8 @@
             weakSelf.selectIndex = index;
             [weakSelf->_buttonTitle setTitle:object.templeName forState:UIControlStateNormal];
             weakSelf->_tid = object.templeId;
+            weakSelf->_currentPage = 1;
+            weakSelf->_reloading = NO;
             [weakSelf requestRefreshData];
             [weakSelf.popView closePopView];
         }];

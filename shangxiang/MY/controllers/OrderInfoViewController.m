@@ -200,7 +200,7 @@
             }
             LFFGPhotoAlbumView *albumView = [LFFGPhotoAlbumView new];
             albumView.pageInfos = infos;
-            [albumView showFromImageView:imageView toContainer:weakSelf.view];
+            [albumView showFromImageView:imageView toContainer:weakSelf.view.window];
             NSLog(@"%@ 啦啦啦啦啦了 ",picObject.picSmallUrl);
         };
         [_viewHallThumb setBackgroundColor:[UIColor clearColor]];
@@ -318,7 +318,14 @@
 
 - (void)goBack
 {
-    [APPNAVGATOR turnToOrderRecordPage];
+    if(USEROPERATIONHELP.isLogin)
+    {
+        [APPNAVGATOR turnToOrderRecordPage];
+    }
+    else
+    {
+        [APPNAVGATOR calendarTurnWillingGuide];
+    }
 }
 
 @end

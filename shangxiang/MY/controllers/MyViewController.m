@@ -21,6 +21,8 @@
     UIButton* buttonDiscoverTotalToother;
 }
 
+@property (nonatomic, strong) UIButton* closebutton;
+
 @end
 
 @implementation MyViewController
@@ -330,15 +332,15 @@
     labelAbout.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
     [buttonAbout addSubview:labelAbout];
     
-//    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(-1, buttonAbout.bottom, self.view.width + 2, 44)];
-//    button.backgroundColor = UIColorFromRGB(COLOR_BG_HIGHLIGHT);
-//    button.layer.borderColor = UIColorFromRGB(COLOR_LINE_NORMAL).CGColor;
-//    button.layer.borderWidth = 0.5;
-//    [button setTitle:@"退出登录" forState:UIControlStateNormal];
-//    [button setTitleColor:UIColorFromRGB(COLOR_FONT_NORMAL) forState:UIControlStateNormal];
-//    [button setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
-//    [button addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
-//    [_contentScollView addSubview:button];
+    _closebutton = [[UIButton alloc] initWithFrame:CGRectMake(-1, buttonAbout.bottom, self.view.width + 2, 44)];
+    _closebutton.backgroundColor = UIColorFromRGB(COLOR_BG_HIGHLIGHT);
+    _closebutton.layer.borderColor = UIColorFromRGB(COLOR_LINE_NORMAL).CGColor;
+    _closebutton.layer.borderWidth = 0.5;
+    [_closebutton setTitle:@"退出登录" forState:UIControlStateNormal];
+    [_closebutton setTitleColor:UIColorFromRGB(COLOR_FONT_NORMAL) forState:UIControlStateNormal];
+    [_closebutton setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
+    [_closebutton addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_contentScollView addSubview:_closebutton];
     
     _contentScollView.contentSize = CGSizeMake(fltViewWidth, fltBegin + fltCellHeight);
     _contentScollView.contentOffset = CGPointMake(0, 0);
@@ -359,9 +361,11 @@
             [weakSelf updateUserInfo:nil];
         } failed:^(id error) {
         }];
+        if(_closebutton) _closebutton.hidden = NO;
     }
     else
     {
+        if(_closebutton) _closebutton.hidden = YES;
         [self updateUserInfo:nil];
     }
 }
@@ -554,6 +558,7 @@
 {
     if(USEROPERATIONHELP.isLogin)
     {
+        if(_closebutton) _closebutton.hidden = NO;
         _labelUsername.text = [LUtility getShowName];
         
         [_viewAvatar sd_setImageWithURL:[NSURL URLWithString:USEROPERATIONHELP.currentUser.headUrl] placeholderImage:[UIImage imageForKey:@"avatar_null"]];
@@ -575,6 +580,7 @@
     }
     else
     {
+        if(_closebutton) _closebutton.hidden = YES;
         _labelUsername.text = @"登录";
         [_viewAvatar setImage:[UIImage imageForKey:@"avatar_null"]];
         NSMutableAttributedString* attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"我的加持"]];

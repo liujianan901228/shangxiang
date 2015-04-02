@@ -47,11 +47,8 @@
     [self.homeTabBarController setSelectedIndex:0];
     self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
 
-    if(preIndex != 0)
-    {
-        UINavigationController* threeNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:preIndex];
-        [threeNavigationController popToRootViewControllerAnimated:NO];
-    }
+    UINavigationController* threeNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:preIndex];
+    [threeNavigationController popToRootViewControllerAnimated:NO];
 }
 
 

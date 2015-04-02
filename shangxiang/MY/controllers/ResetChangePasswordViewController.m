@@ -11,7 +11,7 @@
 
 @interface ResetChangePasswordViewController ()
 {
-    UILabel* _mobileDescription;
+    //UILabel* _mobileDescription;
     UITextField* _mobileTextFiled;
 }
 @end
@@ -25,20 +25,20 @@
     self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
     [self setupForDismissKeyboard];
     
-    _mobileDescription = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 20, 50)];
-    _mobileDescription.text = @"请输入你的密码";
-    _mobileDescription.font = [UIFont systemFontOfSize:15];
-    _mobileDescription.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
-    [self.view addSubview:_mobileDescription];
+//    _mobileDescription = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 20, 50)];
+//    _mobileDescription.text = @"请输入你的密码";
+//    _mobileDescription.font = [UIFont systemFontOfSize:15];
+//    _mobileDescription.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
+//    [self.view addSubview:_mobileDescription];
     
-    UIView* mobileSuperView = [[UIView alloc] initWithFrame:CGRectMake(0, _mobileDescription.bottom, self.view.width, 50)];
+    UIView* mobileSuperView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.view.width, 50)];
     [mobileSuperView setBackgroundColor:[UIColor clearColor]];
     [mobileSuperView.layer setBorderWidth:0.5];
     [mobileSuperView.layer setBorderColor:UIColorFromRGB(COLOR_LINE_NORMAL).CGColor];
     [self.view addSubview:mobileSuperView];
     
     _mobileTextFiled = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 20, 50)];
-    _mobileTextFiled.keyboardType = UIKeyboardTypeASCIICapable;
+    _mobileTextFiled.keyboardType = UIKeyboardTypeNumberPad;
     _mobileTextFiled.autocapitalizationType = NO;
     _mobileTextFiled.returnKeyType = UIReturnKeyDone;
     _mobileTextFiled.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -53,9 +53,10 @@
     UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(20, mobileSuperView.bottom + 20, self.view.width - 40, 40)];
     [buttonSubmitCreateOrder setTitle:@"下一步" forState:UIControlStateNormal];
     [buttonSubmitCreateOrder.layer setCornerRadius:3];
+    [buttonSubmitCreateOrder setClipsToBounds:YES];
     [buttonSubmitCreateOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)];
-    [buttonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_PRESSED)] forState:UIControlStateHighlighted];
+    [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
+    [buttonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
     [buttonSubmitCreateOrder addTarget:self action:@selector(submitCreateOrder) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonSubmitCreateOrder];
 }

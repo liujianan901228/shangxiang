@@ -17,6 +17,7 @@
     UISegmentedControl* _segSwitch;
     UIScrollView* _scrollView;
     NSInteger _requestCount;
+    
 }
 
 @property (nonatomic,strong) UITableView* willTableView;
@@ -61,7 +62,7 @@
     [self.view addSubview:selectView];
     
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, selectView.bottom, self.view.width, self.view.height - selectView.bottom - 64 - 49)];
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, selectView.bottom, self.view.width, self.view.height - selectView.bottom - NaiviagationHeight - TarbarHeight)];
     [_scrollView setBackgroundColor:[UIColor clearColor]];
     [_scrollView setAlwaysBounceVertical:NO];
     [_scrollView setAlwaysBounceHorizontal:NO];

@@ -1925,7 +1925,7 @@
 				TargetAttributes = {
 					639A83AB1A60B2D2001932AE = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 88NL69Q6G7;
+						DevelopmentTeam = F7W524R44R;
 					};
 				};
 			};
@@ -2203,8 +2203,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: chen liming (U82QXRPTYK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chen liming (U82QXRPTYK)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2224,7 +2224,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "d0f82c62-fea7-4f9a-9fac-b12a427e3208";
+				PROVISIONING_PROFILE = "7440e388-7db1-4d6a-b342-ff933b739ceb";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2246,8 +2246,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: chen liming (U82QXRPTYK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chen liming (U82QXRPTYK)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2260,7 +2260,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "d0f82c62-fea7-4f9a-9fac-b12a427e3208";
+				PROVISIONING_PROFILE = "7440e388-7db1-4d6a-b342-ff933b739ceb";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2272,7 +2272,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2299,7 +2299,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d0f82c62-fea7-4f9a-9fac-b12a427e3208";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};
@@ -2311,7 +2311,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2338,7 +2338,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d0f82c62-fea7-4f9a-9fac-b12a427e3208";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};

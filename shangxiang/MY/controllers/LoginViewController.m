@@ -156,8 +156,10 @@
     UIButton* buttonSubmitLogin = [[UIButton alloc] initWithFrame:frame];
     [buttonSubmitLogin setTitle:@"登录" forState:UIControlStateNormal];
     [buttonSubmitLogin.layer setCornerRadius:3];
+    [buttonSubmitLogin setClipsToBounds:YES];
     [buttonSubmitLogin setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [buttonSubmitLogin setBackgroundColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT)];
+    [buttonSubmitLogin setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
+    [buttonSubmitLogin setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
     [buttonSubmitLogin addTarget:self action:@selector(submitLogin) forControlEvents:UIControlEventTouchUpInside];
     [viewMain addSubview:buttonSubmitLogin];
     

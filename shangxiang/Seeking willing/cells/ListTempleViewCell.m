@@ -94,7 +94,14 @@
     [self.viewHall sd_setImageWithURL:[NSURL URLWithString:templeObject.templeSmallUrl] placeholderImage:[UIImage imageForKey:@"img_not_available"]];
     [self.viewMaster sd_setImageWithURL:[NSURL URLWithString:templeObject.attacheSmallUrl] placeholderImage:[UIImage imageForKey:@"img_not_available"]];
     [self.labelHall setText:[NSString stringWithFormat:@"%@ (%@)",templeObject.templeName,templeObject.templeProvince]];
-    [self.labelMaster setText:templeObject.attacheName];
+    if(templeObject.buddhistName)
+    {
+        [self.labelMaster setText:templeObject.buddhistName];
+    }
+    else
+    {
+        [self.labelMaster setText:templeObject.attacheName];
+    }
 }
 
 + (CGFloat)tableView:(UITableView*)tableView rowHeightForObject:(id)object

@@ -115,7 +115,14 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     UILabel* labelMaster = [[UILabel alloc] initWithFrame:CGRectMake(viewMaster.right + 10, labelHall.bottom + 3, 150, 10)];
     [labelMaster setFont:[UIFont systemFontOfSize:10.0f]];
     [labelMaster setNumberOfLines:1];
-    [labelMaster setText:_templeObject.buddhistName];
+    if(_templeObject.buddhistName)
+    {
+        [labelMaster setText:_templeObject.buddhistName];
+    }
+    else
+    {
+        [labelMaster setText:_templeObject.attacheName];
+    }
     [labelMaster setTextColor:UIColorFromRGB(COLOR_FONT_NORMAL)];
     [labelMaster setLineBreakMode:NSLineBreakByTruncatingTail];
     [_scrollView addSubview:labelMaster];
@@ -151,7 +158,14 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     
     _commonTextFiled = [[CommonTextFiled alloc] initWithFrame:CGRectMake(20, labelContentTitle.bottom + 5, self.view.width - 40, 80)];
     [_commonTextFiled setMaxInputCount:100];
-    [_commonTextFiled setTextPlaceHolder:@"请输入求愿内容"];
+    if(self.orderContentText)
+    {
+        [_commonTextFiled insertMessage:self.orderContentText];
+    }
+    else
+    {
+        [_commonTextFiled setTextPlaceHolder:@"请输入求愿内容"];
+    }
     [_scrollView addSubview:_commonTextFiled];
     
     UILabel* labelOtherDesirer = [[UILabel alloc] initWithFrame:CGRectMake(20, _commonTextFiled.bottom + 10, 100, 20)];

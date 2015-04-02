@@ -29,7 +29,7 @@
     self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
     self.title = @"查看祈福";
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - NaiviagationHeight)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - NaiviagationHeight - TarbarHeight)];
     [_tableView setBackgroundColor:[UIColor clearColor]];
     _discoverInfoDataSouce = [[DiscoverInfoDataSource alloc] init];
     _tableView.dataSource = _discoverInfoDataSouce;
@@ -78,12 +78,6 @@
 
 - (void)buttonClicked:(UIButton*)button
 {
-    if(!USEROPERATIONHELP.isLogin)
-    {
-        [APPNAVGATOR turnToLoginGuide];
-        return;
-    }
-    
     [self showChrysanthemumHUD:YES];
     __weak typeof(self) weakSelf = self;
     
@@ -98,8 +92,10 @@
         templeObject.attacheName = infoObject.builddhistName;
         templeObject.attacheId = infoObject.builddhistId;
         templeObject.attacheSmallUrl = infoObject.builddHistThumb;
+        templeObject.buddhistName = infoObject.builddhistName;
         CreateOrderViewController* viewController = [[CreateOrderViewController alloc] init];
         viewController.templeObject = templeObject;
+        viewController.orderContentText = infoObject.wishText;
         viewController.wishType = [LUtility getWishType:infoObject.wishType];
         [weakSelf.navigationController pushViewController:viewController animated:YES];
     } failed:^(id error) {

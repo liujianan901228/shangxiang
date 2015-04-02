@@ -40,6 +40,7 @@
     
     _fieldUsername = [[UITextField alloc] initWithFrame:CGRectMake(labelUsername.right, 0, cell1.width - labelUsername.right, 44)];
     _fieldUsername.autocapitalizationType = NO;
+    _fieldUsername.keyboardType = UIKeyboardTypeNumberPad;
     _fieldUsername.returnKeyType = UIReturnKeyNext;
     _fieldUsername.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _fieldUsername.leftViewMode = UITextFieldViewModeAlways;
@@ -79,9 +80,10 @@
     UIButton* buttonSubmitRegister = [[UIButton alloc] initWithFrame:CGRectMake(20, cell2.bottom + 20, self.view.width - 20*2, 40)];
     [buttonSubmitRegister setTitle:@"立即注册" forState:UIControlStateNormal];
     [buttonSubmitRegister.layer setCornerRadius:3];
+    [buttonSubmitRegister setClipsToBounds:YES];
     [buttonSubmitRegister setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [buttonSubmitRegister setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)];
-    [buttonSubmitRegister setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_PRESSED)] forState:UIControlStateHighlighted];
+    [buttonSubmitRegister setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
+    [buttonSubmitRegister setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
     [buttonSubmitRegister addTarget:self action:@selector(submitRegister) forControlEvents:UIControlEventTouchUpInside];
   
     [self.view addSubview:cell1];

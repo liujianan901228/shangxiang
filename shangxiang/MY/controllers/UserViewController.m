@@ -55,7 +55,7 @@
     self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
     [self setupDismissKeyboard];
     
-    UIBarButtonItem *rightItem = [UIBarButtonItem rsBarButtonItemWithTitle:@"退出登录" image:nil heightLightImage:nil disableImage:nil target:self action:@selector(closeButtonclicked)];
+    UIBarButtonItem *rightItem = [UIBarButtonItem rsBarButtonItemWithTitle:@"保存" image:nil heightLightImage:nil disableImage:nil target:self action:nil];
     [self setRightBarButtonItem:rightItem];
     
     viewMain = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
@@ -409,7 +409,7 @@
 
             LFFGPhotoAlbumView *albumView = [LFFGPhotoAlbumView new];
             albumView.pageInfos = infos;
-            [albumView showFromImageView:_viewAvatar toContainer:self.view];
+            [albumView showFromImageView:_viewAvatar toContainer:self.view.window];
         }
     }
     else if(actionSheet.tag == TAG_ACTIONSHEET_Gender)
@@ -429,14 +429,14 @@
             }];
         }
     }
-    else if(actionSheet.tag == TAG_ACTIONSHEET && buttonIndex == 0)
-    {
-        USEROPERATIONHELP.currentUser.isLogined = NO;
-        [UserGlobalSetting setCurrentUser:nil];
-        USEROPERATIONHELP.currentUser = nil;
-        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:AppUserLogoutNotification object:nil];
-        [self goBack];
-    }
+//    else if(actionSheet.tag == TAG_ACTIONSHEET && buttonIndex == 0)
+//    {
+//        USEROPERATIONHELP.currentUser.isLogined = NO;
+//        [UserGlobalSetting setCurrentUser:nil];
+//        USEROPERATIONHELP.currentUser = nil;
+//        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:AppUserLogoutNotification object:nil];
+//        [self goBack];
+//    }
 }
 
 - (void)setupPickerView
@@ -783,12 +783,12 @@
     [self.view endEditing:YES];
 }
 
-- (void)closeButtonclicked
-{
-    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];
-    actionsheet.tag = TAG_ACTIONSHEET;
-    [actionsheet showInView:APPDELEGATE.window];
-}
+//- (void)closeButtonclicked
+//{
+//    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];
+//    actionsheet.tag = TAG_ACTIONSHEET;
+//    [actionsheet showInView:APPDELEGATE.window];
+//}
 
 
 @end
