@@ -11,6 +11,7 @@
 #import "OrderRecordViewController.h"
 #import "MyViewController.h"
 #import "Reachability.h"
+#import "LoginRequestManager.h"
 
 @interface AppNavigator()<UITabBarControllerDelegate>
 
@@ -63,11 +64,22 @@
         }
         return;
     }
-    LoginViewController* loginViewController = [[LoginViewController alloc] init];
-    RootNavigationViewController *navigationController = [[RootNavigationViewController alloc] initWithRootViewController:loginViewController];
-    [self.currentContentNav presentViewController:navigationController animated:YES completion:^{
-        
+    [LoginRequestManager sendGetAllowThird:^(id obj) {
+        LoginViewController* loginViewController = [[LoginViewController alloc] init];
+        loginViewController.isShowThird = ([[obj objectForKey:@"allow"] integerValue] == 1) ? YES : NO;
+        RootNavigationViewController *navigationController = [[RootNavigationViewController alloc] initWithRootViewController:loginViewController];
+        [self.currentContentNav presentViewController:navigationController animated:YES completion:^{
+            
+        }];
+    } failed:^(id error) {
+        LoginViewController* loginViewController = [[LoginViewController alloc] init];
+        RootNavigationViewController *navigationController = [[RootNavigationViewController alloc] initWithRootViewController:loginViewController];
+        [self.currentContentNav presentViewController:navigationController animated:YES completion:^{
+            
+        }];
     }];
+    
+    
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController

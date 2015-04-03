@@ -193,4 +193,24 @@
 }
 
 
+//判断是否允许第三方登陆
++(BaseRequest*)sendGetAllowThird:(RequestSuccessBlock)successBlock
+                        failed:(RequestErrorBlock)errorBlock
+{
+    RequestSuccessBlock successBlockCopy = [successBlock copy];
+    RequestErrorBlock errorBlockCopy = [errorBlock copy];
+    
+    BaseRequest* request = [BaseRequest sendGetRequestWithMethod:@"isallowotherlogin.php" parameters:nil CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+        if(errorMsg)
+        {
+            EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
+        }
+        else
+        {
+            EXECUTE_BLOCK_SAFELY(successBlockCopy,info);
+        }
+    }];
+    return request;
+}
+
 @end

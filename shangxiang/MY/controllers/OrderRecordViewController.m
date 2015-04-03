@@ -16,6 +16,8 @@
 }
 
 @property (nonatomic, strong) OrderListViewController *currentViewController;//当前子视图控制器
+@property (nonatomic, strong) OrderListViewController* viewController1;
+@property (nonatomic, strong) OrderListViewController* viewController2;
 
 @end
 
@@ -54,14 +56,14 @@
     [self.view addSubview:selectView];
 
     
-    OrderListViewController* viewController1 = [[OrderListViewController alloc] init];
-    viewController1.isWill = YES;
-    [self addChildViewController:viewController1];
-    OrderListViewController* viewController2 = [[OrderListViewController alloc] init];
-    viewController2.isWill = NO;
-    [self addChildViewController:viewController2];
+    _viewController1 = [[OrderListViewController alloc] init];
+    _viewController1.isWill = YES;
+    [self addChildViewController:_viewController1];
+    _viewController2 = [[OrderListViewController alloc] init];
+    _viewController2.isWill = NO;
+    [self addChildViewController:_viewController2];
     
-    _currentViewController = viewController1;
+    _currentViewController = _viewController1;
     _currentViewController.view.frame = CGRectMake(0, 50, self.view.width, self.view.height - 50);
     [self.view  addSubview:_currentViewController.view];
     
@@ -110,7 +112,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if(_currentViewController) [_currentViewController refresh];
+    if(_viewController1 && _viewController1.isViewLoaded) [_viewController1 refresh];
+    if(_viewController2 && _viewController2.isViewLoaded) [_viewController2 refresh];
 }
 
 

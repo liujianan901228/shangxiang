@@ -48,6 +48,12 @@
     }
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ViewControllerDismissNotification object:self];
+}
+
 
 -(void)setBackBarButtonItem
 {

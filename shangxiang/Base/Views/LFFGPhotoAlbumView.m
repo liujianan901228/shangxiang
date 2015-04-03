@@ -157,11 +157,13 @@
     [self addSubview:_scrollView];
     [self addSubview:_pager];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismiss) name:ViewControllerDismissNotification object:nil];
+    
     return self;
 }
 
 - (void)dealloc {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)showFromImageView:(UIImageView *)fromView toContainer:(UIView *)container {
