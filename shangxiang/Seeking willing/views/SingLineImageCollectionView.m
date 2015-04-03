@@ -26,7 +26,7 @@
         [_followLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
         [_followLayout setMinimumInteritemSpacing:0];
         [_followLayout setMinimumLineSpacing:10];
-        [_followLayout setItemSize:CGSizeMake(85, 85)];
+        [_followLayout setItemSize:CGSizeMake(72, 72)];
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height) collectionViewLayout:_followLayout];
         [_collectionView setBackgroundColor:[UIColor clearColor]];

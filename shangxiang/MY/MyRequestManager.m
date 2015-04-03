@@ -23,7 +23,7 @@
     RequestSuccessBlock successBlockCopy = [successBlock copy];
     RequestErrorBlock errorBlockCopy = [errorBlock copy];
     
-    BaseRequest* request = [BaseRequest sendGetRequestWithMethod:@"getmemberorderlist.php" parameters:@{@"mid":mid,@"also":also} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+    BaseRequest* request = [BaseRequest sendGetRequestWithMethod:@"getmemberorderlist.php" parameters:@{@"mid":mid,@"also":also,@"p":@(page),@"pz":@(pageCount)} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
         if(errorMsg)
         {
             EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);

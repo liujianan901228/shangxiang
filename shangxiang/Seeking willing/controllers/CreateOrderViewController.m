@@ -64,7 +64,7 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     // Do any additional setup after loading the view.
     
     self.title = @"填写订单";
-    self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
+    self.view.backgroundColor = RGBCOLOR(245, 245, 245);
     [self setupForDismissKeyboard];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
@@ -129,7 +129,7 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     
     UIButton* wishTypeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 60 - 20, 40, 60, 30)];
     [wishTypeButton setTitleColor:UIColorFromRGB(0xa9a9a9) forState:UIControlStateNormal];
-    [wishTypeButton setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_GRAY)];
+    [wishTypeButton setBackgroundColor:RGBCOLOR(235, 235, 235)];
     [wishTypeButton setTitle:[LUtility getWishTitle:self.wishType] forState:UIControlStateNormal];
     [wishTypeButton setEnabled:NO];
     [wishTypeButton.layer setCornerRadius:3];

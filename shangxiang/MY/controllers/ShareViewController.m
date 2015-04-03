@@ -228,6 +228,11 @@
     return [cls tableView:tableView rowHeightForObject:object];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_shareView showInWindow:self.view.window orderText:self.orderContentText];
+}
+
 #pragma LookDelegate
 - (void)shareText:(LookOrderViewCell*)cell
 {

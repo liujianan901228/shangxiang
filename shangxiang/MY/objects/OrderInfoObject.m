@@ -40,6 +40,15 @@
         _wishGrade = [dic stringForKey:@"wishgrade" withDefault:@""];
         _builddhistId = [dic stringForKey:@"aid" withDefault:@""];
         _expectBuddhadate = [dic stringForKey:@"expect_buddhadate" withDefault:@""];
+        NSString*  hy_orderid = [dic stringForKey:@"hy_orderid" withDefault:@"0"];
+        if([hy_orderid isEqualToString:@"0"])
+        {
+            self.isRedeem = NO;
+        }
+        else
+        {
+            self.isRedeem = YES;
+        }
     }
     return self;
 }

@@ -44,7 +44,7 @@
     UIButton* friendButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.contentView.width, 45)];
     [friendButton setTitle:@"分享到朋友圈" forState:UIControlStateNormal];
     [friendButton setTitleColor:UIColorFromRGB(COLOR_LINE_NORMAL) forState:UIControlStateNormal];
-    [friendButton setImage:[UIImage imageForKey:@"wx_logo_friend"] forState:UIControlStateNormal];
+    [friendButton setImage:[UIImage imageForKey:@"wx_logo_single"] forState:UIControlStateNormal];
     [friendButton setImageEdgeInsets:UIEdgeInsetsMake((45 - 35)/2, 15, (45 - 35)/2, 0)];
     [friendButton setTitleEdgeInsets:UIEdgeInsetsMake(14, 20, 10, 0)];
     [friendButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
@@ -59,16 +59,16 @@
     [self.contentView addSubview:lineView];
     
     UIButton* singButton = [[UIButton alloc] initWithFrame:CGRectMake(0, lineView.bottom, self.contentView.width, 45)];
-    [singButton setTitle:@"分享到微信好友" forState:UIControlStateNormal];
+    [singButton setTitle:@"分享到微博" forState:UIControlStateNormal];
     [singButton setTitleColor:UIColorFromRGB(COLOR_LINE_NORMAL) forState:UIControlStateNormal];
-    [singButton setImage:[UIImage imageForKey:@"wx_logo_single"] forState:UIControlStateNormal];
+    [singButton setImage:[UIImage imageForKey:@"shareto_weibo"] forState:UIControlStateNormal];
     [singButton setImageEdgeInsets:UIEdgeInsetsMake((45 - 35)/2, 15, (45 - 35)/2, 0)];
     [singButton setTitleEdgeInsets:UIEdgeInsetsMake(14, 20, 10, 0)];
     [singButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [singButton setContentVerticalAlignment:UIControlContentVerticalAlignmentTop];
     [singButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [singButton setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
-    [singButton addTarget:self action:@selector(shareSingleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [singButton addTarget:self action:@selector(shareWeiboButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:singButton];
     
     
@@ -102,10 +102,10 @@
     [self.contentView addSubview:lineView];
     
     
-    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(15, lineView.bottom + 2.5, 25, 25)];
-    [button setImage:[UIImage imageForKey:@"shareto_weibo"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(shareWeiboButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:button];
+//    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(15, lineView.bottom + 2.5, 25, 25)];
+//    [button setImage:[UIImage imageForKey:@"shareto_weibo"] forState:UIControlStateNormal];
+//    [button addTarget:self action:@selector(shareWeiboButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.contentView addSubview:button];
     
     UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close)];
     [self addGestureRecognizer:gesture];

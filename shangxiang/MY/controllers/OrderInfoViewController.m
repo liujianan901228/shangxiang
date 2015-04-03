@@ -177,7 +177,7 @@
         [recordLabel setTextColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT)];
         [recordLabel setText:@"代上香祈福记录"];
         [_scrollView addSubview:recordLabel];
-        _viewHallThumb = [[SingLineImageCollectionView alloc] initWithFrame:CGRectMake(20, recordLabel.bottom + 20, self.view.width - 40, 85)];
+        _viewHallThumb = [[SingLineImageCollectionView alloc] initWithFrame:CGRectMake(20, recordLabel.bottom + 20, self.view.width - 40, 72)];
         
         __weak typeof(self) weakSelf = self;
         _viewHallThumb.actionBlock = ^(TemplePictureObject* picObject,UIImageView* imageView)
@@ -201,7 +201,6 @@
             LFFGPhotoAlbumView *albumView = [LFFGPhotoAlbumView new];
             albumView.pageInfos = infos;
             [albumView showFromImageView:imageView toContainer:weakSelf.view.window];
-            NSLog(@"%@ 啦啦啦啦啦了 ",picObject.picSmallUrl);
         };
         [_viewHallThumb setBackgroundColor:[UIColor clearColor]];
         [_viewHallThumb setObject:self.infoObject.images];

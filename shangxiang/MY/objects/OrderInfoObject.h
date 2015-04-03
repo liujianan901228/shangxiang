@@ -36,7 +36,7 @@
 @property (nonatomic, copy) NSString* builddhistId;//上香师Id
 @property (nonatomic, copy) NSString* expectBuddhadate;//回执时间
 @property (nonatomic, strong) NSMutableArray* images;//图片列表
-
+@property (nonatomic, assign) BOOL isRedeem;//是否还愿
 
 - (instancetype)initWithDic:(NSDictionary*)dic;
 

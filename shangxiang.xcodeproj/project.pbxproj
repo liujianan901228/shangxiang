@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		10A9A4551A7FDDF400E23FA6 /* editRemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A9A4541A7FDDF400E23FA6 /* editRemindViewController.m */; };
+		5A1A6D2A1ACE52B600274766 /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1A6D291ACE52B600274766 /* OrderListViewController.m */; };
 		5A516A851A888D97006CC739 /* NotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A516A841A888D97006CC739 /* NotificationObject.m */; };
 		5A516A881A888ECA006CC739 /* NotificationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A516A871A888ECA006CC739 /* NotificationDataSource.m */; };
 		5A516A8B1A888EF6006CC739 /* NotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A516A8A1A888EF6006CC739 /* NotificationViewController.m */; };
@@ -251,6 +252,8 @@
 		10A9A4531A7FDDF400E23FA6 /* editRemindViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editRemindViewController.h; sourceTree = "<group>"; };
 		10A9A4541A7FDDF400E23FA6 /* editRemindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = editRemindViewController.m; sourceTree = "<group>"; };
 		505F4EE42A783425AF96BCA6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5A1A6D281ACE52B600274766 /* OrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListViewController.h; sourceTree = "<group>"; };
+		5A1A6D291ACE52B600274766 /* OrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListViewController.m; sourceTree = "<group>"; };
 		5A516A831A888D97006CC739 /* NotificationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationObject.h; sourceTree = "<group>"; };
 		5A516A841A888D97006CC739 /* NotificationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationObject.m; sourceTree = "<group>"; };
 		5A516A861A888ECA006CC739 /* NotificationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationDataSource.h; sourceTree = "<group>"; };
@@ -1030,6 +1033,8 @@
 				5ACE41261A678FC700BB312E /* MyViewController.m */,
 				5ACE41271A678FC700BB312E /* OrderRecordViewController.h */,
 				5ACE41281A678FC700BB312E /* OrderRecordViewController.m */,
+				5A1A6D281ACE52B600274766 /* OrderListViewController.h */,
+				5A1A6D291ACE52B600274766 /* OrderListViewController.m */,
 				5ACE41291A678FC700BB312E /* RegisterViewController.h */,
 				5ACE412A1A678FC700BB312E /* RegisterViewController.m */,
 				5ACE412B1A678FC700BB312E /* ResetPasswordViewController.h */,
@@ -2176,6 +2181,7 @@
 				639A86AC1A60B5D7001932AE /* SDWebImageManager.m in Sources */,
 				639A86961A60B5D7001932AE /* GifImage.m in Sources */,
 				63DCB6D81AAAACD500271D4A /* UserHomeTownObject.m in Sources */,
+				5A1A6D2A1ACE52B600274766 /* OrderListViewController.m in Sources */,
 				63DCB6E11AAAACD500271D4A /* LoadErrorView.m in Sources */,
 				5ACDA3CC1A80753200DDAFA5 /* HomeTarItem.m in Sources */,
 				5ACE416A1A6796F400BB312E /* TempleObject.m in Sources */,

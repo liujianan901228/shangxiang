@@ -61,7 +61,7 @@
     // Do any additional setup after loading the view.
     
     self.title = @"填写订单";
-    self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
+    self.view.backgroundColor = RGBCOLOR(245, 245, 245);
     [self setupForDismissKeyboard];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
@@ -118,7 +118,7 @@
     
     UIButton* wishTypeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 60 - 20, 40, 60, 30)];
     [wishTypeButton setTitleColor:UIColorFromRGB(0xa9a9a9) forState:UIControlStateNormal];
-    [wishTypeButton setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_GRAY)];
+    [wishTypeButton setBackgroundColor:RGBCOLOR(235, 235, 235)];
     [wishTypeButton setTitle:_infoObject.wishType forState:UIControlStateNormal];
     [wishTypeButton setEnabled:NO];
     [wishTypeButton.layer setCornerRadius:3];
@@ -132,23 +132,23 @@
     
     UILabel* labelContentTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, line.bottom + 10, self.view.width - 40 , 20)];
     [labelContentTitle setFont:[UIFont systemFontOfSize:12]];
-    [labelContentTitle setTextColor:UIColorFromRGB(0xc6c6c6)];
+    [labelContentTitle setTextColor:RGBCOLOR(83, 83, 83)];
     NSString* labelContentString = [NSString stringWithFormat:@"信众%@所求愿望已完,特此答谢还愿",[LUtility getShowName]];
     NSInteger length = [LUtility getShowName].length;
     NSMutableAttributedString* labelContentAttributedString = [[NSMutableAttributedString alloc] initWithString:labelContentString];
-    [labelContentAttributedString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FONT_NORMAL) range:NSRangeMake(2, length)];
+    [labelContentAttributedString addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(32, 32, 32) range:NSRangeMake(2, length)];
     [labelContentTitle setAttributedText:labelContentAttributedString];
     
     [_scrollView addSubview:labelContentTitle];
     
-    UIButton* buttonSelectContent = [[UIButton alloc] initWithFrame:CGRectMake(0, line.bottom + 10, 60, 30)];
-    buttonSelectContent.right = wishTypeButton.right;
-    [buttonSelectContent setTitle:@"精选" forState:UIControlStateNormal];
-    [buttonSelectContent.titleLabel setFont:[UIFont systemFontOfSize:10.0f]];
-    [buttonSelectContent setTitleColor:UIColorFromRGB(COLOR_FONT_FORM_HINT) forState:UIControlStateNormal];
-    [buttonSelectContent setBackgroundColor:[UIColor clearColor]];
-    [buttonSelectContent addTarget:self action:@selector(editChoice) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:buttonSelectContent];
+//    UIButton* buttonSelectContent = [[UIButton alloc] initWithFrame:CGRectMake(0, line.bottom + 10, 60, 30)];
+//    buttonSelectContent.right = wishTypeButton.right;
+//    [buttonSelectContent setTitle:@"精选" forState:UIControlStateNormal];
+//    [buttonSelectContent.titleLabel setFont:[UIFont systemFontOfSize:10.0f]];
+//    [buttonSelectContent setTitleColor:UIColorFromRGB(COLOR_FONT_FORM_HINT) forState:UIControlStateNormal];
+//    [buttonSelectContent setBackgroundColor:[UIColor clearColor]];
+//    [buttonSelectContent addTarget:self action:@selector(editChoice) forControlEvents:UIControlEventTouchUpInside];
+//    [_scrollView addSubview:buttonSelectContent];
     
     _commonTextFiled = [[CommonTextFiled alloc] initWithFrame:CGRectMake(20, labelContentTitle.bottom + 5, self.view.width - 40, 80)];
     [_commonTextFiled setMaxInputCount:100];

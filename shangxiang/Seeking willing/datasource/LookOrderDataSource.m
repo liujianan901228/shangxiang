@@ -50,7 +50,7 @@
     {
         [(LookOrderViewCell*)cell setCellDelegate:self.cellDelegate];
     }
-        
+    
     if ([cell isKindOfClass:[BaseTableViewCell class]]) {
         [(BaseTableViewCell*)cell setIndexPath:indexPath];
         [(BaseTableViewCell*)cell setObject:object];

@@ -31,18 +31,19 @@
         
         CGFloat contentHeight = [ListTempleViewCell tableView:nil rowHeightForObject:nil];
         
-        self.viewHall = [[UIImageView alloc] initWithFrame:CGRectMake(16, 8, 34, 34)];
+        self.viewHall = [[UIImageView alloc] initWithFrame:CGRectMake(16, (contentHeight - 45)/2, 45, 45)];
         [self.viewHall setClipsToBounds:YES];
         [self.viewHall setContentMode:UIViewContentModeScaleAspectFill];
         [self.contentView addSubview:self.viewHall];
         
         
-        self.viewMaster = [[UIImageView alloc] initWithFrame:CGRectMake(self.viewHall.right + 8, 8, 34, 34)];
+        self.viewMaster = [[UIImageView alloc] initWithFrame:CGRectMake(self.viewHall.right + 8, (contentHeight - 45)/2, 45, 45)];
         [self.viewMaster setClipsToBounds:YES];
         [self.viewMaster setContentMode:UIViewContentModeScaleAspectFill];
         [self.contentView addSubview:self.viewMaster];
 
-        self.buttonOrder = [[UIButton alloc] initWithFrame:CGRectMake(self.contentView.width - 60 -20, (contentHeight - 30)/2, 60, 30)];
+        CGFloat width = (kScreenWidth > 320) ? 130 : 70;
+        self.buttonOrder = [[UIButton alloc] initWithFrame:CGRectMake(self.contentView.width - width -20, (contentHeight - 30)/2, width, 30)];
         [self.buttonOrder setTitle:@"填订单" forState:UIControlStateNormal];
         [self.buttonOrder.titleLabel setFont:[UIFont systemFontOfSize:12.0f]];
         [self.buttonOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
@@ -51,13 +52,13 @@
         [self.buttonOrder addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.buttonOrder];
         
-        self.labelHall = [[UILabel alloc] initWithFrame:CGRectMake(self.viewMaster.right + 8, 12, self.contentView.width - self.buttonOrder.width - 20 - self.viewMaster.right, 15)];
+        self.labelHall = [[UILabel alloc] initWithFrame:CGRectMake(self.viewMaster.right + 8, 20, self.contentView.width - self.buttonOrder.width - 20 - self.viewMaster.right, 15)];
         [self.labelHall setFont:[UIFont systemFontOfSize:12.0f]];
         [self.labelHall setNumberOfLines:1];
         [self.labelHall setLineBreakMode:NSLineBreakByTruncatingTail];
         [self.contentView addSubview:self.labelHall];
         
-        self.labelMaster = [[UILabel alloc] initWithFrame:CGRectMake(self.viewMaster.right + 8, 28, self.contentView.width - self.buttonOrder.width - 20 - self.viewMaster.right, 10)];
+        self.labelMaster = [[UILabel alloc] initWithFrame:CGRectMake(self.viewMaster.right + 8, 35, self.contentView.width - self.buttonOrder.width - 20 - self.viewMaster.right, 10)];
         [self.labelMaster setFont:[UIFont systemFontOfSize:10.0f]];
         [self.labelMaster setNumberOfLines:1];
         [self.labelMaster setTextColor:UIColorFromRGB(COLOR_FONT_NORMAL)];
@@ -106,7 +107,7 @@
 
 + (CGFloat)tableView:(UITableView*)tableView rowHeightForObject:(id)object
 {
-    return 50.0f;
+    return 65;
 }
 
 

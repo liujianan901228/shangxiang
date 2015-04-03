@@ -15,7 +15,7 @@
 {
     if(self = [super initWithFrame:frame])
     {
-        _singImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 85, 85)];
+        _singImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 72, 72)];
         _singImageView.contentMode = UIViewContentModeScaleAspectFill;
         _singImageView.clipsToBounds = YES;
         
