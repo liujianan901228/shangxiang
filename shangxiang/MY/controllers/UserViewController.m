@@ -36,6 +36,7 @@
 @property (nonatomic, strong) UIView *pickerContainer; ///< 选择器容器，只占据下半边
 @property (nonatomic, strong) UIPickerView *hometownPicker; ///< 城市选择
 @property (nonatomic, strong) UIButton *pickerConfirmBtn; ///< 选择器确认按钮
+@property (nonatomic, strong) UILabel *pickerTitle;//>选择器标题
 
 @property (nonatomic, strong) UserHomeTownObject* homeObj;
 @property (nonatomic, strong) NSArray *provinces;
@@ -379,6 +380,7 @@
 /// 编辑城市
 - (void)editCity {
     [self setupPickerView];
+    _pickerTitle.text = @"我的位置";
     [self enterPicker:_hometownPicker];
 }
 
@@ -443,7 +445,7 @@
 {
     if (_pickerBackground != nil) return;
     
-    self.hometownPicker = [[UIPickerView alloc] init];
+    self.hometownPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, Picker_Container_Height)];
     self.hometownPicker.delegate = self;
     self.hometownPicker.showsSelectionIndicator = YES;
     self.provinces =[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"hometown" ofType:@"plist"]];
@@ -481,7 +483,7 @@
     }
     
 
-    CGFloat barHeight = 40;
+    CGFloat barHeight = Picker_Header_Height;
     _pickerBackground = [UIView new];
     _pickerBackground.frame = self.view.bounds;
     _pickerBackground.backgroundColor = [UIColor clearColor];
@@ -495,13 +497,25 @@
     _pickerConfirmBtn = [UIButton new];
     _pickerConfirmBtn.size = CGSizeMake(60, barHeight);
     [_pickerConfirmBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [_pickerConfirmBtn setTitleColor:UIColorFromRGB(0x007aff) forState:UIControlStateNormal];
-    [_pickerConfirmBtn setTitleColor:UIColorFromRGBA(0x007aff, 0.5) forState:UIControlStateHighlighted];
+    [_pickerConfirmBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [_pickerConfirmBtn setTitleColor:UIColorFromRGB(0x686867) forState:UIControlStateNormal];
     _pickerConfirmBtn.right = _pickerContainer.width;
     [_pickerConfirmBtn addTarget:self action:@selector(confirmPicker) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     [_pickerContainer addSubview:_pickerConfirmBtn];
+    
+    _pickerTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, Picker_Header_Height)];
+    _pickerTitle.font = [UIFont systemFontOfSize:13];
+    _pickerTitle.textAlignment = NSTextAlignmentCenter;
+    _pickerTitle.centerX = _pickerContainer.centerX;
+    _pickerTitle.backgroundColor = [UIColor clearColor];
+    _pickerTitle.textColor = UIColorFromRGB(0x686867);
+    [_pickerContainer addSubview:_pickerTitle];
+    
+    
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(0, Picker_Header_Height - 0.5, self.view.width, 0.5)];
+    lineView.backgroundColor = UIColorFromRGB(COLOR_LINE_NORMAL);
+    [_pickerContainer addSubview:lineView];
+    
     [_pickerBackground addSubview:_pickerContainer];
     
     UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endPicker)];
