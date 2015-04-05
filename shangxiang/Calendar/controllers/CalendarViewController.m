@@ -331,7 +331,7 @@
        || ([lunarCalendar getMonth] == 1 && [lunarCalendar getDay] == 1)
        )
     {
-        [folibg setImage:[UIImage imageForKey:[NSString stringWithFormat:@"foli_%d_%d",[lunarCalendar getMonth],[lunarCalendar getDay]]]];
+        [folibg setImage:[UIImage imageForKey:[NSString stringWithFormat:@"foli_%zd_%zd",[lunarCalendar getMonth],[lunarCalendar getDay]]]];
     }
     else
     {
