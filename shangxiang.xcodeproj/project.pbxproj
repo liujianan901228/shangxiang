@@ -173,6 +173,7 @@
 		63C9FD441A7145F400F718AE /* DiscoverInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C9FD431A7145F400F718AE /* DiscoverInfoCell.m */; };
 		63C9FD471A71466A00F718AE /* BlessingsMemberObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C9FD461A71466A00F718AE /* BlessingsMemberObject.m */; };
 		63C9FD4A1A714C9700F718AE /* DiscoverInfoDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C9FD491A714C9700F718AE /* DiscoverInfoDataSource.m */; };
+		63D744FE1ACFA04F00376B04 /* SXGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D744FD1ACFA04F00376B04 /* SXGuideViewController.m */; };
 		63D92B111AAA00F000DA81A3 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63D92B101AAA00F000DA81A3 /* PushConfig.plist */; };
 		63D92B151AAA011800DA81A3 /* libPushSDK-1.8.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D92B141AAA011800DA81A3 /* libPushSDK-1.8.2.a */; };
 		63D9F19E1A66BA6200F73571 /* EGORefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 63D9F1981A66BA6200F73571 /* EGORefresh.bundle */; };
@@ -647,6 +648,8 @@
 		63C9FD461A71466A00F718AE /* BlessingsMemberObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlessingsMemberObject.m; sourceTree = "<group>"; };
 		63C9FD481A714C9700F718AE /* DiscoverInfoDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverInfoDataSource.h; sourceTree = "<group>"; };
 		63C9FD491A714C9700F718AE /* DiscoverInfoDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverInfoDataSource.m; sourceTree = "<group>"; };
+		63D744FC1ACFA04F00376B04 /* SXGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SXGuideViewController.h; sourceTree = "<group>"; };
+		63D744FD1ACFA04F00376B04 /* SXGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SXGuideViewController.m; sourceTree = "<group>"; };
 		63D92B101AAA00F000DA81A3 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		63D92B131AAA011800DA81A3 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
 		63D92B141AAA011800DA81A3 /* libPushSDK-1.8.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.2.a"; sourceTree = "<group>"; };
@@ -1402,6 +1405,7 @@
 			children = (
 				639A83B31A60B2D2001932AE /* AppDelegate.h */,
 				639A83B41A60B2D2001932AE /* AppDelegate.m */,
+				63D744FB1ACFA03000376B04 /* Guide */,
 				63DCB62D1AAAACD400271D4A /* Base */,
 				63360A6C1A7DE51100AD43E7 /* Calendar */,
 				639A83F71A60B5D6001932AE /* HomePage */,
@@ -1678,6 +1682,15 @@
 				63C554E81A7D1DD5002FCA24 /* ShareView.m */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		63D744FB1ACFA03000376B04 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				63D744FC1ACFA04F00376B04 /* SXGuideViewController.h */,
+				63D744FD1ACFA04F00376B04 /* SXGuideViewController.m */,
+			);
+			path = Guide;
 			sourceTree = "<group>";
 		};
 		63D92B121AAA011800DA81A3 /* psuh */ = {
@@ -2101,6 +2114,7 @@
 				639A83B51A60B2D2001932AE /* AppDelegate.m in Sources */,
 				63C554DD1A7CE755002FCA24 /* PayInfoViewController.m in Sources */,
 				639A86AB1A60B5D7001932AE /* SDWebImageDownloaderOperation.m in Sources */,
+				63D744FE1ACFA04F00376B04 /* SXGuideViewController.m in Sources */,
 				639A86891A60B5D7001932AE /* ToolsHelper.m in Sources */,
 				63C8EB721A69FE0C00767A1C /* AttachInfoObject.m in Sources */,
 				63C554E61A7CF743002FCA24 /* LookOrderDataSource.m in Sources */,

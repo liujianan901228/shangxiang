@@ -42,8 +42,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    [APPNAVGATOR openDefaultMainViewController];
-    
+
+    if([UserGlobalSetting isFirstOpenApp] == NO) {
+        [APPNAVGATOR openTutorialPage];
+        [UserGlobalSetting setFirstOpenApp];
+    } else {
+        [APPNAVGATOR openDefaultMainViewController];
+    }
 
     [self.window makeKeyAndVisible];
     // Override point for customization after application launch.

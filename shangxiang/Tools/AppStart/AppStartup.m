@@ -41,13 +41,13 @@
     }];
     
     
-    //获取日历背景图片
-    [CalendarDataSource getBuddhismHolidayBg:^(id obj) {
-        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-        [def setObject:obj forKey:@"foliBg"];
-    } failed:^(id error) {
-        
-    }];
+//    //获取日历背景图片
+//    [CalendarDataSource getBuddhismHolidayBg:^(id obj) {
+//        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+//        [def setObject:obj forKey:@"foliBg"];
+//    } failed:^(id error) {
+//        
+//    }];
     
 }
 

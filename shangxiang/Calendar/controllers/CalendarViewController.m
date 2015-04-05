@@ -147,8 +147,9 @@
     [self.view addSubview:holidayView];
     
     UIImageView *folibg = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.detailView.bottom, self.view.frame.size.width, self.view.height - self.detailView.bottom)];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [folibg sd_setImageWithURL:[NSURL URLWithString:[def objectForKey:@"foliBg"]] placeholderImage:[UIImage imageForKey:@"folibg"]];
+//    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+//    [folibg sd_setImageWithURL:[NSURL URLWithString:[def objectForKey:@"foliBg"]] placeholderImage:[UIImage imageForKey:@"folibg"]];
+    [folibg setImage:[UIImage imageForKey:@"foli_bg"]];
     folibg.tag = 10086;
     folibg.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:folibg];
@@ -316,6 +317,26 @@
     self.detailView.nongli = [NSString stringWithFormat:@"农历%@%@",[lunarCalendar MonthLunar],[lunarCalendar DayLunar]];
     
     self.detailView.riqi = [NSString stringWithFormat:@"%ld",(long)self.calendar.currentDateSelected.day];
+    
+    UIImageView *folibg = (UIImageView *)[self.view viewWithTag:10086];
+    if(([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 8)
+       || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 21)
+       || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 15)
+       || ([lunarCalendar getMonth] == 7 && [lunarCalendar getDay] == 30)
+       || ([lunarCalendar getMonth] == 3 && [lunarCalendar getDay] == 16)
+       || ([lunarCalendar getMonth] == 4 && [lunarCalendar getDay] == 8)
+       || ([lunarCalendar getMonth] == 4 && [lunarCalendar getDay] == 4)
+       || ([lunarCalendar getMonth] == 4 && [lunarCalendar getDay] == 15)
+       || ([lunarCalendar getMonth] == 1 && [lunarCalendar getDay] == 6)
+       || ([lunarCalendar getMonth] == 1 && [lunarCalendar getDay] == 1)
+       )
+    {
+        [folibg setImage:[UIImage imageForKey:[NSString stringWithFormat:@"foli_%d_%d",[lunarCalendar getMonth],[lunarCalendar getDay]]]];
+    }
+    else
+    {
+        [folibg setImage:[UIImage imageForKey:@"foli_bg"]];
+    }
 }
 
 #pragma mark - Transition examples

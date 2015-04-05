@@ -34,5 +34,8 @@
 
 -(void)switchToLivingTab:(NSInteger)index;
 
+//>打开引导页面
+-(void)openTutorialPage;
+
 @end
 

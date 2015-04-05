@@ -12,6 +12,7 @@
 #import "MyViewController.h"
 #import "Reachability.h"
 #import "LoginRequestManager.h"
+#import "SXGuideViewController.h"
 
 @interface AppNavigator()<UITabBarControllerDelegate>
 
@@ -33,6 +34,11 @@
     return self;
 }
 
+-(void)openTutorialPage
+{
+    SXGuideViewController *tpv = [[SXGuideViewController alloc]init];
+    APPDELEGATE.window.rootViewController = tpv;
+}
 
 -(void)openDefaultMainViewController
 {
