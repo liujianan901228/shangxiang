@@ -113,6 +113,13 @@
 
 - (void)turnToOrderRecordPage
 {
+    NSInteger preIndex = self.homeTabBarController.selectedIndex;
+   if(preIndex != 3)
+   {
+       UINavigationController* currentNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:preIndex];
+       [currentNavigationController popToRootViewControllerAnimated:NO];
+   }
+    
     [self.homeTabBarController setSelectedIndex:3];
     self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:3];
     

@@ -54,7 +54,7 @@
     // Do any additional setup after loading the view.
     self.title = @"个人资料";
     self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
-    [self setupDismissKeyboard];
+    [self setupForDismissKeyboard];
     
     UIBarButtonItem *rightItem = [UIBarButtonItem rsBarButtonItemWithTitle:@"保存" image:nil heightLightImage:nil disableImage:nil target:self action:@selector(savaButtonclicked)];
     [self setRightBarButtonItem:rightItem];
@@ -279,7 +279,7 @@
     frame.origin = CGPointMake(fltHintMargin, 0);
     frame.size = CGSizeMake(fltHintWidth, fltCellHeight);
     _hintSexy = [[UILabel alloc] initWithFrame:frame];
-    _hintSexy.text = @"男";
+    _hintSexy.text = @"未知";
     _hintSexy.font = [UIFont systemFontOfSize:15];
     _hintSexy.textColor = UIColorFromRGB(COLOR_FONT_FORM_HINT);
     [buttonSexy addSubview:_hintSexy];
@@ -292,11 +292,6 @@
     [self updateUserInfo];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (void)updateUserInfo
 {
@@ -416,29 +411,11 @@
     }
     else if(actionSheet.tag == TAG_ACTIONSHEET_Gender)
     {
-        if(buttonIndex < 2) {
-            [self showChrysanthemumHUD:YES];
-            __weak typeof(self) _self = self;
-            //修改性别
-            NSInteger gender =  buttonIndex == 0 ? 1 : 2;
-            [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:USEROPERATIONHELP.currentUser.nickName trueName:USEROPERATIONHELP.currentUser.trueName area:USEROPERATIONHELP.currentUser.area sex:gender successBlock:^(id obj) {
-                [_self removeAllHUDViews:YES];
-                USEROPERATIONHELP.currentUser.gender = gender;
-                [_self updateUserInfo];
-            } failed:^(id error) {
-                [_self removeAllHUDViews:NO];
-                [_self dealWithError:error];
-            }];
+        if(buttonIndex < 2)
+        {
+            _hintSexy.text =  buttonIndex == 0 ? @"男" : @"女";
         }
     }
-//    else if(actionSheet.tag == TAG_ACTIONSHEET && buttonIndex == 0)
-//    {
-//        USEROPERATIONHELP.currentUser.isLogined = NO;
-//        [UserGlobalSetting setCurrentUser:nil];
-//        USEROPERATIONHELP.currentUser = nil;
-//        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:AppUserLogoutNotification object:nil];
-//        [self goBack];
-//    }
 }
 
 - (void)setupPickerView
@@ -553,19 +530,8 @@
 }
 
 - (void)confirmPicker {
-    [self showChrysanthemumHUD:YES];
-    __weak typeof(self) _self =self;
-    
-    //修改地区
     NSString* provinceCity = [NSString stringWithFormat:@"%@-%@",self.homeObj.provinceName,self.homeObj.city];
-    [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:USEROPERATIONHELP.currentUser.nickName trueName:USEROPERATIONHELP.currentUser.trueName area:provinceCity sex:USEROPERATIONHELP.currentUser.gender successBlock:^(id obj) {
-        [_self removeAllHUDViews:YES];
-        USEROPERATIONHELP.currentUser.area = provinceCity;
-        [_self updateUserInfo];
-    } failed:^(id error) {
-        [_self removeAllHUDViews:NO];
-        [_self dealWithError:error];
-    }];
+    [_hintRegion setText:provinceCity];
     [self endPicker];
 }
 
@@ -760,37 +726,6 @@
     }
 }
 
-
-- (void)setupDismissKeyboard {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    UITapGestureRecognizer *singleTapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAnywhereToDismissKeyboard:)];
-    
-    __weak UIViewController *weakSelf = self;
-    
-    NSOperationQueue *mainQuene =[NSOperationQueue mainQueue];
-    [nc addObserverForName:UIKeyboardWillShowNotification  object:nil queue:mainQuene usingBlock:^(NSNotification *note)
-    {
-        [weakSelf.view addGestureRecognizer:singleTapGR];
-    }];
-    [nc addObserverForName:UIKeyboardWillHideNotification object:nil queue:mainQuene usingBlock:^(NSNotification *note)
-    {
-        //修改姓名
-        __weak typeof(self) _self = self;
-        NSString* nickName = _hintMobile.text;
-        NSString* trueName = _hintRealname.text;
-        [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:_hintMobile.text trueName:_hintRealname.text area:USEROPERATIONHELP.currentUser.area sex:USEROPERATIONHELP.currentUser.gender successBlock:^(id obj) {
-            [_self removeAllHUDViews:YES];
-            USEROPERATIONHELP.currentUser.nickName = nickName;
-            USEROPERATIONHELP.currentUser.trueName = trueName;
-            [_self updateUserInfo];
-        } failed:^(id error) {
-            [_self removeAllHUDViews:NO];
-            [_self dealWithError:error];
-        }];
-        [weakSelf.view removeGestureRecognizer:singleTapGR];
-    }];
-}
-
 - (void)tapAnywhereToDismissKeyboard:(UIGestureRecognizer *)gestureRecognizer
 {
     //此method会将self.view里所有的subview的first responder都resign掉
@@ -799,19 +734,35 @@
 
 - (void)savaButtonclicked
 {
-//    NSInteger gender =  0;
-//    if(![_hintSexy.text isEqualToString:@"未知"])
-//    {
-//        gender = [_hintSexy.text isEqualToString:@"男"] ? 1 : 2;
-//    }
-//    [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:_hintMobile.text trueName:_hintRealname.text area: sex:gender successBlock:^(id obj) {
-//        [_self removeAllHUDViews:YES];
-//        USEROPERATIONHELP.currentUser.gender = gender;
-//        [_self updateUserInfo];
-//    } failed:^(id error) {
-//        [_self removeAllHUDViews:NO];
-//        [_self dealWithError:error];
-//    }];
+    NSInteger gender =  0;
+    if(![_hintSexy.text isEqualToString:@"未知"])
+    {
+        gender = [_hintSexy.text isEqualToString:@"男"] ? 1 : 2;
+    }
+    NSString* provinceCity = _hintRegion.text;
+    NSString* nickName = _hintMobile.text;
+    NSString* trueName = _hintRealname.text;
+
+    
+    __weak typeof(self) _self = self;
+    [_self showChrysanthemumHUD:YES];
+    [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:nickName trueName:trueName  area:provinceCity sex:gender successBlock:^(id obj) {
+        [_self removeAllHUDViews:YES];
+        USEROPERATIONHELP.currentUser.gender = gender;
+        USEROPERATIONHELP.currentUser.nickName = nickName;
+        USEROPERATIONHELP.currentUser.trueName = trueName;
+        USEROPERATIONHELP.currentUser.area = provinceCity;
+        
+        [_self updateUserInfo];
+        [_self showTimedHUD:YES message:[obj objectForKey:@"msg"]];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_self goBack];
+        });
+
+    } failed:^(id error) {
+        [_self removeAllHUDViews:NO];
+        [_self dealWithError:error];
+    }];
 }
 
 
