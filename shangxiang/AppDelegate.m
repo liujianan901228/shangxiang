@@ -231,7 +231,7 @@ fetchCompletionHandler:
         }
         
         NSInteger msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:nil message:[userInfo stringForKey:@"msg" withDefault:@"收到一条新的消息"] delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"currentNavigationController", nil];
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:nil message:[userInfo stringForKey:@"msg" withDefault:@"收到一条新的消息"] delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
         [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
         [_alertViewArray addObject:alertView];
         [alertView show];
