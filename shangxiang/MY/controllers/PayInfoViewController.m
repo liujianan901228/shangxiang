@@ -366,7 +366,14 @@
 
 - (void)goBack
 {
-    [APPNAVGATOR turnToOrderRecordPage];
+    if(USEROPERATIONHELP.isLogin)
+    {
+        [APPNAVGATOR turnToOrderRecordPage];
+    }
+    else
+    {
+        [APPNAVGATOR calendarTurnWillingGuide];
+    }
 }
 
 - (void)dealloc

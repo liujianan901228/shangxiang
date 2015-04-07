@@ -212,7 +212,7 @@
             [_scrollView addSubview:_viewHallThumb];
         }
         
-        if(self.isWilling)
+        if(self.isWilling && self.infoObject.isRedeem)
         {
             CGFloat offsetY = (self.infoObject.images && self.infoObject.images.count > 0) ? _viewHallThumb.bottom + 20 : lineView.bottom + 20;
             UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(20,offsetY , self.view.width - 40, 40)];

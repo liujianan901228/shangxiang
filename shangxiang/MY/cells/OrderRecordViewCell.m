@@ -72,7 +72,7 @@
         [_scrollContentView addSubview:self.labelOrderTitle];
         
         self.labelOrderDesc = [[UILabel alloc] initWithFrame:CGRectMake(16, 28, self.width -16 - self.labelStatus.width - 10 - 10, 12)];
-        [self.labelOrderDesc setFont:[UIFont systemFontOfSize:10.0f]];
+        [self.labelOrderDesc setFont:[UIFont systemFontOfSize:9.0f]];
         [self.labelOrderDesc setTextColor:UIColorFromRGB(0xbababa)];
         self.labelOrderDesc.numberOfLines = 1;
         self.labelOrderDesc.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -102,7 +102,10 @@
     [super setObject:object];
     WillingObject* willingObject = (WillingObject*)object;
     [self.labelOrderTitle setText:[NSString stringWithFormat:@"%@(%@)",willingObject.templeName,willingObject.buddhistName]];
-    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderNumber,willingObject.buddhaDate]];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[willingObject.retime integerValue]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy年MM月dd日"];
+    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderNumber,[formatter stringFromDate:confromTimesp]]];
     [self.labelStatus setText:willingObject.status];
     if([willingObject.status isEqualToString:@"未支付"])
     {

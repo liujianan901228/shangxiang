@@ -85,7 +85,6 @@
     
     LunarCalendar *lunarCalendar = [self.calendar.currentDate chineseCalendarDate];
     self.detailView.nongli = [NSString stringWithFormat:@"农历%@%@",[lunarCalendar MonthLunar],[lunarCalendar DayLunar]];
-    
     self.detailView.riqi = [NSString stringWithFormat:@"%ld",(long)self.calendar.currentDate.day];
     [self.view addSubview:self.detailView];
     
@@ -179,12 +178,14 @@
     [JTCalendarMonthWeekDaysView beforeReloadAppearance];
     [weekdaysView reloadAppearance];
     [self.view addSubview:weekdaysView];
+    [self setNongliBg:[[NSDate date] chineseCalendarDate] folibg:folibg];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+   
 }
 
 - (void)dealloc
@@ -317,8 +318,12 @@
     self.detailView.nongli = [NSString stringWithFormat:@"农历%@%@",[lunarCalendar MonthLunar],[lunarCalendar DayLunar]];
     
     self.detailView.riqi = [NSString stringWithFormat:@"%ld",(long)self.calendar.currentDateSelected.day];
-    
-    UIImageView *folibg = (UIImageView *)[self.view viewWithTag:10086];
+    [self setNongliBg:lunarCalendar folibg:(UIImageView*)[self.view viewWithTag:10086]];
+}
+
+- (void)setNongliBg:(LunarCalendar*)lunarCalendar folibg:(UIImageView*)folibg
+{
+    if(!folibg) return;
     if(([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 8)
        || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 21)
        || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 15)

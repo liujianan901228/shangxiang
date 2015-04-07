@@ -56,7 +56,7 @@
     self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
     [self setupDismissKeyboard];
     
-    UIBarButtonItem *rightItem = [UIBarButtonItem rsBarButtonItemWithTitle:@"保存" image:nil heightLightImage:nil disableImage:nil target:self action:nil];
+    UIBarButtonItem *rightItem = [UIBarButtonItem rsBarButtonItemWithTitle:@"保存" image:nil heightLightImage:nil disableImage:nil target:self action:@selector(savaButtonclicked)];
     [self setRightBarButtonItem:rightItem];
     
     viewMain = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
@@ -797,12 +797,22 @@
     [self.view endEditing:YES];
 }
 
-//- (void)closeButtonclicked
-//{
-//    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];
-//    actionsheet.tag = TAG_ACTIONSHEET;
-//    [actionsheet showInView:APPDELEGATE.window];
-//}
+- (void)savaButtonclicked
+{
+//    NSInteger gender =  0;
+//    if(![_hintSexy.text isEqualToString:@"未知"])
+//    {
+//        gender = [_hintSexy.text isEqualToString:@"男"] ? 1 : 2;
+//    }
+//    [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:_hintMobile.text trueName:_hintRealname.text area: sex:gender successBlock:^(id obj) {
+//        [_self removeAllHUDViews:YES];
+//        USEROPERATIONHELP.currentUser.gender = gender;
+//        [_self updateUserInfo];
+//    } failed:^(id error) {
+//        [_self removeAllHUDViews:NO];
+//        [_self dealWithError:error];
+//    }];
+}
 
 
 @end
