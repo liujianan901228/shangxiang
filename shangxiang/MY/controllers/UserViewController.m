@@ -14,6 +14,7 @@
 #import "ASIFormDataRequest.h"
 #import "LoginRequestManager.h"
 #import "LFFGPhotoAlbumView.h"
+#import "BaseRequest.h"
 
 #define TAG_ACTIONSHEET_Image   4123//修改头像actionSheet
 #define TAG_ACTIONSHEET_Gender  4124//男女
@@ -654,7 +655,7 @@
     
     //修改头像
     [self showChrysanthemumHUD:YES];
-    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://app.shangxiang.com/api/app/hfupload.php"]];
+    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@hfupload.php",DefaultBaseAddress]]];
 
     [request addPostValue:USEROPERATIONHELP.currentUser.userId forKey:@"mid"];
     [request addPostValue:@"1" forKey:@"uploadimage"];

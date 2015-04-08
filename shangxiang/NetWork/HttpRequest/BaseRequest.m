@@ -38,8 +38,6 @@
 
 @implementation BaseRequest
 
-// Relase
-#define DefaultBaseAddress  @"http://app.shangxiang.com/api/app/"
 
 -(instancetype)initWithAddress:(NSString*)baseAddress
                     parameters:(NSDictionary*)params
