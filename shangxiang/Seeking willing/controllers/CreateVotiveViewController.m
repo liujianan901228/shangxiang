@@ -533,7 +533,7 @@
     
     CGFloat barHeight = Picker_Header_Height;
     _pickerBackground = [UIView new];
-    _pickerBackground.frame = _scrollView.bounds;
+    _pickerBackground.frame = self.view.bounds;
     _pickerBackground.backgroundColor = [UIColor clearColor];
     _hometownPicker.top = barHeight;
     
@@ -589,6 +589,7 @@
 
 - (void)enterPicker:(UIView *)picker {
     _pickerBackground.backgroundColor = [UIColor clearColor];
+    _pickerBackground.frame = self.view.bounds;
     _pickerContainer.top = _pickerBackground.height;
     [_hometownPicker removeFromSuperview];
     [_birthdayPicker removeFromSuperview];
