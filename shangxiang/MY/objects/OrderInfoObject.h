@@ -34,6 +34,7 @@
 @property (nonatomic, copy) NSString* status;
 @property (nonatomic, copy) NSString* wishGrade;//香火等级
 @property (nonatomic, copy) NSString* builddhistId;//上香师Id
+@property (nonatomic, copy) NSString* buddhadate;
 @property (nonatomic, copy) NSString* expectBuddhadate;//回执时间
 @property (nonatomic, strong) NSMutableArray* images;//图片列表
 @property (nonatomic, assign) BOOL isRedeem;//是否还愿

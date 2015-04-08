@@ -102,10 +102,7 @@
     [super setObject:object];
     WillingObject* willingObject = (WillingObject*)object;
     [self.labelOrderTitle setText:[NSString stringWithFormat:@"%@(%@)",willingObject.templeName,willingObject.buddhistName]];
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[willingObject.retime integerValue]];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy年MM月dd日"];
-    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderNumber,[formatter stringFromDate:confromTimesp]]];
+    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderNumber,willingObject.buddhaDate]];
     [self.labelStatus setText:willingObject.status];
     if([willingObject.status isEqualToString:@"未支付"])
     {

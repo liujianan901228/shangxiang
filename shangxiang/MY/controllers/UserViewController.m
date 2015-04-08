@@ -654,7 +654,7 @@
     
     //修改头像
     [self showChrysanthemumHUD:YES];
-    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://app.shangxiang.com/hfupload.php"]];
+    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://app.shangxiang.com/api/app/hfupload.php"]];
 
     [request addPostValue:USEROPERATIONHELP.currentUser.userId forKey:@"mid"];
     [request addPostValue:@"1" forKey:@"uploadimage"];

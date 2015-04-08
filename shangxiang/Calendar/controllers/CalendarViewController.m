@@ -327,6 +327,7 @@
     if(([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 8)
        || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 21)
        || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 15)
+       || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 19)
        || ([lunarCalendar getMonth] == 7 && [lunarCalendar getDay] == 30)
        || ([lunarCalendar getMonth] == 3 && [lunarCalendar getDay] == 16)
        || ([lunarCalendar getMonth] == 4 && [lunarCalendar getDay] == 8)

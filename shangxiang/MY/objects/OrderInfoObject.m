@@ -40,6 +40,7 @@
         _wishGrade = [dic stringForKey:@"wishgrade" withDefault:@""];
         _builddhistId = [dic stringForKey:@"aid" withDefault:@""];
         _expectBuddhadate = [dic stringForKey:@"expect_buddhadate" withDefault:@""];
+        _buddhadate = [dic stringForKey:@"buddhadate" withDefault:@""];
         NSString*  hy_orderid = [dic stringForKey:@"hy_orderid" withDefault:@"0"];
         if([hy_orderid isEqualToString:@"0"])
         {

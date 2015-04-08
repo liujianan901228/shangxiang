@@ -122,15 +122,12 @@
     [dateLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     [dateLabel setFont:[UIFont systemFontOfSize:14]];
     
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:self.infoObject.retime];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy年MM月dd日"];
 
-    NSMutableAttributedString* dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间: %@",[formatter stringFromDate:confromTimesp]]];
+    NSMutableAttributedString* dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间: %@",self.infoObject.buddhadate]];
     [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xbababa) range:NSRangeMake(0, 4)];
     [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSRangeMake(0, 4)];
-    [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, [formatter stringFromDate:confromTimesp].length)];
-    [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, [formatter stringFromDate:confromTimesp].length)];
+    [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, self.infoObject.buddhadate.length)];
+    [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, self.infoObject.buddhadate.length)];
     
     [dateLabel setAttributedText:dateString];
     [_scrollView addSubview:dateLabel];

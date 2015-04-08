@@ -230,8 +230,22 @@ fetchCompletionHandler:
             [_alertViewArray removeAllObjects];
         }
         
-        NSInteger msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:nil message:[userInfo stringForKey:@"msg" withDefault:@"收到一条新的消息"] delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
+        NSInteger msgtype = 3;
+        if([userInfo objectForKey:@"msgtype"])
+        {
+            msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
+        }
+        NSString* message = @"收到一条新的消息";
+        NSDictionary *aps = [userInfo valueForKey:@"aps"];
+        if(aps && ((NSString*)[aps valueForKey:@"alert"]).length > 0)
+        {
+            message = [aps valueForKey:@"alert"];
+        }
+        else if([userInfo objectForKey:@"msg"])
+        {
+            message = [userInfo stringForKey:@"msg" withDefault:@"收到一条新的消息"];
+        }
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
         [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
         [_alertViewArray addObject:alertView];
         [alertView show];
