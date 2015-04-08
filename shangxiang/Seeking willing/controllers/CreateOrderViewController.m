@@ -522,28 +522,30 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     self.birthdayPicker =[[UIDatePicker alloc] init];
     [self.birthdayPicker setDatePickerMode:UIDatePickerModeDate];
     self.birthdayPicker.locale = [NSLocale currentLocale];
-    
+    self.birthdayPicker.backgroundColor = [UIColor whiteColor];
     self.birthdayPicker.minimumDate = _minDate;
 
     self.birthObj = [[UserBirthdayObject alloc] init];
     self.birthObj.year = [NSNumber numberWithInteger:_minDate.year];
     self.birthObj.month = [NSNumber numberWithInteger:_minDate.month];
     self.birthObj.day = [NSNumber numberWithInteger:_minDate.day];
-
     [self.birthdayPicker addTarget:self action:@selector(birthdayPickerValueChange:) forControlEvents:UIControlEventValueChanged];
     
     
     _typePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.width, Picker_Container_Height)];
     _typePicker.delegate = self;
+    _typePicker.backgroundColor = [UIColor whiteColor];
     _typePicker.showsSelectionIndicator = YES;
     
     _choicePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.width, Picker_Container_Height)];
     _choicePicker.delegate = self;
+    _choicePicker.backgroundColor = [UIColor whiteColor];
     _choicePicker.showsSelectionIndicator = YES;
     
     self.hometownPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.width, Picker_Container_Height)];
     self.hometownPicker.delegate = self;
     self.hometownPicker.showsSelectionIndicator = YES;
+    _hometownPicker.backgroundColor = [UIColor whiteColor];
     self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"hometown" ofType:@"plist"]];
     
     self.homeObj = [[UserHomeTownObject alloc] init];
@@ -584,11 +586,10 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     _pickerBackground.backgroundColor = [UIColor clearColor];
     _hometownPicker.top = barHeight;
     
-    _hometownPicker.backgroundColor = [UIColor whiteColor];
-    
     _pickerContainer = [UIView new];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerContainer.size = CGSizeMake(_hometownPicker.width, _hometownPicker.height + barHeight);
-    _pickerContainer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerConfirmBtn = [UIButton new];
     _pickerConfirmBtn.size = CGSizeMake(60, barHeight);
     [_pickerConfirmBtn setTitle:@"确定" forState:UIControlStateNormal];
@@ -814,5 +815,13 @@ NSString *const RegexStringPhone = @"(\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{8}";
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField.returnKeyType == UIReturnKeyDone)
+    {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
 
 @end

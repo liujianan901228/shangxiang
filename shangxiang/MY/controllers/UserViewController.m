@@ -469,8 +469,9 @@
     _hometownPicker.backgroundColor = [UIColor whiteColor];
     
     _pickerContainer = [UIView new];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerContainer.size = CGSizeMake(_hometownPicker.width, _hometownPicker.height + barHeight);
-    _pickerContainer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerConfirmBtn = [UIButton new];
     _pickerConfirmBtn.size = CGSizeMake(60, barHeight);
     [_pickerConfirmBtn setTitle:@"确定" forState:UIControlStateNormal];
