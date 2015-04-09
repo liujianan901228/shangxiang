@@ -2223,8 +2223,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2244,7 +2244,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "e4c7c25d-451b-452f-974a-14df5ddb0360";
+				PROVISIONING_PROFILE = "1261d102-6544-4e80-a3ab-bcafbe4f94bc";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2266,8 +2266,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2280,7 +2280,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "e4c7c25d-451b-452f-974a-14df5ddb0360";
+				PROVISIONING_PROFILE = "1261d102-6544-4e80-a3ab-bcafbe4f94bc";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2291,8 +2291,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2319,7 +2319,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e4c7c25d-451b-452f-974a-14df5ddb0360";
+				PROVISIONING_PROFILE = "1261d102-6544-4e80-a3ab-bcafbe4f94bc";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};
@@ -2330,8 +2330,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ying Zhang (8F26H75SEX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ying Zhang (8F26H75SEX)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianlai(Beijing) Culture Media Co., Ltd. (88NL69Q6G7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shangxiang/Base/airplay",
@@ -2358,7 +2358,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e4c7c25d-451b-452f-974a-14df5ddb0360";
+				PROVISIONING_PROFILE = "1261d102-6544-4e80-a3ab-bcafbe4f94bc";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 x86_64 i386 armv7";
 			};
