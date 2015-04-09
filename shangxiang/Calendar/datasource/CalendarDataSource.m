@@ -316,7 +316,12 @@ int endAction;
 + (void)alertShow:(NSString *)str
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [APPNAVGATOR.alertViewArray addObject:alert];
     [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [APPNAVGATOR.alertViewArray removeObject:alertView];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

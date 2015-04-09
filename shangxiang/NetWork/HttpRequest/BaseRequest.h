@@ -10,7 +10,7 @@
 #import "ExError.h"
 
 // Relase
-#define DefaultBaseAddress  @"http://218.244.131.126:812/api/app/"
+#define DefaultBaseAddress  @"http://app.shangxiang.com/api/app/"
 
 typedef void (^ RequestComplete)(NSInteger errorNum, id info, ExError *errorMsg);
 

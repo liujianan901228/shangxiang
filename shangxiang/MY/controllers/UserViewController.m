@@ -20,7 +20,7 @@
 #define TAG_ACTIONSHEET_Gender  4124//男女
 #define TAG_ACTIONSHEET 523
 
-@interface UserViewController ()<UIActionSheetDelegate,UIPickerViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,CropImageContenViewProtocol>
+@interface UserViewController ()<UIActionSheetDelegate,UIPickerViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,CropImageContenViewProtocol,UIAlertViewDelegate>
 {
     UIScrollView* viewMain;
     UIImageView* _viewAvatar;//头像
@@ -362,6 +362,7 @@
 {
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:@"修改头像" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选择手机中的照片",@"查看大图",nil];
     actionsheet.tag = TAG_ACTIONSHEET_Image;
+    [APPNAVGATOR.actionSheetArray addObject:actionsheet];
     [actionsheet showInView:APPDELEGATE.window];
 }
 
@@ -370,6 +371,7 @@
 {
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择性别" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"男",@"女", nil];
     actionsheet.tag = TAG_ACTIONSHEET_Gender;
+    [APPNAVGATOR.actionSheetArray addObject:actionsheet];
     [actionsheet showInView:APPDELEGATE.window];
 }
 
@@ -417,6 +419,11 @@
             _hintSexy.text =  buttonIndex == 0 ? @"男" : @"女";
         }
     }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [APPNAVGATOR.actionSheetArray removeObject:actionSheet];
 }
 
 - (void)setupPickerView
@@ -637,9 +644,14 @@
         picker.sourceType = sourceType;
         [self presentViewController:picker animated:YES completion:^{}];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"访问图片库失败" message:@"设备不允许访问图片库" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"访问图片库失败" message:@"设备不允许访问图片库" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [APPNAVGATOR.alertViewArray addObject:alert];
         [alert show];
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [APPNAVGATOR.alertViewArray removeObject:alertView];
 }
 
 -(void)didCancelOperation {

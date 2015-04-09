@@ -70,7 +70,7 @@
     {
         if(!shareText || shareText.length == 0)
         {
-            [APPNAVGATOR showAlert:@"请输入分享内容" Message:nil];
+            [self showTimedHUD:YES message:@"请输入分享内容"];
         }
         else
         {

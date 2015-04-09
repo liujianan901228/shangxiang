@@ -10,10 +10,8 @@
 #import "MyRequestManager.h"
 #import "CalendarDataSource.h"
 
-@interface AppStartup()<UIAlertViewDelegate>
-@property(nonatomic,strong)UIAlertView* optionalAlertView;
-@property(nonatomic,strong)UIAlertView* requireAlertView;
-@property(nonatomic)BOOL hasShowForceAlert;
+@interface AppStartup()
+
 @end
 
 @implementation AppStartup

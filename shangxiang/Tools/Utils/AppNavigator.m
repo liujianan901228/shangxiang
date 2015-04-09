@@ -30,6 +30,8 @@
         _homeTabBarController = (HomeTabBarViewController *)[storyboard instantiateInitialViewController];
         _homeTabBarController.delegate = self;
         self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
+        self.alertViewArray = [NSMutableArray array];
+        self.actionSheetArray = [NSMutableArray array];
     }
     return self;
 }
@@ -95,15 +97,6 @@
 }
 
 
-- (void)showAlert:(NSString*)title Message:(NSString*)msg
-{
-    UIAlertView* viewAlert = [[UIAlertView alloc] init];
-    [viewAlert setTitle:title];
-    [viewAlert setMessage:msg];
-    [viewAlert addButtonWithTitle:@"确定"];
-    [viewAlert show];
-}
-
 -(void)switchToLivingTab:(NSInteger)index
 {
     [self.currentContentNav popToRootViewControllerAnimated:NO];
@@ -140,6 +133,18 @@
         UINavigationController* firstNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
         [firstNavigationController popToRootViewControllerAnimated:NO];
     }
+}
+- (void)dismissWindow
+{
+    for (id item in APPNAVGATOR.actionSheetArray) {
+        [(UIActionSheet*)item dismissWithClickedButtonIndex:[(UIActionSheet*)item cancelButtonIndex] animated:YES];
+    }
+    
+    for (id item in APPNAVGATOR.alertViewArray) {
+        [(UIAlertView*)item dismissWithClickedButtonIndex:[(UIAlertView*)item cancelButtonIndex] animated:YES];
+    }
+    [APPNAVGATOR.actionSheetArray removeAllObjects];
+    [APPNAVGATOR.alertViewArray removeAllObjects];
 }
 
 @end

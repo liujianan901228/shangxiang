@@ -269,7 +269,7 @@
     order.productName = self.productName; //商品标题
     order.productDescription = self.productName; //商品描述
     order.amount = [NSString stringWithFormat:@"%.2f",self.price]; //商品价格
-    order.notifyURL =  @"http://218.244.131.126:812/api/app_alipay/notify_url.php"; //回调URL
+    order.notifyURL =  @"http://app.shangxiang.com/api/app_alipay/notify_url.php"; //回调URL
     
     order.service = @"mobile.securitypay.pay";
     order.paymentType = @"1";

@@ -237,11 +237,11 @@
     BOOL bolValid = YES;
     if (fieldUsername.text.length < 2) {
         bolValid = NO;
-        [APPNAVGATOR showAlert:@"帐号检查" Message:@"请输入正确的手机号"];
+        [self showTimedHUD:YES message:@"请输入正确的手机号"];
     }
     if (bolValid && fieldPassword.text.length < 1) {
         bolValid = NO;
-        [APPNAVGATOR showAlert:@"帐号检查" Message:@"请输入正确的密码"];
+        [self showTimedHUD:YES message:@"请输入正确的密码"];
     }
     if (bolValid)
     {

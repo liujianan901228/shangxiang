@@ -382,6 +382,7 @@
 {
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];
     actionsheet.tag = TAG_ACTIONSHEET;
+    [APPNAVGATOR.actionSheetArray addObject:actionsheet];
     [actionsheet showInView:APPDELEGATE.window];
 }
 
@@ -394,6 +395,10 @@
         USEROPERATIONHELP.currentUser = nil;
         [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:AppUserLogoutNotification object:nil];
     }
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [APPNAVGATOR.actionSheetArray removeObject:actionSheet];
 }
 
 
@@ -539,7 +544,7 @@
             else
             {
                 vcTarget = [[BrowserViewController alloc] init];
-                ((BrowserViewController*)vcTarget).url = @"http://218.244.131.126:812/app_aboutus.html";
+                ((BrowserViewController*)vcTarget).url = @"http://app.shangxiang.com/app_aboutus.html";
             }
         }
             break;

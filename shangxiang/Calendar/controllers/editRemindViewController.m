@@ -136,6 +136,7 @@
     else
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"确定删除“%@”吗？",remindName] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+        [APPNAVGATOR.alertViewArray addObject:alert];
         [alert show];
     }
 }
@@ -149,6 +150,7 @@
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
     alert.tag = 10000;
+    [APPNAVGATOR.alertViewArray addObject:alert];
     [alert show];
 }
 
@@ -173,6 +175,10 @@
             }];
         }
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [APPNAVGATOR.alertViewArray removeObject:alertView];
 }
 
 - (void)reloadCalendar:(NSNotification*)notification

@@ -14,7 +14,6 @@
 
 @interface AppDelegate ()<WeiboSDKDelegate,UIAlertViewDelegate>
 
-@property (nonatomic, strong) NSMutableArray* alertViewArray;
 
 @end
 
@@ -136,16 +135,6 @@
 {
     if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
     {
-//        WBSendMessageToWeiboResponse* sendMessageToWeiboResponse = (WBSendMessageToWeiboResponse*)response;
-//        NSString* accessToken = [sendMessageToWeiboResponse];
-//        NSString *title = @"发送结果";
-//        NSString *message = [NSString stringWithFormat:@"响应状态: %d\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode, response.userInfo, response.requestUserInfo];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-//                                                        message:message
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"确定"
-//                                              otherButtonTitles:nil];
-//        [alert show];
         if(response.statusCode == 0)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:ShareSuccessNotification object:nil];
@@ -219,16 +208,7 @@ fetchCompletionHandler:
     if(application.applicationState == UIApplicationStateActive)
     {
     
-        if(!_alertViewArray) _alertViewArray = [[NSMutableArray alloc] init];
-        
-        if(_alertViewArray.count > 0)
-        {
-            for(UIAlertView* alerView in _alertViewArray)
-            {
-                [alerView dismissWithClickedButtonIndex:[alerView cancelButtonIndex] animated:YES];
-            }
-            [_alertViewArray removeAllObjects];
-        }
+        [APPNAVGATOR dismissWindow];
         
         NSInteger msgtype = 3;
         if([userInfo objectForKey:@"msgtype"])
@@ -247,7 +227,7 @@ fetchCompletionHandler:
         }
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
         [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
-        [_alertViewArray addObject:alertView];
+        [APPNAVGATOR.alertViewArray addObject:alertView];
         [alertView show];
     }
     
@@ -273,6 +253,10 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             [APPNAVGATOR switchToLivingTab:0];
         }
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [APPNAVGATOR.alertViewArray removeObject:alertView];
 }
 
 // log NSSet with UTF8
