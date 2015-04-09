@@ -246,10 +246,15 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         NSInteger msgtype = [[alertView getAssociatedValueForKey:@"msgtype"] integerValue];
         if(msgtype == 1 || msgtype == 2)
         {
+            [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+            }];
+            
             [APPNAVGATOR switchToLivingTab:2];
         }
         else if(msgtype == 3)
         {
+            [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+            }];
             [APPNAVGATOR switchToLivingTab:0];
         }
     }
