@@ -544,7 +544,7 @@
             else
             {
                 vcTarget = [[BrowserViewController alloc] init];
-                ((BrowserViewController*)vcTarget).url = @"http://app.shangxiang.com/app_aboutus.html";
+                ((BrowserViewController*)vcTarget).url = @"http://218.244.131.126:812/app_aboutus.html";
             }
         }
             break;
