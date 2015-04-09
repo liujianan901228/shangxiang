@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "shangxiang/Discover/controllers/DiscoverInfoViewController.m"
-            timestampString = "450079407.449626"
+            filePath = "shangxiang/AppDelegate.m"
+            timestampString = "450254428.734823"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-buttonClicked:"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
+            landmarkName = "-application:didReceiveRemoteNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

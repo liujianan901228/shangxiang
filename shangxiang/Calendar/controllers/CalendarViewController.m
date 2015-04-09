@@ -145,7 +145,7 @@
     [holidayView addSubview:label];
     [self.view addSubview:holidayView];
     
-    UIImageView *folibg = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.detailView.bottom, self.view.frame.size.width, self.view.height - self.detailView.bottom)];
+    UIImageView *folibg = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.detailView.bottom, self.view.frame.size.width, self.view.frame.size.height-175)];
 //    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
 //    [folibg sd_setImageWithURL:[NSURL URLWithString:[def objectForKey:@"foliBg"]] placeholderImage:[UIImage imageForKey:@"folibg"]];
     [folibg setImage:[UIImage imageForKey:@"foli_bg"]];

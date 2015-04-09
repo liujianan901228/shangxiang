@@ -25,6 +25,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShown:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(close) name:ViewControllerDismissNotification object:nil];
     }
     return self;
 }

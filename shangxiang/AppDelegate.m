@@ -204,31 +204,36 @@ fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
+    [APPNAVGATOR dismissWindow];
+    NSInteger msgtype = 3;
+    if([userInfo objectForKey:@"msgtype"])
+    {
+        msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
+    }
+    NSString* message = @"收到一条新的消息";
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    if(aps && ((NSString*)[aps valueForKey:@"alert"]).length > 0)
+    {
+        message = [aps valueForKey:@"alert"];
+    }
+    else if([userInfo objectForKey:@"msg"])
+    {
+        message = [userInfo stringForKey:@"msg" withDefault:@"收到一条新的消息"];
+    }
     
     if(application.applicationState == UIApplicationStateActive)
     {
-    
-        [APPNAVGATOR dismissWindow];
         
-        NSInteger msgtype = 3;
-        if([userInfo objectForKey:@"msgtype"])
-        {
-            msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
-        }
-        NSString* message = @"收到一条新的消息";
-        NSDictionary *aps = [userInfo valueForKey:@"aps"];
-        if(aps && ((NSString*)[aps valueForKey:@"alert"]).length > 0)
-        {
-            message = [aps valueForKey:@"alert"];
-        }
-        else if([userInfo objectForKey:@"msg"])
-        {
-            message = [userInfo stringForKey:@"msg" withDefault:@"收到一条新的消息"];
-        }
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
         [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
         [APPNAVGATOR.alertViewArray addObject:alertView];
         [alertView show];
+    }
+    else
+    {
+        [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+        }];
+        [self changeByMsgType:msgtype];
     }
     
     completionHandler(UIBackgroundFetchResultNewData);
@@ -244,19 +249,24 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     if(buttonIndex == 1)
     {
         NSInteger msgtype = [[alertView getAssociatedValueForKey:@"msgtype"] integerValue];
-        if(msgtype == 1 || msgtype == 2)
-        {
-            [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
-            }];
-            
-            [APPNAVGATOR switchToLivingTab:2];
-        }
-        else if(msgtype == 3)
-        {
-            [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
-            }];
-            [APPNAVGATOR switchToLivingTab:0];
-        }
+        [self changeByMsgType:msgtype];
+    }
+}
+
+- (void)changeByMsgType:(NSInteger)msgtype
+{
+    if(msgtype == 1 || msgtype == 2)
+    {
+        [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+        }];
+        
+        [APPNAVGATOR switchToLivingTab:2];
+    }
+    else if(msgtype == 3)
+    {
+        [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+        }];
+        [APPNAVGATOR switchToLivingTab:0];
     }
 }
 
