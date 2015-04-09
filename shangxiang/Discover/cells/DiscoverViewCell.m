@@ -121,7 +121,7 @@
     
     [self.contentLabel setText:orderObject.wishText];
     
-    NSString* blessText = @"无人祈福";
+    NSString* blessText = @"无人加持";
     
     if(orderObject.nameBelssings && orderObject.nameBelssings.length > 0 && orderObject.coBlessings)
     {
