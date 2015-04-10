@@ -38,11 +38,6 @@
     self.navigationController.navigationBarHidden = NO;
     
 
-    CGFloat errorHeight = self.view.height - 64;
-    if(![LUtility isHigherIOS7]) {
-        errorHeight = self.view.height - 44;
-    }
-
     // 返回按钮
     NSInteger x = [self.navigationController.viewControllers count];
     
@@ -51,6 +46,12 @@
         // 多余一级的时候，再创建返回按钮
         [self setLeftBarButtonItem:[BaseViewController navigationBackButtonItemWithTarget:self action:@selector(goBack)]];
     }
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ViewControllerDismissNotification object:self];
 }
 
 

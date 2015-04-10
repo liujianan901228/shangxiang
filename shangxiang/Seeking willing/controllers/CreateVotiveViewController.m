@@ -33,6 +33,7 @@
 @property (nonatomic, strong) UIPickerView *choicePicker;//精选类型
 @property (nonatomic, strong) UIDatePicker *birthdayPicker; ///< 生日选择
 @property (nonatomic, strong) UIButton *pickerConfirmBtn; ///< 选择器确认按钮
+@property (nonatomic, strong) UILabel *pickerTitle;//>选择器标题
 @property (nonatomic, strong) UserHomeTownObject* homeObj;
 @property (nonatomic, strong) NSArray *provinces;
 @property (nonatomic, strong) NSArray *cities;
@@ -40,6 +41,7 @@
 @property (nonatomic, strong) NSDate* birthDate;
 @property (nonatomic, strong) GradeInfoObject* gradeInfoObject;
 @property (nonatomic, strong) NSString* choice;//精选暂存
+@property (nonatomic, strong) NSDate* minDate;
 
 @end
 
@@ -60,7 +62,7 @@
     // Do any additional setup after loading the view.
     
     self.title = @"填写订单";
-    self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
+    self.view.backgroundColor = RGBCOLOR(245, 245, 245);
     [self setupForDismissKeyboard];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
@@ -70,6 +72,9 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
     [self.view addSubview:_scrollView];
+    
+    NSTimeInterval  interval = 24*60*60;
+    _minDate = [[NSDate alloc] initWithTimeIntervalSinceNow:interval];
     
     [self initWithTempleInfo];
     [self setupPickerView];
@@ -114,7 +119,7 @@
     
     UIButton* wishTypeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 60 - 20, 40, 60, 30)];
     [wishTypeButton setTitleColor:UIColorFromRGB(0xa9a9a9) forState:UIControlStateNormal];
-    [wishTypeButton setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_GRAY)];
+    [wishTypeButton setBackgroundColor:RGBCOLOR(235, 235, 235)];
     [wishTypeButton setTitle:_infoObject.wishType forState:UIControlStateNormal];
     [wishTypeButton setEnabled:NO];
     [wishTypeButton.layer setCornerRadius:3];
@@ -128,23 +133,23 @@
     
     UILabel* labelContentTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, line.bottom + 10, self.view.width - 40 , 20)];
     [labelContentTitle setFont:[UIFont systemFontOfSize:12]];
-    [labelContentTitle setTextColor:UIColorFromRGB(0xc6c6c6)];
+    [labelContentTitle setTextColor:RGBCOLOR(83, 83, 83)];
     NSString* labelContentString = [NSString stringWithFormat:@"信众%@所求愿望已完,特此答谢还愿",[LUtility getShowName]];
     NSInteger length = [LUtility getShowName].length;
     NSMutableAttributedString* labelContentAttributedString = [[NSMutableAttributedString alloc] initWithString:labelContentString];
-    [labelContentAttributedString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FONT_NORMAL) range:NSRangeMake(2, length)];
+    [labelContentAttributedString addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(32, 32, 32) range:NSRangeMake(2, length)];
     [labelContentTitle setAttributedText:labelContentAttributedString];
     
     [_scrollView addSubview:labelContentTitle];
     
-    UIButton* buttonSelectContent = [[UIButton alloc] initWithFrame:CGRectMake(0, line.bottom + 10, 60, 30)];
-    buttonSelectContent.right = wishTypeButton.right;
-    [buttonSelectContent setTitle:@"精选" forState:UIControlStateNormal];
-    [buttonSelectContent.titleLabel setFont:[UIFont systemFontOfSize:10.0f]];
-    [buttonSelectContent setTitleColor:UIColorFromRGB(COLOR_FONT_FORM_HINT) forState:UIControlStateNormal];
-    [buttonSelectContent setBackgroundColor:[UIColor clearColor]];
-    [buttonSelectContent addTarget:self action:@selector(editChoice) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:buttonSelectContent];
+//    UIButton* buttonSelectContent = [[UIButton alloc] initWithFrame:CGRectMake(0, line.bottom + 10, 60, 30)];
+//    buttonSelectContent.right = wishTypeButton.right;
+//    [buttonSelectContent setTitle:@"精选" forState:UIControlStateNormal];
+//    [buttonSelectContent.titleLabel setFont:[UIFont systemFontOfSize:10.0f]];
+//    [buttonSelectContent setTitleColor:UIColorFromRGB(COLOR_FONT_FORM_HINT) forState:UIControlStateNormal];
+//    [buttonSelectContent setBackgroundColor:[UIColor clearColor]];
+//    [buttonSelectContent addTarget:self action:@selector(editChoice) forControlEvents:UIControlEventTouchUpInside];
+//    [_scrollView addSubview:buttonSelectContent];
     
     _commonTextFiled = [[CommonTextFiled alloc] initWithFrame:CGRectMake(20, labelContentTitle.bottom + 5, self.view.width - 40, 80)];
     [_commonTextFiled setMaxInputCount:100];
@@ -169,7 +174,7 @@
     [_fieldOtherDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldOtherDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldOtherDesirer.layer setCornerRadius:5.0f];
-    [_fieldOtherDesirer setPlaceholder:@"请输入"];
+     [_fieldOtherDesirer setText:USEROPERATIONHELP.currentUser.nickName];
     [_fieldOtherDesirer.layer setMasksToBounds:YES];
     [_fieldOtherDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldOtherDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
@@ -195,7 +200,8 @@
     [_fieldPositionDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldPositionDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldPositionDesirer.layer setCornerRadius:5.0f];
-    [_fieldPositionDesirer setPlaceholder:@"请输入"];
+    if(USEROPERATIONHELP.currentUser.area) [_fieldPositionDesirer setText:USEROPERATIONHELP.currentUser.area];
+    else [_fieldPositionDesirer setPlaceholder:@"请输入"];
     [_fieldPositionDesirer.layer setMasksToBounds:YES];
     [_fieldPositionDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldPositionDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
@@ -245,7 +251,12 @@
     [_fieldTimeDesirer setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_fieldTimeDesirer setFont:[UIFont systemFontOfSize:14.0f]];
     [_fieldTimeDesirer.layer setCornerRadius:5.0f];
-    [_fieldTimeDesirer setPlaceholder:@"请输入"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateString = [dateFormatter stringFromDate:_minDate];
+    [_fieldTimeDesirer setText:dateString];
     [_fieldTimeDesirer.layer setMasksToBounds:YES];
     [_fieldTimeDesirer.layer setBorderWidth:HEIGHT_LINE];
     [_fieldTimeDesirer.layer setBorderColor:[UIColorFromRGB(COLOR_LINE_NORMAL) CGColor]];
@@ -306,12 +317,15 @@
     
     __weak typeof(self) weakSelf = self;
     [weakSelf showChrysanthemumHUD:YES];
-    [ListTempleManager postOrderInfo:[LUtility getWishType:self.infoObject.wishType] wishText:[_commonTextFiled getContentText] wishName:_fieldOtherDesirer.text wishGrade:self.gradeInfoObject.gradeVal buddhaDate:self.birthObj.transBirthDayToString wishPlace:_fieldPositionDesirer.text tid:self.infoObject.tid aid:self.infoObject.builddhistId userId:USEROPERATIONHELP.currentUser.userId mobile:nil alsoWish:1 orderId:self.infoObject.orderId successBlock:^(id obj) {
+    NSString* userId = (USEROPERATIONHELP.currentUser && USEROPERATIONHELP.currentUser.userId) ? USEROPERATIONHELP.currentUser.userId : @"";
+    [ListTempleManager postOrderInfo:[LUtility getWishType:self.infoObject.wishType] wishText:[_commonTextFiled getContentText] wishName:_fieldOtherDesirer.text wishGrade:self.gradeInfoObject.gradeVal buddhaDate:self.birthObj.transBirthDayToString wishPlace:_fieldPositionDesirer.text tid:self.infoObject.tid aid:self.infoObject.builddhistId userId:userId mobile:nil alsoWish:1 orderId:self.infoObject.orderId successBlock:^(id obj) {
         [weakSelf removeAllHUDViews:YES];
         NSString* orderId = [obj stringForKey:@"orderid" withDefault:@""];
         PayInfoViewController* payInfoViewController = [[PayInfoViewController alloc] init];
         payInfoViewController.orderId = orderId;
         payInfoViewController.price = weakSelf.gradeInfoObject.gradePrice;
+        payInfoViewController.productName = weakSelf.gradeInfoObject.gradeName;
+        payInfoViewController.orderContentText = [weakSelf.commonTextFiled getContentText];
         [weakSelf.navigationController pushViewController:payInfoViewController animated:YES];
         
     } failed:^(id error) {
@@ -409,6 +423,7 @@
 /// 编辑城市
 - (void)editCity {
     [self setupPickerView];
+    _pickerTitle.text = @"我的位置";
     [self enterPicker:_hometownPicker];
 }
 
@@ -424,6 +439,7 @@
             {
                 //成功或者失败
                 [weakSelf setupPickerView];
+                _pickerTitle.text = @"精选";
                 [weakSelf enterPicker:_choicePicker];
             }
         }];
@@ -431,6 +447,7 @@
     else
     {
         [self setupPickerView];
+        _pickerTitle.text = @"精选";
         [self enterPicker:_choicePicker];
     }
 }
@@ -439,13 +456,14 @@
 - (void)editWishGradeType
 {
     [self setupPickerView];
+    _pickerTitle.text = @"香烛类型";
     [self enterPicker:_typePicker];
 }
 
 /// 编辑生日
 - (void)editBirty {
     [self setupPickerView];
-    
+    _pickerTitle.text = @"预约日期";
     [self birthdayPickerValueChange:_birthdayPicker];
     [self enterPicker:_birthdayPicker];
 }
@@ -457,34 +475,30 @@
     self.birthdayPicker =[[UIDatePicker alloc] init];
     [self.birthdayPicker setDatePickerMode:UIDatePickerModeDate];
     self.birthdayPicker.locale = [NSLocale currentLocale];
-    
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setYear:[NSDate date].year];
-    [components setMonth:[NSDate date].month];
-    [components setDay:[NSDate date].day];
-    
-    NSDate *minDate = [gregorian dateFromComponents:components];
-    self.birthdayPicker.minimumDate = minDate;
+    self.birthdayPicker.backgroundColor = [UIColor whiteColor];
+    self.birthdayPicker.minimumDate = _minDate;
     
     self.birthObj = [[UserBirthdayObject alloc] init];
-    self.birthObj.year = [NSNumber numberWithInteger:[NSDate date].year];
-    self.birthObj.month = [NSNumber numberWithInteger:[NSDate date].month];
-    self.birthObj.day = [NSNumber numberWithInteger:[NSDate date].day];
+    self.birthObj.year = [NSNumber numberWithInteger:_minDate.year];
+    self.birthObj.month = [NSNumber numberWithInteger:_minDate.month];
+    self.birthObj.day = [NSNumber numberWithInteger:_minDate.day];
     
     [self.birthdayPicker addTarget:self action:@selector(birthdayPickerValueChange:) forControlEvents:UIControlEventValueChanged];
     
     
-    _typePicker = [[UIPickerView alloc] init];
+     _typePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.width, Picker_Container_Height)];
     _typePicker.delegate = self;
+    _typePicker.backgroundColor = [UIColor whiteColor];
     _typePicker.showsSelectionIndicator = YES;
     
-    _choicePicker = [[UIPickerView alloc] init];
+     _choicePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.width, Picker_Container_Height)];
     _choicePicker.delegate = self;
+    _choicePicker.backgroundColor = [UIColor whiteColor];
     _choicePicker.showsSelectionIndicator = YES;
     
-    self.hometownPicker = [[UIPickerView alloc] init];
+    self.hometownPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.width, Picker_Container_Height)];
     self.hometownPicker.delegate = self;
+    _hometownPicker.backgroundColor = [UIColor whiteColor];
     self.hometownPicker.showsSelectionIndicator = YES;
     self.provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"hometown" ofType:@"plist"]];
     
@@ -520,27 +534,39 @@
     }
     
     
-    CGFloat barHeight = 40;
+    CGFloat barHeight = Picker_Header_Height;
     _pickerBackground = [UIView new];
-    _pickerBackground.frame = _scrollView.bounds;
+    _pickerBackground.frame = self.view.bounds;
     _pickerBackground.backgroundColor = [UIColor clearColor];
     _hometownPicker.top = barHeight;
-    
-    _hometownPicker.backgroundColor = [UIColor whiteColor];
+
     
     _pickerContainer = [UIView new];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerContainer.size = CGSizeMake(_hometownPicker.width, _hometownPicker.height + barHeight);
-    _pickerContainer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerConfirmBtn = [UIButton new];
     _pickerConfirmBtn.size = CGSizeMake(60, barHeight);
     [_pickerConfirmBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [_pickerConfirmBtn setTitleColor:UIColorFromRGB(0x007aff) forState:UIControlStateNormal];
-    [_pickerConfirmBtn setTitleColor:UIColorFromRGBA(0x007aff, 0.5) forState:UIControlStateHighlighted];
+    [_pickerConfirmBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [_pickerConfirmBtn setTitleColor:UIColorFromRGB(0x686867) forState:UIControlStateNormal];
     _pickerConfirmBtn.right = _pickerContainer.width;
     [_pickerConfirmBtn addTarget:self action:@selector(confirmPicker) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     [_pickerContainer addSubview:_pickerConfirmBtn];
+    
+    _pickerTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, Picker_Header_Height)];
+    _pickerTitle.font = [UIFont systemFontOfSize:13];
+    _pickerTitle.textAlignment = NSTextAlignmentCenter;
+    _pickerTitle.centerX = _pickerContainer.centerX;
+    _pickerTitle.backgroundColor = [UIColor clearColor];
+    _pickerTitle.textColor = UIColorFromRGB(0x686867);
+    [_pickerContainer addSubview:_pickerTitle];
+    
+    
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(0, Picker_Header_Height - 0.5, _scrollView.width, 0.5)];
+    lineView.backgroundColor = UIColorFromRGB(COLOR_LINE_NORMAL);
+    [_pickerContainer addSubview:lineView];
+    
     [_pickerBackground addSubview:_pickerContainer];
     
     UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endPicker)];
@@ -566,6 +592,7 @@
 
 - (void)enterPicker:(UIView *)picker {
     _pickerBackground.backgroundColor = [UIColor clearColor];
+    _pickerBackground.frame = self.view.bounds;
     _pickerContainer.top = _pickerBackground.height;
     [_hometownPicker removeFromSuperview];
     [_birthdayPicker removeFromSuperview];
@@ -575,7 +602,7 @@
     [_pickerContainer addSubview:picker];
     picker.top = _pickerConfirmBtn.bottom;
     
-    [_scrollView addSubview:_pickerBackground];
+    [self.view addSubview:_pickerBackground];
     UIViewAnimationOptions op = UIViewAnimationOptionBeginFromCurrentState;
     op |= (7 << 16);
     [UIView animateWithDuration:0.3 delay:0 options:op animations:^{
@@ -626,9 +653,9 @@
             GradeInfoObject* infoObject = [self.gradeInfoArray objectAtIndex:0];
             self.gradeInfoObject = infoObject;
         }
-        NSString* typeText = [NSString stringWithFormat:@"%@       %zd",self.gradeInfoObject.gradeName,self.gradeInfoObject.gradePrice];
+        NSString* typeText = [NSString stringWithFormat:@"%@       %.2f",self.gradeInfoObject.gradeName,self.gradeInfoObject.gradePrice];
         NSMutableAttributedString* typeStringText = [[NSMutableAttributedString alloc] initWithString:typeText];
-        [typeStringText setAttributeKey:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[typeText rangeOfString:[NSString stringWithFormat:@"%zd",self.gradeInfoObject.gradePrice]]];
+        [typeStringText setAttributeKey:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[typeText rangeOfString:[NSString stringWithFormat:@"%.2f",self.gradeInfoObject.gradePrice]]];
         [_fieldTypeDesirer setAttributedText:typeStringText];
     }
     else if(_choicePicker.superview)
@@ -694,7 +721,7 @@
         if(self.gradeInfoArray && self.gradeInfoArray.count > 0)
         {
             GradeInfoObject* infoObject = [self.gradeInfoArray objectAtIndex:row];
-            return [NSString stringWithFormat:@"%@              %zd",infoObject.gradeName,infoObject.gradePrice];
+            return [NSString stringWithFormat:@"%@              %.2f",infoObject.gradeName,infoObject.gradePrice];
         }
     }
     else if([pickerView isEqual:self.choicePicker])
@@ -741,5 +768,13 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField.returnKeyType == UIReturnKeyDone)
+    {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
 
 @end

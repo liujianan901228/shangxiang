@@ -157,11 +157,13 @@
     [self addSubview:_scrollView];
     [self addSubview:_pager];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismiss) name:ViewControllerDismissNotification object:nil];
+    
     return self;
 }
 
 - (void)dealloc {
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)showFromImageView:(UIImageView *)fromView toContainer:(UIView *)container {
@@ -480,8 +482,14 @@
     if (self.isSheetDisplay) return;
     self.isSheetDisplay = YES;
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存到手机", nil];
+    [APPNAVGATOR.actionSheetArray addObject:sheet];
     sheet.destructiveButtonIndex = 1;
     [sheet showInView:self.window];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [APPNAVGATOR.actionSheetArray removeObject:actionSheet];
 }
 
 

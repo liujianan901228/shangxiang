@@ -42,6 +42,7 @@
         
         _shareButton = [[UIButton alloc] initWithFrame:CGRectMake(self.contentView.width - 20 - 130, _firstLabel.bottom, 130, 30)];
         [_shareButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        _shareButton.userInteractionEnabled = NO;
         [_shareButton setTitleColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) forState:UIControlStateNormal];
         [_shareButton setTitle:@"[随喜转发] 功德无量" forState:UIControlStateNormal];
         [_shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];

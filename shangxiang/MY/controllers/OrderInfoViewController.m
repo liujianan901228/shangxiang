@@ -14,6 +14,7 @@
 #import "ListTempleManager.h"
 #import "GradeInfoObject.h"
 #import "LFFGPhotoAlbumView.h"
+#import "PayInfoViewController.h"
 
 @interface OrderInfoViewController ()
 
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) OrderInfoObject* infoObject;
 @property (nonatomic, strong) SingLineImageCollectionView* viewHallThumb;
 @property (nonatomic, strong) UILabel* wishGradeLabel;
+@property (nonatomic, strong) GradeInfoObject* gradeInfo;
 
 @end
 
@@ -53,7 +55,7 @@
     [orderNumberLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     [orderNumberLabel setFont:[UIFont systemFontOfSize:14]];
     [orderNumberLabel setTextColor:UIColorFromRGB(0x808080)];
-    [orderNumberLabel setText:[NSString stringWithFormat:@"订单号 : %@",self.infoObject.orderId]];
+    [orderNumberLabel setText:[NSString stringWithFormat:@"订单号 : %@",self.infoObject.orderLongId]];
     [_scrollView addSubview:orderNumberLabel];
     
     UILabel* nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, orderNumberLabel.bottom + 5, self.view.width - 40, 20)];
@@ -83,7 +85,7 @@
     [_scrollView addSubview:templeNameLabel];
     
     
-    UILabel* attchNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 120, lineView.bottom + 10, 100, 20)];
+    UILabel* attchNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 150, lineView.bottom + 10, 100, 20)];
     [attchNameLabel setNumberOfLines:1];
     [attchNameLabel setBackgroundColor:[UIColor clearColor]];
     [attchNameLabel setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -114,17 +116,18 @@
     [_scrollView addSubview:_wishGradeLabel];
     
     
-    UILabel* dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 120, templeNameLabel.bottom + 5, 100, 20)];
+    UILabel* dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 150, templeNameLabel.bottom + 5, 150, 20)];
     [dateLabel setNumberOfLines:1];
     [dateLabel setBackgroundColor:[UIColor clearColor]];
     [dateLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     [dateLabel setFont:[UIFont systemFontOfSize:14]];
     
-    NSMutableAttributedString* dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间: %@",self.infoObject.wishDate]];
+
+    NSMutableAttributedString* dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"时间: %@",self.infoObject.buddhadate]];
     [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xbababa) range:NSRangeMake(0, 4)];
     [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSRangeMake(0, 4)];
-    [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, self.infoObject.wishDate.length)];
-    [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, self.infoObject.wishDate.length)];
+    [dateString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, self.infoObject.buddhadate.length)];
+    [dateString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, self.infoObject.buddhadate.length)];
     
     [dateLabel setAttributedText:dateString];
     [_scrollView addSubview:dateLabel];
@@ -159,50 +162,57 @@
     [lineView setBackgroundColor:UIColorFromRGB(COLOR_LINE_NORMAL)];
     [_scrollView addSubview:lineView];
     
-    UILabel* recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, lineView.bottom + 10, self.view.width - 40, 20)];
-    [recordLabel setNumberOfLines:1];
-    [recordLabel setBackgroundColor:[UIColor clearColor]];
-    [recordLabel setLineBreakMode:NSLineBreakByTruncatingTail];
-    [recordLabel setFont:[UIFont systemFontOfSize:15]];
-    [recordLabel setTextColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT)];
-    [recordLabel setText:@"代上香祈福记录"];
-    [_scrollView addSubview:recordLabel];
+    
     
     if([self.infoObject.status isEqualToString:@"已完成"])
     {
-        _viewHallThumb = [[SingLineImageCollectionView alloc] initWithFrame:CGRectMake(20, recordLabel.bottom + 20, self.view.width - 40, 85)];
         
-        __weak typeof(self) weakSelf = self;
-        _viewHallThumb.actionBlock = ^(TemplePictureObject* picObject,UIImageView* imageView)
+        if(self.infoObject.images && self.infoObject.images.count > 0)
         {
-            NSMutableArray *infos = @[].mutableCopy;
-            for (NSUInteger i = 0; i < weakSelf.infoObject.images.count && i < 9; i++)
+            UILabel* recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, lineView.bottom + 10, self.view.width - 40, 20)];
+            [recordLabel setNumberOfLines:1];
+            [recordLabel setBackgroundColor:[UIColor clearColor]];
+            [recordLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+            [recordLabel setFont:[UIFont systemFontOfSize:15]];
+            [recordLabel setTextColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT)];
+            [recordLabel setText:@"代上香祈福记录"];
+            [_scrollView addSubview:recordLabel];
+        
+        
+            _viewHallThumb = [[SingLineImageCollectionView alloc] initWithFrame:CGRectMake(20, recordLabel.bottom + 20, self.view.width - 40, 72)];
+            
+            __weak typeof(self) weakSelf = self;
+            _viewHallThumb.actionBlock = ^(TemplePictureObject* picObject,UIImageView* imageView)
             {
-                TemplePictureObject* object = (TemplePictureObject*)[weakSelf.infoObject.images objectAtIndex:i];
-                UIImageView *image = imageView;
-                LFFGPhotoAlbumPageInfo *info = [LFFGPhotoAlbumPageInfo new];
-                if([object.picSmallUrl isEqualToString:picObject.picSmallUrl])
+                NSMutableArray *infos = @[].mutableCopy;
+                for (NSUInteger i = 0; i < weakSelf.infoObject.images.count && i < 9; i++)
                 {
-                    info.thumbView = image;
+                    TemplePictureObject* object = (TemplePictureObject*)[weakSelf.infoObject.images objectAtIndex:i];
+                    UIImageView *image = imageView;
+                    LFFGPhotoAlbumPageInfo *info = [LFFGPhotoAlbumPageInfo new];
+                    if([object.picSmallUrl isEqualToString:picObject.picSmallUrl])
+                    {
+                        info.thumbView = image;
+                    }
+                    info.thumbSize = image.size;
+                    info.largeURL = object.picBigUrl;
+                    NSLog(@"%@",info.largeURL);
+                    //info.largeSize = photo.largeSize;
+                    [infos addObject:info];
                 }
-                info.thumbSize = image.size;
-                info.largeURL = object.picBigUrl;
-                NSLog(@"%@",info.largeURL);
-                //info.largeSize = photo.largeSize;
-                [infos addObject:info];
-            }
-            LFFGPhotoAlbumView *albumView = [LFFGPhotoAlbumView new];
-            albumView.pageInfos = infos;
-            [albumView showFromImageView:imageView toContainer:weakSelf.view];
-            NSLog(@"%@ 啦啦啦啦啦了 ",picObject.picSmallUrl);
-        };
-        [_viewHallThumb setBackgroundColor:[UIColor clearColor]];
-        [_viewHallThumb setObject:self.infoObject.images];
-        [_scrollView addSubview:_viewHallThumb];
+                LFFGPhotoAlbumView *albumView = [LFFGPhotoAlbumView new];
+                albumView.pageInfos = infos;
+                [albumView showFromImageView:imageView toContainer:weakSelf.view.window];
+            };
+            [_viewHallThumb setBackgroundColor:[UIColor clearColor]];
+            [_viewHallThumb setObject:self.infoObject.images];
+            [_scrollView addSubview:_viewHallThumb];
+        }
         
-        if(self.isWilling)
+        if(self.isWilling && !self.infoObject.isRedeem)
         {
-            UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(20, _viewHallThumb.bottom + 20, self.view.width - 40, 40)];
+            CGFloat offsetY = (self.infoObject.images && self.infoObject.images.count > 0) ? _viewHallThumb.bottom + 20 : lineView.bottom + 20;
+            UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(20,offsetY , self.view.width - 40, 40)];
             [buttonSubmitCreateOrder setTitle:@"在此还愿" forState:UIControlStateNormal];
             [buttonSubmitCreateOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
             [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
@@ -211,8 +221,27 @@
             [_scrollView addSubview:buttonSubmitCreateOrder];
         }
     }
+    else if([self.infoObject.status isEqualToString:@"未支付"])
+    {
+        UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(20, lineView.bottom + 20, self.view.width - 40, 40)];
+        [buttonSubmitCreateOrder setTitle:@"继续支付" forState:UIControlStateNormal];
+        [buttonSubmitCreateOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+        [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
+        [buttonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
+        [buttonSubmitCreateOrder addTarget:self action:@selector(pay) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:buttonSubmitCreateOrder];
+
+    }
     else
     {
+        UILabel* recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, lineView.bottom + 10, self.view.width - 40, 20)];
+        [recordLabel setNumberOfLines:1];
+        [recordLabel setBackgroundColor:[UIColor clearColor]];
+        [recordLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+        [recordLabel setFont:[UIFont systemFontOfSize:15]];
+        [recordLabel setTextColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT)];
+        [recordLabel setText:@"代上香祈福记录"];
+        [_scrollView addSubview:recordLabel];
         UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake((_scrollView.width - 63)/2, recordLabel.bottom + 20, 63, 50)];
         [imageView setBackgroundColor:[UIColor clearColor]];
         [imageView setImage:[UIImage imageForKey:@"receipt"]];
@@ -264,13 +293,14 @@
         {
             if([info.gradeName isEqualToString:weakSelf.infoObject.wishGrade])
             {
-                NSString* text = [NSString stringWithFormat:@"香烛: %@  ￥%zd",weakSelf.infoObject.wishGrade,info.gradePrice];
+                NSString* text = [NSString stringWithFormat:@"香烛: %@  ￥%.2f",weakSelf.infoObject.wishGrade,info.gradePrice];
                 NSMutableAttributedString* wishGradeString = [[NSMutableAttributedString alloc] initWithString:text];
                 [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xbababa) range:NSRangeMake(0, 4)];
                 [wishGradeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSRangeMake(0, 4)];
                 [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0x808080) range:NSRangeMake(4, self.infoObject.wishGrade.length)];
                 [wishGradeString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15] range:NSRangeMake(4, self.infoObject.wishGrade.length)];
-                [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[text rangeOfString:[NSString stringWithFormat:@"￥%zd",info.gradePrice]]];
+                [wishGradeString addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT) range:[text rangeOfString:[NSString stringWithFormat:@"￥%.2f",info.gradePrice]]];
+                weakSelf.gradeInfo = info;
                 [weakSelf.wishGradeLabel setAttributedText:wishGradeString];
             }
         }
@@ -279,9 +309,26 @@
     }];
 }
 
+- (void)pay
+{
+    PayInfoViewController* viewController = [[PayInfoViewController alloc] init];
+    viewController.orderId = self.infoObject.orderId;
+    viewController.price = self.gradeInfo.gradePrice;
+    viewController.orderContentText = self.infoObject.wishText;
+    viewController.productName = self.gradeInfo.gradeName;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
 - (void)goBack
 {
-    [APPNAVGATOR turnToOrderRecordPage];
+    if(USEROPERATIONHELP.isLogin)
+    {
+        [APPNAVGATOR turnToOrderRecordPage];
+    }
+    else
+    {
+        [APPNAVGATOR calendarTurnWillingGuide];
+    }
 }
 
 @end

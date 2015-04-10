@@ -7,6 +7,7 @@
 //
 
 #import "AppUser.h"
+#import "APService.h"
 
 @implementation AppUser
 
@@ -26,6 +27,8 @@
     [aCoder encodeObject:self.area forKey:@"area"];
     [aCoder encodeObject:@(self.receivedBlessings) forKey:@"receivedBlessings"];
     [aCoder encodeObject:self.mobile forKey:@"mobile"];
+    [aCoder encodeObject:self.jregid forKey:@"jregid"];
+    [aCoder encodeObject:[NSNumber numberWithBool:self.isRemind] forKey:@"isRemind"];
 }
 
 
@@ -46,6 +49,8 @@
         self.area = [aDecoder decodeObjectForKey:@"area"];
         self.doBlessings = [[aDecoder decodeObjectForKey:@"receivedBlessings"] integerValue];
         self.mobile = [aDecoder decodeObjectForKey:@"mobile"];
+        self.jregid = [aDecoder decodeObjectForKey:@"jregid"];
+        self.isRemind = [[aDecoder decodeObjectForKey:@"isRemind"] boolValue];
     }
     return self;
 }
@@ -66,8 +71,24 @@
         self.receivedBlessings = [dic intForKey:@"received_blessings" withDefault:0];
         self.doBlessings = [dic intForKey:@"do_blessings" withDefault:0];
         self.mobile = [dic stringForKey:@"mobile" withDefault:@""];
+        self.jregid = [dic stringForKey:@"jpushregid" withDefault:@""];
+        
+        self.isRemind = [[dic objectForKey:@"isflremind"] integerValue] == 1 ? YES : NO;
     }
     return self;
+}
+
+- (void)setIsLogined:(BOOL)isLogined
+{
+    _isLogined = isLogined;
+    if(_isLogined && _jregid)
+    {
+        [APService setTags:nil alias:_userId callbackSelector:nil object:nil];
+    }
+    else
+    {
+        [APService setTags:nil alias:nil callbackSelector:nil object:nil];
+    }
 }
 
 @end

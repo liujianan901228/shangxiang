@@ -14,6 +14,9 @@
 
 @property(nonatomic,strong)UINavigationController* currentContentNav;
 
+
+@property(nonatomic,strong)NSMutableArray* alertViewArray;
+@property(nonatomic,strong)NSMutableArray* actionSheetArray;
 /**
  *   开启默认controller
  */
@@ -23,14 +26,20 @@
 //跳转登录页面
 -(void)turnToLoginGuide;;
 
-//显示提醒框
-- (void)showAlert:(NSString*)title Message:(NSString*)msg;
 
 //跳转订单查询页面
 - (void)turnToOrderRecordPage;
 
 //日历跳转求愿页面
 - (void)calendarTurnWillingGuide;
+
+-(void)switchToLivingTab:(NSInteger)index;
+
+//>打开引导页面
+-(void)openTutorialPage;
+
+//>推送过来了消失
+- (void)dismissWindow;
 
 @end
 

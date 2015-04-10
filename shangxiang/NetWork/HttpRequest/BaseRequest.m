@@ -38,8 +38,6 @@
 
 @implementation BaseRequest
 
-// Relase
-#define DefaultBaseAddress  @"http://demo123.shangxiang.com/api/app/"
 
 -(instancetype)initWithAddress:(NSString*)baseAddress
                     parameters:(NSDictionary*)params
@@ -103,6 +101,16 @@
                     completeBlock(0,dictionary,nil);
                 }
             }
+            else
+            {
+                ExError* exError = [ExError errorWithCode:@"0" errorMessage:@"网络错误"];
+                completeBlock(0,nil,exError);
+            }
+        }
+        else
+        {
+            ExError* exError = [ExError errorWithCode:@"0" errorMessage:@"网络错误"];
+            completeBlock(0,nil,exError);
         }
     }];
     

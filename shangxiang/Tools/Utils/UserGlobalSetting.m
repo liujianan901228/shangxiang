@@ -35,4 +35,20 @@
     return nil;
 }
 
++(BOOL)isFirstOpenApp
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    return [[userDefaults stringForKey:kFirstOpenAppFlag] boolValue];
+}
+
++(void)setFirstOpenApp
+{
+    NSNumber       *obj = [NSNumber numberWithBool:YES];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setObject:obj forKey:kFirstOpenAppFlag];
+    [userDefaults synchronize];
+}
+
 @end

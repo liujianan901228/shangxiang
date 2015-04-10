@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) TempleObject* templeObject;
 @property (nonatomic, assign) WishType wishType;
+@property (nonatomic, copy) NSString* orderContentText;
 
 @end

@@ -156,70 +156,76 @@
     UIButton* buttonSubmitLogin = [[UIButton alloc] initWithFrame:frame];
     [buttonSubmitLogin setTitle:@"登录" forState:UIControlStateNormal];
     [buttonSubmitLogin.layer setCornerRadius:3];
+    [buttonSubmitLogin setClipsToBounds:YES];
     [buttonSubmitLogin setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [buttonSubmitLogin setBackgroundColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT)];
+    [buttonSubmitLogin setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
+    [buttonSubmitLogin setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
     [buttonSubmitLogin addTarget:self action:@selector(submitLogin) forControlEvents:UIControlEventTouchUpInside];
     [viewMain addSubview:buttonSubmitLogin];
     
-    frame.origin = CGPointMake(0, fltViewHeight - 150);
-    frame.size = CGSizeMake(fltViewWidth, 0.5f);
-    viewTemp = [[UIView alloc] initWithFrame:frame];
-    viewTemp.backgroundColor = UIColorFromRGB(COLOR_LINE_NORMAL);
-    [viewMain addSubview:viewTemp];
+    if(self.isShowThird)
+    {
+        frame.origin = CGPointMake(0, fltViewHeight - 150);
+        frame.size = CGSizeMake(fltViewWidth, 0.5f);
+        viewTemp = [[UIView alloc] initWithFrame:frame];
+        viewTemp.backgroundColor = UIColorFromRGB(COLOR_LINE_NORMAL);
+        [viewMain addSubview:viewTemp];
     
-    frame.origin = CGPointMake((fltViewWidth - 120) / 2, fltViewHeight - 170);
-    frame.size = CGSizeMake(120, 40);
-    UILabel* labelPartnerLogin = [[UILabel alloc] initWithFrame:frame];
-    labelPartnerLogin.text = @"使用合作账号登录";
-    labelPartnerLogin.font = [UIFont systemFontOfSize:12.0f];
-    labelPartnerLogin.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
-    labelPartnerLogin.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
-    labelPartnerLogin.textAlignment = NSTextAlignmentCenter;
-    [viewMain addSubview:labelPartnerLogin];
     
-    UIImage* imgWechat = [UIImage imageForKey:@"logo_wechat"];
-    frame.origin = CGPointMake(fltViewWidth / 2 - imgWechat.size.width - 30, fltViewHeight - 120);
-    frame.size = imgWechat.size;
-    UIImageView* viewWechat = [[UIImageView alloc] initWithFrame:frame];
-    viewWechat.image = imgWechat;
-    [viewMain addSubview:viewWechat];
-    
-    UIImage* imgWeibo = [UIImage imageForKey:@"logo_weibo"];
-    frame.origin = CGPointMake(fltViewWidth / 2 + 30, fltViewHeight - 120);
-    frame.size = imgWeibo.size;
-    UIImageView* viewWeibo = [[UIImageView alloc] initWithFrame:frame];
-    viewWeibo.image = imgWeibo;
-    [viewMain addSubview:viewWeibo];
-    
-    frame.origin = CGPointMake(viewWechat.frame.origin.x, viewWechat.frame.origin.y + imgWechat.size.height);
-    frame.size = CGSizeMake(imgWechat.size.width, 30);
-    UILabel* labelWechat = [[UILabel alloc] initWithFrame:frame];
-    labelWechat.text = @"微信";
-    labelWechat.font = [UIFont systemFontOfSize:14];
-    labelWechat.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
-    labelWechat.textAlignment = NSTextAlignmentCenter;
-    [viewMain addSubview:labelWechat];
-    
-    frame.origin = CGPointMake(viewWeibo.frame.origin.x, viewWeibo.frame.origin.y + imgWeibo.size.height);
-    frame.size = CGSizeMake(imgWeibo.size.width, 30);
-    UILabel* labelWeibo = [[UILabel alloc] initWithFrame:frame];
-    labelWeibo.text = @"微博";
-    labelWeibo.font = [UIFont systemFontOfSize:14];
-    labelWeibo.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
-    labelWeibo.textAlignment = NSTextAlignmentCenter;
-    [viewMain addSubview:labelWeibo];
-    
-    frame.origin = viewWechat.frame.origin;
-    frame.size = CGSizeMake(imgWechat.size.width, imgWechat.size.height + labelWechat.frame.size.height);
-    UIButton* buttonWechatLogin = [[UIButton alloc] initWithFrame:frame];
-    [buttonWechatLogin addTarget:self action:@selector(wechatLogin) forControlEvents:UIControlEventTouchUpInside];
-    [viewMain addSubview:buttonWechatLogin];
-    
-    frame.origin = viewWeibo.frame.origin;
-    frame.size = CGSizeMake(imgWeibo.size.width, imgWeibo.size.height + labelWeibo.frame.size.height);
-    UIButton* buttonWeiboLogin = [[UIButton alloc] initWithFrame:frame];
-    [buttonWeiboLogin addTarget:self action:@selector(weiboLogin) forControlEvents:UIControlEventTouchUpInside];
-    [viewMain addSubview:buttonWeiboLogin];
+        frame.origin = CGPointMake((fltViewWidth - 120) / 2, fltViewHeight - 170);
+        frame.size = CGSizeMake(120, 40);
+        UILabel* labelPartnerLogin = [[UILabel alloc] initWithFrame:frame];
+        labelPartnerLogin.text = @"使用合作账号登录";
+        labelPartnerLogin.font = [UIFont systemFontOfSize:12.0f];
+        labelPartnerLogin.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
+        labelPartnerLogin.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
+        labelPartnerLogin.textAlignment = NSTextAlignmentCenter;
+        [viewMain addSubview:labelPartnerLogin];
+        
+        UIImage* imgWechat = [UIImage imageForKey:@"logo_wechat"];
+        frame.origin = CGPointMake(fltViewWidth / 2 - imgWechat.size.width - 30, fltViewHeight - 120);
+        frame.size = imgWechat.size;
+        UIImageView* viewWechat = [[UIImageView alloc] initWithFrame:frame];
+        viewWechat.image = imgWechat;
+        [viewMain addSubview:viewWechat];
+        
+        UIImage* imgWeibo = [UIImage imageForKey:@"logo_weibo"];
+        frame.origin = CGPointMake(fltViewWidth / 2 + 30, fltViewHeight - 120);
+        frame.size = imgWeibo.size;
+        UIImageView* viewWeibo = [[UIImageView alloc] initWithFrame:frame];
+        viewWeibo.image = imgWeibo;
+        [viewMain addSubview:viewWeibo];
+        
+        frame.origin = CGPointMake(viewWechat.frame.origin.x, viewWechat.frame.origin.y + imgWechat.size.height);
+        frame.size = CGSizeMake(imgWechat.size.width, 30);
+        UILabel* labelWechat = [[UILabel alloc] initWithFrame:frame];
+        labelWechat.text = @"微信";
+        labelWechat.font = [UIFont systemFontOfSize:14];
+        labelWechat.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
+        labelWechat.textAlignment = NSTextAlignmentCenter;
+        [viewMain addSubview:labelWechat];
+        
+        frame.origin = CGPointMake(viewWeibo.frame.origin.x, viewWeibo.frame.origin.y + imgWeibo.size.height);
+        frame.size = CGSizeMake(imgWeibo.size.width, 30);
+        UILabel* labelWeibo = [[UILabel alloc] initWithFrame:frame];
+        labelWeibo.text = @"微博";
+        labelWeibo.font = [UIFont systemFontOfSize:14];
+        labelWeibo.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
+        labelWeibo.textAlignment = NSTextAlignmentCenter;
+        [viewMain addSubview:labelWeibo];
+        
+        frame.origin = viewWechat.frame.origin;
+        frame.size = CGSizeMake(imgWechat.size.width, imgWechat.size.height + labelWechat.frame.size.height);
+        UIButton* buttonWechatLogin = [[UIButton alloc] initWithFrame:frame];
+        [buttonWechatLogin addTarget:self action:@selector(wechatLogin) forControlEvents:UIControlEventTouchUpInside];
+        [viewMain addSubview:buttonWechatLogin];
+        
+        frame.origin = viewWeibo.frame.origin;
+        frame.size = CGSizeMake(imgWeibo.size.width, imgWeibo.size.height + labelWeibo.frame.size.height);
+        UIButton* buttonWeiboLogin = [[UIButton alloc] initWithFrame:frame];
+        [buttonWeiboLogin addTarget:self action:@selector(weiboLogin) forControlEvents:UIControlEventTouchUpInside];
+        [viewMain addSubview:buttonWeiboLogin];
+    }
     
     [self.view addSubview:viewMain];
     
@@ -231,11 +237,11 @@
     BOOL bolValid = YES;
     if (fieldUsername.text.length < 2) {
         bolValid = NO;
-        [APPNAVGATOR showAlert:@"帐号检查" Message:@"请输入正确的手机号"];
+        [self showTimedHUD:YES message:@"请输入正确的手机号"];
     }
     if (bolValid && fieldPassword.text.length < 1) {
         bolValid = NO;
-        [APPNAVGATOR showAlert:@"帐号检查" Message:@"请输入正确的密码"];
+        [self showTimedHUD:YES message:@"请输入正确的密码"];
     }
     if (bolValid)
     {

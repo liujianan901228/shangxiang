@@ -109,7 +109,7 @@
     [super setObject:object];
     OrderObject* orderObject = (OrderObject*)object;
     [self.headImageView sd_setImageWithURL:[NSURL URLWithString:orderObject.headUrl] placeholderImage:[UIImage imageForKey:@"avatar_null"]];
-    [self.nameLabel setText:[LUtility getDisCoverShowName:orderObject.nickName trueName:orderObject.trueName]];
+    [self.nameLabel setText:[LUtility getDisCoverShowName:orderObject.wishName trueName:orderObject.wishName]];
     NSString* showDate = orderObject.wishDate;
     if(![orderObject.wishDate isEqualToString:@"刚刚"])
     {
@@ -121,7 +121,7 @@
     
     [self.contentLabel setText:orderObject.wishText];
     
-    NSString* blessText = @"无人祈福";
+    NSString* blessText = @"无人加持";
     
     if(orderObject.nameBelssings && orderObject.nameBelssings.length > 0 && orderObject.coBlessings)
     {

@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSInteger,WxType)
 {
     WxType_Friend = 0 ,
-    WxType_Single = 1
+    WxType_Single = 1 ,
+    WxType_Weibo = 2
 };
 
 typedef void(^ShareBlock)(WxType type, NSString* shareText);
@@ -19,8 +20,9 @@ typedef void(^ShareBlock)(WxType type, NSString* shareText);
 @interface ShareView : UIView
 
 @property (nonatomic, copy) ShareBlock shareBlock;
+@property (nonatomic, strong) UITextView* textView;
 
-- (void)showInWindow:(UIWindow*)window;
+- (void)showInWindow:(UIWindow*)window orderText:(NSString*)orderText;
 - (void)close;
 
 @end

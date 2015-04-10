@@ -9,6 +9,9 @@
 #import "SVHTTPRequest.h"
 #import "ExError.h"
 
+// Relase
+#define DefaultBaseAddress  @"http://218.244.131.126:812/api/app/"
+
 typedef void (^ RequestComplete)(NSInteger errorNum, id info, ExError *errorMsg);
 
 typedef void(^RequestSuccessBlock)(id obj);

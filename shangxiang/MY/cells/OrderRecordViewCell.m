@@ -72,7 +72,7 @@
         [_scrollContentView addSubview:self.labelOrderTitle];
         
         self.labelOrderDesc = [[UILabel alloc] initWithFrame:CGRectMake(16, 28, self.width -16 - self.labelStatus.width - 10 - 10, 12)];
-        [self.labelOrderDesc setFont:[UIFont systemFontOfSize:10.0f]];
+        [self.labelOrderDesc setFont:[UIFont systemFontOfSize:9.0f]];
         [self.labelOrderDesc setTextColor:UIColorFromRGB(0xbababa)];
         self.labelOrderDesc.numberOfLines = 1;
         self.labelOrderDesc.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -102,8 +102,16 @@
     [super setObject:object];
     WillingObject* willingObject = (WillingObject*)object;
     [self.labelOrderTitle setText:[NSString stringWithFormat:@"%@(%@)",willingObject.templeName,willingObject.buddhistName]];
-    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderId,willingObject.buddhaDate]];
+    [self.labelOrderDesc setText:[NSString stringWithFormat:@"订单号:%@  %@",willingObject.orderNumber,willingObject.buddhaDate]];
     [self.labelStatus setText:willingObject.status];
+    if([willingObject.status isEqualToString:@"未支付"])
+    {
+        _scrollView.scrollEnabled = YES;
+    }
+    else
+    {
+        _scrollView.scrollEnabled = NO;
+    }
 }
 
 - (void)handleTapgesture:(UITapGestureRecognizer*)gesture

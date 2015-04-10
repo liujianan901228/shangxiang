@@ -13,6 +13,6 @@
 #define AppUserLoginNotification @"AppUserLoginNotication"//登录
 #define AppUserLogoutNotification @"AppUserLogoutNotication"//退出登录
 #define ShareSuccessNotification @"ShareNotification"//分享成功
-
+#define ViewControllerDismissNotification @"ViewControllerDismissNotification"
 
 #endif

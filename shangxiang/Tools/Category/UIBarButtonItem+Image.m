@@ -72,7 +72,7 @@
 #pragma clang diagnostic pop
     }
 
-    CGFloat width = 100.0f;
+    CGFloat width = 80.0f;
     CGFloat height = 44.0f;
     CGFloat x = 0.0f;
     CGFloat y = 0.0f;
@@ -88,7 +88,7 @@
     }else {
         [customButton setFrame:CGRectMake(x,
                                           y,
-                                          sizeOfTitle.width+22.0f,
+                                          sizeOfTitle.width,
                                           height)];
     }
     UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:customButton];
@@ -205,23 +205,17 @@
         [customButton setBackgroundImage:image forState:UIControlStateNormal];
         [customButton setBackgroundColor:[UIColor clearColor]];
     }
-    else {
-//        [customButton setBackgroundColor:[UIColor blueColor]];
-    }
-    if (hlImage != nil) {
+
+    if (hlImage != nil)
+    {
         [customButton setBackgroundImage:hlImage forState:UIControlStateHighlighted];
     }
     if (nil != disImage)
     {
         [customButton setBackgroundImage:disImage forState:UIControlStateDisabled];
     }
-    if (title.length <= 2) {
-        [customButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    }
-    else
-    {
-        [customButton.titleLabel setFont:[UIFont systemFontOfSize:13.0f]];
-    }
+    
+    [customButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
 
     [customButton.titleLabel setShadowOffset:CGSizeMake(0.0f, 0.5f)];
     if (title!=nil && ![title isEqualToString:@""]) {

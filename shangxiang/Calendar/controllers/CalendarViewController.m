@@ -5,6 +5,7 @@
 #import "editRemindViewController.h"
 #import "UIImageView+WebCache.h"
 #import "Reachability.h"
+#import "JTCalendarMonthWeekDaysView.h"
 
 @interface CalendarViewController ()
 {
@@ -20,6 +21,10 @@
     self.title = @"佛历";
     isFirstRead = YES;
     self.view.backgroundColor = UIColorFromRGB(0xf6f8f7);
+    if ([[UIDevice currentDevice] systemVersion].floatValue>=7.0)
+    {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     self.calendar = [JTCalendar new];
     
     // All modifications on calendarAppearance have to be done before setMenuMonthsView and setContentView
@@ -54,6 +59,7 @@
     
     UIButton* leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 30, 60, 30)];
     [leftButton setImage:[UIImage imageForKey:@"left_arrow"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageForKey:@"left_arrow"] forState:UIControlStateHighlighted];
     leftButton.tag = 10096;
     leftButton.center = CGPointMake(self.view.frame.size.width*.25, self.calendarMenuView.centerY);
     [leftButton addTarget:self action:@selector(buttonScroll:) forControlEvents:UIControlEventTouchUpInside];
@@ -61,6 +67,7 @@
     
     UIButton* rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, 60, 30)];
     [rightButton setImage:[UIImage imageForKey:@"right_arrow"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageForKey:@"right_arrow"] forState:UIControlStateHighlighted];
     rightButton.tag = 10097;
     rightButton.center = CGPointMake(self.view.frame.size.width*.75, self.calendarMenuView.centerY);
     [rightButton addTarget:self action:@selector(buttonScroll:) forControlEvents:UIControlEventTouchUpInside];
@@ -68,7 +75,7 @@
     
 
 
-    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom, self.view.frame.size.width*3/5., 50)];
+    self.detailView = [[CalendarDetailView alloc] initWithFrame:CGRectMake(0, self.calendarContentView.bottom + 8, self.view.frame.size.width*3/5., 50)];
     self.detailView.backgroundColor = UIColorFromRGB(0xf6f8f7);
 //    self.detailView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
 //    self.detailView.layer.borderWidth = 0.8f;
@@ -78,12 +85,12 @@
     
     LunarCalendar *lunarCalendar = [self.calendar.currentDate chineseCalendarDate];
     self.detailView.nongli = [NSString stringWithFormat:@"农历%@%@",[lunarCalendar MonthLunar],[lunarCalendar DayLunar]];
-    
     self.detailView.riqi = [NSString stringWithFormat:@"%ld",(long)self.calendar.currentDate.day];
     [self.view addSubview:self.detailView];
     
-    UIView *addBirthdayView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*3/5., self.calendarContentView.bottom, self.view.frame.size.width*2/5., 50)];
+    UIView *addBirthdayView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*3/5., self.calendarContentView.bottom + 8, self.view.frame.size.width*2/5., 50)];
     addBirthdayView.tag = 10084;
+    
     
     NSString *addStr = @"添加亲友生日";
     UIFont *addFont = [UIFont systemFontOfSize:15.];
@@ -93,7 +100,7 @@
     UIImageView *addBirImageView = [[UIImageView alloc] initWithFrame:CGRectMake(addOrign_x, 0, addBirImage.size.width, addBirImage.size.height)];
     addBirImageView.center = CGPointMake(addBirImageView.center.x, addBirthdayView.height/2.);
     addBirImageView.image = addBirImage;
-    UILabel *addBirLabel = [[UILabel alloc] initWithFrame:CGRectMake(addBirImageView.frame.size.width+addOrign_x, 0, addStrWidth, 50)];
+    UILabel *addBirLabel = [[UILabel alloc] initWithFrame:CGRectMake(addBirImageView.frame.size.width+addOrign_x + 3, 0, addStrWidth, 50)];
     addBirLabel.text = addStr;
     addBirLabel.font = addFont;
     addBirLabel.textColor = [UIColor colorWithRed:223./255. green:88./255. blue:20./255. alpha:1];
@@ -122,6 +129,8 @@
     UIView *holidayView = [[UIView alloc] initWithFrame:CGRectMake(0, self.detailView.frame.size.height+self.detailView.frame.origin.y, self.view.frame.size.width, 40)];
     holidayView.backgroundColor = UIColorFromRGB(0xf6f8f7);
     holidayView.tag = 10085;
+    holidayView.layer.borderWidth = 0.8;
+    holidayView.layer.borderColor = [UIColor colorWithRed:225./255. green:228./255. blue:226./255. alpha:1].CGColor;
     UIImage *buddImage = [UIImage imageForKey:@"budd"];
     UIImageView *buddImageView = [[UIImageView alloc] initWithImage:buddImage];
     [buddImageView setContentMode:UIViewContentModeScaleAspectFit];
@@ -136,9 +145,10 @@
     [holidayView addSubview:label];
     [self.view addSubview:holidayView];
     
-    UIImageView *folibg = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.detailView.bottom, self.view.frame.size.width, self.view.height - self.detailView.bottom)];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [folibg sd_setImageWithURL:[NSURL URLWithString:[def objectForKey:@"foliBg"]] placeholderImage:[UIImage imageForKey:@"folibg"]];
+    UIImageView *folibg = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.detailView.bottom, self.view.frame.size.width, self.view.frame.size.height-175)];
+//    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+//    [folibg sd_setImageWithURL:[NSURL URLWithString:[def objectForKey:@"foliBg"]] placeholderImage:[UIImage imageForKey:@"folibg"]];
+    [folibg setImage:[UIImage imageForKey:@"foli_bg"]];
     folibg.tag = 10086;
     folibg.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:folibg];
@@ -162,12 +172,20 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRemindView)];
     [label addGestureRecognizer:tap];
     [self reloadCalendar];
+    
+    JTCalendarMonthWeekDaysView* weekdaysView = [[JTCalendarMonthWeekDaysView alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 30)];
+    weekdaysView.backgroundColor = self.view.backgroundColor;
+    [JTCalendarMonthWeekDaysView beforeReloadAppearance];
+    [weekdaysView reloadAppearance];
+    [self.view addSubview:weekdaysView];
+    [self setNongliBg:[[NSDate date] chineseCalendarDate] folibg:folibg];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+   
 }
 
 - (void)dealloc
@@ -300,13 +318,37 @@
     self.detailView.nongli = [NSString stringWithFormat:@"农历%@%@",[lunarCalendar MonthLunar],[lunarCalendar DayLunar]];
     
     self.detailView.riqi = [NSString stringWithFormat:@"%ld",(long)self.calendar.currentDateSelected.day];
+    [self setNongliBg:lunarCalendar folibg:(UIImageView*)[self.view viewWithTag:10086]];
+}
+
+- (void)setNongliBg:(LunarCalendar*)lunarCalendar folibg:(UIImageView*)folibg
+{
+    if(!folibg) return;
+    if(([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 8)
+       || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 21)
+       || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 15)
+       || ([lunarCalendar getMonth] == 2 && [lunarCalendar getDay] == 19)
+       || ([lunarCalendar getMonth] == 7 && [lunarCalendar getDay] == 30)
+       || ([lunarCalendar getMonth] == 3 && [lunarCalendar getDay] == 16)
+       || ([lunarCalendar getMonth] == 4 && [lunarCalendar getDay] == 8)
+       || ([lunarCalendar getMonth] == 4 && [lunarCalendar getDay] == 4)
+       || ([lunarCalendar getMonth] == 4 && [lunarCalendar getDay] == 15)
+       || ([lunarCalendar getMonth] == 1 && [lunarCalendar getDay] == 6)
+       || ([lunarCalendar getMonth] == 1 && [lunarCalendar getDay] == 1)
+       )
+    {
+        [folibg setImage:[UIImage imageForKey:[NSString stringWithFormat:@"foli_%zd_%zd",[lunarCalendar getMonth],[lunarCalendar getDay]]]];
+    }
+    else
+    {
+        [folibg setImage:[UIImage imageForKey:@"foli_bg"]];
+    }
 }
 
 #pragma mark - Transition examples
 
 - (void)transitionExample:(UISwipeGestureRecognizer *)ges
 {
-
     if ((ges.direction == UISwipeGestureRecognizerDirectionUp) && (self.calendar.calendarAppearance.isWeekMode)) {
         return;
     }
@@ -326,7 +368,8 @@
     [UIView animateWithDuration:.5
                      animations:^{
                          self.calendarContentViewHeight.constant = newHeight;
-                         if (self.calendar.calendarAppearance.isWeekMode) {
+                         if (self.calendar.calendarAppearance.isWeekMode)
+                         {
                              self.calendarContentView.frame = CGRectMake(0, self.calendarMenuView.bottom, self.view.frame.size.width, 75);
                          }
                          else
@@ -343,7 +386,20 @@
                      }
                      completion:^(BOOL finished) {
                          [self.calendar reloadAppearance];
-                         
+                         if(self.calendar.currentDateSelected)
+                         {
+                             [self.calendar setCurrentDate:self.calendar.currentDateSelected];
+                         }
+                         else
+                         {
+                             NSDateComponents *dayComponent = [NSDateComponents new];
+                             dayComponent.month = self.calendar.currentDate.month;
+                             dayComponent.year = self.calendar.currentDate.year;
+                             dayComponent.day = 1;
+                             NSCalendar *myCal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+                             NSDate *myDate1 = [myCal dateFromComponents:dayComponent];
+                             [self.calendar setCurrentDate:myDate1];
+                         }
                          [UIView animateWithDuration:.25
                                           animations:^{
                                               self.calendarContentView.layer.opacity = 1;
@@ -351,11 +407,31 @@
                                               
                                           }];
                      }];
+    [self unSelectHoliday];
 }
+
+//- (void)setDetailAndBgFrame:(BOOL)isWeekMode
+//{
+//    float orgin_y = self.calendarContentView.bottom;
+//    
+//    self.detailView.frame = CGRectMake(0, orgin_y,  self.view.frame.size.width*3/5., 50);
+//    UIView *addBirView = [self.view viewWithTag:10084];
+//    addBirView.frame = CGRectMake(self.view.frame.size.width*3/5., orgin_y, self.view.frame.size.width*2/5., 50);
+//    
+//    UIView *holidayView = [self.view viewWithTag:10085];
+//    UIImageView *folibg = (UIImageView *)[self.view viewWithTag:10086];
+//    
+//    holidayView.frame = CGRectMake(0, self.detailView.frame.size.height+self.detailView.frame.origin.y, self.view.frame.size.width, 40);
+//    folibg.frame = CGRectMake(0, holidayView.bottom, self.view.frame.size.width, self.view.height-holidayView.bottom +40);
+//}
 
 - (void)setDetailAndBgFrame:(BOOL)isWeekMode
 {
-    float orgin_y = self.calendarContentView.bottom;
+    float orgin_y = 328;
+    if (isWeekMode)
+    {
+        orgin_y = 143;
+    }
     
     self.detailView.frame = CGRectMake(0, orgin_y,  self.view.frame.size.width*3/5., 50);
     UIView *addBirView = [self.view viewWithTag:10084];
@@ -365,7 +441,14 @@
     UIImageView *folibg = (UIImageView *)[self.view viewWithTag:10086];
     
     holidayView.frame = CGRectMake(0, self.detailView.frame.size.height+self.detailView.frame.origin.y, self.view.frame.size.width, 40);
-    folibg.frame = CGRectMake(0, holidayView.bottom, self.view.frame.size.width, self.view.height-holidayView.bottom +40);
+    if (orgin_y == 143) {
+        folibg.frame = CGRectMake(0, folibg.frame.origin.y-(328-143), self.view.frame.size.width, self.view.frame.size.height-175);
+    }
+    else
+    {
+        folibg.frame = CGRectMake(0, folibg.frame.origin.y+(328-143), self.view.frame.size.width, self.view.frame.size.height-175);
+    }
+    
 }
 
 #pragma mark - selectDelegate

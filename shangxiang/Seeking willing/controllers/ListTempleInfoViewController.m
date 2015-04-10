@@ -56,7 +56,7 @@
     _segSwitch = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"寺庙介绍", @"法师介绍", nil]];
     NSDictionary* textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:UIColorFromRGB(COLOR_FONT_FORM_NORMAL), NSForegroundColorAttributeName, [UIFont systemFontOfSize:14.f], NSFontAttributeName, nil, NSShadowAttributeName, nil];
     NSDictionary* SelectTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:14.f], NSFontAttributeName, nil, NSShadowAttributeName, nil];
-    [_segSwitch setFrame:CGRectMake(0, 10, self.view.width, 40)];
+    [_segSwitch setFrame:CGRectMake(20, 20, self.view.width - 40, 40)];
     [_segSwitch setTintColor:[UIColor clearColor]];
     [_segSwitch setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [_segSwitch setTitleTextAttributes:SelectTextAttributes forState:UIControlStateSelected];
@@ -85,7 +85,7 @@
     templeView.showsHorizontalScrollIndicator = NO;
     templeView.showsVerticalScrollIndicator = NO;
     
-    _viewHallThumb = [[SingLineImageCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 85)];
+    _viewHallThumb = [[SingLineImageCollectionView alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 40, 72)];
     __weak typeof(self) weakSelf = self;
     _viewHallThumb.actionBlock = ^(TemplePictureObject* picObject,UIImageView* imageView)
     {
@@ -107,8 +107,7 @@
         }
         LFFGPhotoAlbumView *albumView = [LFFGPhotoAlbumView new];
         albumView.pageInfos = infos;
-        [albumView showFromImageView:imageView toContainer:weakSelf.view];
-        NSLog(@"%@ 啦啦啦啦啦了 ",picObject.picSmallUrl);
+        [albumView showFromImageView:imageView toContainer:weakSelf.view.window];
     };
     [_viewHallThumb setBackgroundColor:[UIColor whiteColor]];
     [_viewHallThumb setObject:_templeInfoObject.images];

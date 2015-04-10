@@ -26,7 +26,7 @@
 {
     if(!_tableView)
     {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - NaiviagationHeight - TarbarHeight)];
         [_tableView setBackgroundColor:[UIColor clearColor]];
         _listTempleDataSource = [[ListTempleViewDataSource alloc] init];
         _listTempleDataSource.cellDelegate = self;
@@ -79,11 +79,6 @@
         [self showTimedHUD:YES message:@"当前无网络连接，请检查您的网络"];
         return;
     }
-    else if(!USEROPERATIONHELP.isLogin)
-    {
-        [APPNAVGATOR turnToLoginGuide];
-        return;
-    }
     
     id <BaseTableViewDataSource> dataSource = (id <BaseTableViewDataSource> )tableView.dataSource;
     
@@ -101,11 +96,6 @@
     if([[Reachability reachabilityWithHostName:@"www.shangxiang.com"] currentReachabilityStatus] == kNotReachable)
     {
         [self showTimedHUD:YES message:@"当前无网络连接，请检查您的网络"];
-        return;
-    }
-    else if(!USEROPERATIONHELP.isLogin)
-    {
-        [APPNAVGATOR turnToLoginGuide];
         return;
     }
     

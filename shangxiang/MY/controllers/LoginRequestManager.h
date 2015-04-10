@@ -36,8 +36,11 @@
                           failed:(RequestErrorBlock)errorBlock;
 
 //第三方登陆
-//第三方登陆
 +(BaseRequest*)sendThirdLogin:(NSString*)token name:(NSString*)name regtype:(NSString*)regtype headUrl:(NSString*)headUrl nickName:(NSString*)nickName success:(RequestSuccessBlock)successBlock
                        failed:(RequestErrorBlock)errorBlock;
+
+//判断是否允许第三方登陆
++(BaseRequest*)sendGetAllowThird:(RequestSuccessBlock)successBlock
+                          failed:(RequestErrorBlock)errorBlock;
 
 @end

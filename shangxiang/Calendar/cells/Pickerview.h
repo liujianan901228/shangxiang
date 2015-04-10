@@ -22,7 +22,6 @@
     NSArray *rows;              //每个component有多少项数据
     NSArray *titleOfComponent;  //某个component的的某个row的title
     NSInteger yangliSelected;   //选择的是阳历还是阴历
-    NSInteger type;
     UIPickerView *pickerview;
     
     @private
@@ -34,9 +33,9 @@
     UILabel *mark;
 }
 
-@property(nonatomic,assign) id<PickerViewDelegate> delegate;
+@property (nonatomic, weak) id<PickerViewDelegate> delegate;
+@property (nonatomic, assign) NSInteger pickerType;
 
-- (void)setPickerType:(int)type;
 - (int)selectedRowInComponent:(int)index;
 - (void)loadPickerData;
 - (void)reloadPicker;

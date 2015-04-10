@@ -14,11 +14,13 @@
 #import "ASIFormDataRequest.h"
 #import "LoginRequestManager.h"
 #import "LFFGPhotoAlbumView.h"
+#import "BaseRequest.h"
 
 #define TAG_ACTIONSHEET_Image   4123//修改头像actionSheet
 #define TAG_ACTIONSHEET_Gender  4124//男女
+#define TAG_ACTIONSHEET 523
 
-@interface UserViewController ()<UIActionSheetDelegate,UIPickerViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,CropImageContenViewProtocol>
+@interface UserViewController ()<UIActionSheetDelegate,UIPickerViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,CropImageContenViewProtocol,UIAlertViewDelegate>
 {
     UIScrollView* viewMain;
     UIImageView* _viewAvatar;//头像
@@ -35,6 +37,7 @@
 @property (nonatomic, strong) UIView *pickerContainer; ///< 选择器容器，只占据下半边
 @property (nonatomic, strong) UIPickerView *hometownPicker; ///< 城市选择
 @property (nonatomic, strong) UIButton *pickerConfirmBtn; ///< 选择器确认按钮
+@property (nonatomic, strong) UILabel *pickerTitle;//>选择器标题
 
 @property (nonatomic, strong) UserHomeTownObject* homeObj;
 @property (nonatomic, strong) NSArray *provinces;
@@ -52,7 +55,10 @@
     // Do any additional setup after loading the view.
     self.title = @"个人资料";
     self.view.backgroundColor = UIColorFromRGB(COLOR_BG_NORMAL);
-    [self setupDismissKeyboard];
+    [self setupForDismissKeyboard];
+    
+    UIBarButtonItem *rightItem = [UIBarButtonItem rsBarButtonItemWithTitle:@"保存" image:nil heightLightImage:nil disableImage:nil target:self action:@selector(savaButtonclicked)];
+    [self setRightBarButtonItem:rightItem];
     
     viewMain = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     [viewMain setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
@@ -274,7 +280,7 @@
     frame.origin = CGPointMake(fltHintMargin, 0);
     frame.size = CGSizeMake(fltHintWidth, fltCellHeight);
     _hintSexy = [[UILabel alloc] initWithFrame:frame];
-    _hintSexy.text = @"男";
+    _hintSexy.text = @"未知";
     _hintSexy.font = [UIFont systemFontOfSize:15];
     _hintSexy.textColor = UIColorFromRGB(COLOR_FONT_FORM_HINT);
     [buttonSexy addSubview:_hintSexy];
@@ -287,11 +293,6 @@
     [self updateUserInfo];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (void)updateUserInfo
 {
@@ -361,6 +362,7 @@
 {
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:@"修改头像" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"选择手机中的照片",@"查看大图",nil];
     actionsheet.tag = TAG_ACTIONSHEET_Image;
+    [APPNAVGATOR.actionSheetArray addObject:actionsheet];
     [actionsheet showInView:APPDELEGATE.window];
 }
 
@@ -369,12 +371,14 @@
 {
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择性别" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"男",@"女", nil];
     actionsheet.tag = TAG_ACTIONSHEET_Gender;
+    [APPNAVGATOR.actionSheetArray addObject:actionsheet];
     [actionsheet showInView:APPDELEGATE.window];
 }
 
 /// 编辑城市
 - (void)editCity {
     [self setupPickerView];
+    _pickerTitle.text = @"我的位置";
     [self enterPicker:_hometownPicker];
 }
 
@@ -405,33 +409,28 @@
 
             LFFGPhotoAlbumView *albumView = [LFFGPhotoAlbumView new];
             albumView.pageInfos = infos;
-            [albumView showFromImageView:_viewAvatar toContainer:self.view];
+            [albumView showFromImageView:_viewAvatar toContainer:self.view.window];
         }
     }
     else if(actionSheet.tag == TAG_ACTIONSHEET_Gender)
     {
-        if(buttonIndex < 2) {
-            [self showChrysanthemumHUD:YES];
-            __weak typeof(self) _self = self;
-            //修改性别
-            NSInteger gender =  buttonIndex == 0 ? 1 : 2;
-            [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:USEROPERATIONHELP.currentUser.nickName trueName:USEROPERATIONHELP.currentUser.trueName area:USEROPERATIONHELP.currentUser.area sex:gender successBlock:^(id obj) {
-                [_self removeAllHUDViews:YES];
-                USEROPERATIONHELP.currentUser.gender = gender;
-                [_self updateUserInfo];
-            } failed:^(id error) {
-                [_self removeAllHUDViews:NO];
-                [_self dealWithError:error];
-            }];
+        if(buttonIndex < 2)
+        {
+            _hintSexy.text =  buttonIndex == 0 ? @"男" : @"女";
         }
     }
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [APPNAVGATOR.actionSheetArray removeObject:actionSheet];
 }
 
 - (void)setupPickerView
 {
     if (_pickerBackground != nil) return;
     
-    self.hometownPicker = [[UIPickerView alloc] init];
+    self.hometownPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, Picker_Container_Height)];
     self.hometownPicker.delegate = self;
     self.hometownPicker.showsSelectionIndicator = YES;
     self.provinces =[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"hometown" ofType:@"plist"]];
@@ -469,7 +468,7 @@
     }
     
 
-    CGFloat barHeight = 40;
+    CGFloat barHeight = Picker_Header_Height;
     _pickerBackground = [UIView new];
     _pickerBackground.frame = self.view.bounds;
     _pickerBackground.backgroundColor = [UIColor clearColor];
@@ -478,18 +477,31 @@
     _hometownPicker.backgroundColor = [UIColor whiteColor];
     
     _pickerContainer = [UIView new];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerContainer.size = CGSizeMake(_hometownPicker.width, _hometownPicker.height + barHeight);
-    _pickerContainer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9];
+    _pickerContainer.backgroundColor = [UIColor whiteColor];
     _pickerConfirmBtn = [UIButton new];
     _pickerConfirmBtn.size = CGSizeMake(60, barHeight);
     [_pickerConfirmBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [_pickerConfirmBtn setTitleColor:UIColorFromRGB(0x007aff) forState:UIControlStateNormal];
-    [_pickerConfirmBtn setTitleColor:UIColorFromRGBA(0x007aff, 0.5) forState:UIControlStateHighlighted];
+    [_pickerConfirmBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [_pickerConfirmBtn setTitleColor:UIColorFromRGB(0x686867) forState:UIControlStateNormal];
     _pickerConfirmBtn.right = _pickerContainer.width;
     [_pickerConfirmBtn addTarget:self action:@selector(confirmPicker) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     [_pickerContainer addSubview:_pickerConfirmBtn];
+    
+    _pickerTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, Picker_Header_Height)];
+    _pickerTitle.font = [UIFont systemFontOfSize:13];
+    _pickerTitle.textAlignment = NSTextAlignmentCenter;
+    _pickerTitle.centerX = _pickerContainer.centerX;
+    _pickerTitle.backgroundColor = [UIColor clearColor];
+    _pickerTitle.textColor = UIColorFromRGB(0x686867);
+    [_pickerContainer addSubview:_pickerTitle];
+    
+    
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(0, Picker_Header_Height - 0.5, self.view.width, 0.5)];
+    lineView.backgroundColor = UIColorFromRGB(COLOR_LINE_NORMAL);
+    [_pickerContainer addSubview:lineView];
+    
     [_pickerBackground addSubview:_pickerContainer];
     
     UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endPicker)];
@@ -527,19 +539,8 @@
 }
 
 - (void)confirmPicker {
-    [self showChrysanthemumHUD:YES];
-    __weak typeof(self) _self =self;
-    
-    //修改地区
     NSString* provinceCity = [NSString stringWithFormat:@"%@-%@",self.homeObj.provinceName,self.homeObj.city];
-    [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:USEROPERATIONHELP.currentUser.nickName trueName:USEROPERATIONHELP.currentUser.trueName area:provinceCity sex:USEROPERATIONHELP.currentUser.gender successBlock:^(id obj) {
-        [_self removeAllHUDViews:YES];
-        USEROPERATIONHELP.currentUser.area = provinceCity;
-        [_self updateUserInfo];
-    } failed:^(id error) {
-        [_self removeAllHUDViews:NO];
-        [_self dealWithError:error];
-    }];
+    [_hintRegion setText:provinceCity];
     [self endPicker];
 }
 
@@ -643,9 +644,14 @@
         picker.sourceType = sourceType;
         [self presentViewController:picker animated:YES completion:^{}];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"访问图片库失败" message:@"设备不允许访问图片库" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"访问图片库失败" message:@"设备不允许访问图片库" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [APPNAVGATOR.alertViewArray addObject:alert];
         [alert show];
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [APPNAVGATOR.alertViewArray removeObject:alertView];
 }
 
 -(void)didCancelOperation {
@@ -661,7 +667,7 @@
     
     //修改头像
     [self showChrysanthemumHUD:YES];
-    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://demo123.shangxiang.com/api/app/hfupload.php"]];
+    ASIFormDataRequest* request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@hfupload.php",DefaultBaseAddress]]];
 
     [request addPostValue:USEROPERATIONHELP.currentUser.userId forKey:@"mid"];
     [request addPostValue:@"1" forKey:@"uploadimage"];
@@ -734,41 +740,43 @@
     }
 }
 
-
-- (void)setupDismissKeyboard {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    UITapGestureRecognizer *singleTapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAnywhereToDismissKeyboard:)];
-    
-    __weak UIViewController *weakSelf = self;
-    
-    NSOperationQueue *mainQuene =[NSOperationQueue mainQueue];
-    [nc addObserverForName:UIKeyboardWillShowNotification  object:nil queue:mainQuene usingBlock:^(NSNotification *note)
-    {
-        [weakSelf.view addGestureRecognizer:singleTapGR];
-    }];
-    [nc addObserverForName:UIKeyboardWillHideNotification object:nil queue:mainQuene usingBlock:^(NSNotification *note)
-    {
-        //修改姓名
-        __weak typeof(self) _self = self;
-        NSString* nickName = _hintMobile.text;
-        NSString* trueName = _hintRealname.text;
-        [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:_hintMobile.text trueName:_hintRealname.text area:USEROPERATIONHELP.currentUser.area sex:USEROPERATIONHELP.currentUser.gender successBlock:^(id obj) {
-            [_self removeAllHUDViews:YES];
-            USEROPERATIONHELP.currentUser.nickName = nickName;
-            USEROPERATIONHELP.currentUser.trueName = trueName;
-            [_self updateUserInfo];
-        } failed:^(id error) {
-            [_self removeAllHUDViews:NO];
-            [_self dealWithError:error];
-        }];
-        [weakSelf.view removeGestureRecognizer:singleTapGR];
-    }];
-}
-
 - (void)tapAnywhereToDismissKeyboard:(UIGestureRecognizer *)gestureRecognizer
 {
     //此method会将self.view里所有的subview的first responder都resign掉
     [self.view endEditing:YES];
+}
+
+- (void)savaButtonclicked
+{
+    NSInteger gender =  0;
+    if(![_hintSexy.text isEqualToString:@"未知"])
+    {
+        gender = [_hintSexy.text isEqualToString:@"男"] ? 1 : 2;
+    }
+    NSString* provinceCity = _hintRegion.text;
+    NSString* nickName = _hintMobile.text;
+    NSString* trueName = _hintRealname.text;
+
+    
+    __weak typeof(self) _self = self;
+    [_self showChrysanthemumHUD:YES];
+    [MyRequestManager changUserInfo:USEROPERATIONHELP.currentUser.userId nickName:nickName trueName:trueName  area:provinceCity sex:gender successBlock:^(id obj) {
+        [_self removeAllHUDViews:YES];
+        USEROPERATIONHELP.currentUser.gender = gender;
+        USEROPERATIONHELP.currentUser.nickName = nickName;
+        USEROPERATIONHELP.currentUser.trueName = trueName;
+        USEROPERATIONHELP.currentUser.area = provinceCity;
+        
+        [_self updateUserInfo];
+        [_self showTimedHUD:YES message:[obj objectForKey:@"msg"]];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_self goBack];
+        });
+
+    } failed:^(id error) {
+        [_self removeAllHUDViews:NO];
+        [_self dealWithError:error];
+    }];
 }
 
 

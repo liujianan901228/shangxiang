@@ -31,6 +31,7 @@
     NSInteger selectDay;
     NSInteger selectRemind;
 }
+
 @end
 
 @implementation AddBirthdayViewController
@@ -147,7 +148,7 @@
     
     
     
-    pickerView = [[Pickerview alloc] initWithFrame:CGRectMake(0, FRAME.height, FRAME.width ,300)];
+    pickerView = [[Pickerview alloc] initWithFrame:CGRectMake(0, FRAME.height, FRAME.width ,Picker_Container_Height)];
     pickerView.delegate = self;
     pickerView.backgroundColor = [UIColor whiteColor];
     
@@ -197,7 +198,7 @@
     [pickerView->pickerview selectRow:selectDefaultMonth-1 inComponent:1 animated:NO];
     [pickerView->pickerview selectRow:selectDefaultDay-1 inComponent:2 animated:NO];
     [UIView animateWithDuration:.5f animations:^{
-        pickerView.frame = CGRectMake(0, FRAME.height-300, FRAME.width ,300);
+        pickerView.frame = CGRectMake(0, FRAME.height-Picker_Container_Height, FRAME.width ,Picker_Container_Height);
     }];
 
 }
@@ -215,18 +216,12 @@
     [pickerView setPickerType:0];
     
     [UIView animateWithDuration:.5f animations:^{
-        pickerView.frame = CGRectMake(0, FRAME.height-300, FRAME.width ,300);
+        pickerView.frame = CGRectMake(0, FRAME.height-Picker_Container_Height, FRAME.width ,Picker_Container_Height);
     }];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (selectType == 2) {
-        UILabel *label = (UILabel *)[self.view viewWithTag:10000];
-        label.text = [alertData objectAtIndex:[pickerView selectedRowInComponent:0]];
-        selectRemind = [pickerView selectedRowInComponent:0];
-    }
-    
     UITextField *nameTextView = (UITextField *)[self.view viewWithTag:1000];
     [nameTextView resignFirstResponder];
     
@@ -275,7 +270,15 @@
         [CalendarDataSource modifyCalendarRemindDo:0 WithRname:name Rdate:[NSString stringWithFormat:@"%zd-%.2zd-%.2zd",selectYear,selectMonth,selectDay] Rtime:selectRemind Crid:[self.rid intValue] success:^(id obj)
         {
                 [self alertShow:[obj objectForKey:@"msg"]];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCalendar" object:nil];
+                NSDateComponents *comp = [[NSDateComponents alloc]init];
+                [comp setMonth:selectMonth];
+                [comp setDay:selectDay];
+                [comp setYear:selectYear];
+                NSCalendar *myCal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+                NSDate *myDate1 = [myCal dateFromComponents:comp];
+                NSLog(@"myDate1 = %@",myDate1);
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCalendar" object:myDate1];
         } failed:^(ExError* error) {
             [self alertShow:error.titleForError];
         }];
@@ -283,7 +286,6 @@
 }
 - (void)ButtonPressed:(int)index
 {
-    
     if(index == 0)
     {
         pickerView->titleOfComponent = [[NSArray alloc] initWithObjects:yearData,yanglimonthData,yangliDayData,EarthlyBranches,miniteData, nil];
@@ -296,38 +298,56 @@
     }
     else
     {
-        NSMutableString *str = [[NSMutableString alloc] init];
-        NSArray *yangliArray = [NSArray arrayWithObjects:yearData,yanglimonthData,yangliDayData,EarthlyBranches,miniteData, nil];
-        NSArray *nongliArray = [NSArray arrayWithObjects:yearData,nonglimonthData,nongliDayData,EarthlyBranches,miniteData, nil];
         
-        if (pickerView->yangliSelected == 1) {
+        if(pickerView.pickerType == 1)
+        {
+            NSMutableString *str = [[NSMutableString alloc] init];
+            NSArray *yangliArray = [NSArray arrayWithObjects:yearData,yanglimonthData,yangliDayData,EarthlyBranches,miniteData, nil];
+            NSArray *nongliArray = [NSArray arrayWithObjects:yearData,nonglimonthData,nongliDayData,EarthlyBranches,miniteData, nil];
+            
+            if (pickerView->yangliSelected == 1) {
 
-            for (int i = 0; i < 3; i++) {
-                [str appendString:[[yangliArray objectAtIndex:i] objectAtIndex:[pickerView selectedRowInComponent:i]]];
+                for (int i = 0; i < 3; i++) {
+                    [str appendString:[[yangliArray objectAtIndex:i] objectAtIndex:[pickerView selectedRowInComponent:i]]];
+                }
+                
+            }
+            else
+            {
+                for (int i = 0; i < 3; i++) {
+                    [str appendString:[[nongliArray objectAtIndex:i] objectAtIndex:[pickerView selectedRowInComponent:i]]];
+                }
             }
             
+            selectYear = [pickerView selectedRowInComponent:0]+selectDefaultYear;
+            selectMonth = [pickerView selectedRowInComponent:1]+1;
+            selectDay = [pickerView selectedRowInComponent:2]+1;
+            
+            UITextField *timeTextFiled = (UITextField *)[self.view viewWithTag:10001];
+            timeTextFiled.text = str;
+            
+            
+            [UIView animateWithDuration:.5f animations:^{
+                pickerView.frame = CGRectMake(0, FRAME.height, FRAME.width ,Picker_Container_Height);
+            }];
+            
+            selectType = 0;
         }
         else
         {
-            for (int i = 0; i < 3; i++) {
-                [str appendString:[[nongliArray objectAtIndex:i] objectAtIndex:[pickerView selectedRowInComponent:i]]];
+            if (selectType == 2)
+            {
+                UILabel *label = (UILabel *)[self.view viewWithTag:10000];
+                label.text = [alertData objectAtIndex:[pickerView selectedRowInComponent:0]];
+                selectRemind = [pickerView selectedRowInComponent:0];
             }
+            
+            UITextField *nameTextView = (UITextField *)[self.view viewWithTag:1000];
+            [nameTextView resignFirstResponder];
+            
+            [self keyboardWillShow];
+            selectType = 0;
         }
-        
-        selectYear = [pickerView selectedRowInComponent:0]+selectDefaultYear;
-        selectMonth = [pickerView selectedRowInComponent:1]+1;
-        selectDay = [pickerView selectedRowInComponent:2]+1;
-        
-        UITextField *timeTextFiled = (UITextField *)[self.view viewWithTag:10001];
-        timeTextFiled.text = str;
-        
-        
-        [UIView animateWithDuration:.5f animations:^{
-            pickerView.frame = CGRectMake(0, FRAME.height, FRAME.width ,300);
-        }];
-        
-        selectType = 0;
-    
     }
 
 }
@@ -336,7 +356,7 @@
 {
     selectType = 0;
     [UIView animateWithDuration:.5f animations:^{
-        pickerView.frame = CGRectMake(0, FRAME.height, FRAME.width ,300);
+        pickerView.frame = CGRectMake(0, FRAME.height, FRAME.width ,Picker_Container_Height);
     }];
 }
 
@@ -348,7 +368,12 @@
 - (void)alertShow:(NSString *)str
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [APPNAVGATOR.alertViewArray addObject:alert];
     [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [APPNAVGATOR.alertViewArray removeObject:alertView];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -366,15 +391,5 @@
     }
     return YES;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

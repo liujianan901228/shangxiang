@@ -10,10 +10,8 @@
 #import "MyRequestManager.h"
 #import "CalendarDataSource.h"
 
-@interface AppStartup()<UIAlertViewDelegate>
-@property(nonatomic,strong)UIAlertView* optionalAlertView;
-@property(nonatomic,strong)UIAlertView* requireAlertView;
-@property(nonatomic)BOOL hasShowForceAlert;
+@interface AppStartup()
+
 @end
 
 @implementation AppStartup
@@ -41,13 +39,13 @@
     }];
     
     
-    //获取日历背景图片
-    [CalendarDataSource getBuddhismHolidayBg:^(id obj) {
-        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-        [def setObject:obj forKey:@"foliBg"];
-    } failed:^(id error) {
-        
-    }];
+//    //获取日历背景图片
+//    [CalendarDataSource getBuddhismHolidayBg:^(id obj) {
+//        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+//        [def setObject:obj forKey:@"foliBg"];
+//    } failed:^(id error) {
+//        
+//    }];
     
 }
 

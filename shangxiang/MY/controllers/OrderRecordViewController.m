@@ -7,22 +7,17 @@
 //
 
 #import "OrderRecordViewController.h"
-#import "ORderRecorderDataSource.h"
-#import "MyRequestManager.h"
-#import "WillingObject.h"
-#import "OrderInfoViewController.h"
+#import "OrderListViewController.h"
 
-@interface OrderRecordViewController ()<UITableViewDelegate,OrderRecordViewCellDelegate>
+@interface OrderRecordViewController ()
 {
     UISegmentedControl* _segSwitch;
-    UIScrollView* _scrollView;
-    NSInteger _requestCount;
+    NSInteger _index;
 }
 
-@property (nonatomic,strong) UITableView* willTableView;
-@property (nonatomic,strong) UITableView* redeemTableview;
-@property (nonatomic,strong) ORderRecorderDataSource* willDataSouce;
-@property (nonatomic,strong) ORderRecorderDataSource* redeemDataSouce;
+@property (nonatomic, strong) OrderListViewController *currentViewController;//当前子视图控制器
+@property (nonatomic, strong) OrderListViewController* viewController1;
+@property (nonatomic, strong) OrderListViewController* viewController2;
 
 @end
 
@@ -59,165 +54,67 @@
     [selectView addSubview:line];
     
     [self.view addSubview:selectView];
-    
-    
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, selectView.bottom, self.view.width, self.view.height - selectView.bottom - 64)];
-    [_scrollView setBackgroundColor:[UIColor clearColor]];
-    [_scrollView setAlwaysBounceVertical:NO];
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.showsVerticalScrollIndicator = NO;
-    [_scrollView setPagingEnabled:NO];
-    [_scrollView setContentSize:CGSizeMake(_scrollView.width * 2, _scrollView.height)];
-    [self.view addSubview:_scrollView];
 
     
-    _willTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, _scrollView.width, _scrollView.height)];
-    [_willTableView setBackgroundColor:[UIColor clearColor]];
-    _willDataSouce = [[ORderRecorderDataSource alloc] init];
-    _willDataSouce.cellDelegate = self;
-    _willTableView.dataSource = _willDataSouce;
-    _willTableView.delegate = self;
-    _willTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    if ([_willTableView respondsToSelector:@selector(setSeparatorInset:)])
-    {
-        _willTableView.separatorInset = UIEdgeInsetsZero;
-    }
-    [_scrollView addSubview:_willTableView];
+    _viewController1 = [[OrderListViewController alloc] init];
+    _viewController1.isWill = YES;
+    [self addChildViewController:_viewController1];
+    _viewController2 = [[OrderListViewController alloc] init];
+    _viewController2.isWill = NO;
+    [self addChildViewController:_viewController2];
     
-    _redeemTableview = [[UITableView alloc] initWithFrame:CGRectMake(_scrollView.width, 0, _scrollView.width, _scrollView.height)];
-    [_redeemTableview setBackgroundColor:[UIColor clearColor]];
-    _redeemDataSouce = [[ORderRecorderDataSource alloc] init];
-    _redeemDataSouce.cellDelegate = self;
-    _redeemTableview.dataSource = _redeemDataSouce;
-    _redeemTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    if ([_redeemTableview respondsToSelector:@selector(setSeparatorInset:)])
-    {
-        _redeemTableview.separatorInset = UIEdgeInsetsZero;
-    }
-    [_scrollView addSubview:_redeemTableview];
-    
-    [self loadData];
+    _currentViewController = _viewController1;
+    _currentViewController.view.frame = CGRectMake(0, 50, self.view.width, self.view.height - 50);
+    [self.view  addSubview:_currentViewController.view];
     
 }
 
-
-- (void)loadData
+#pragma mark segment事件
+-(void)itemSelected:(NSUInteger )aIndex
 {
-    [self showChrysanthemumHUD:YES];
-    typeof(self) weakSelf = self;
-    _requestCount = 0;
-    [MyRequestManager getMemerOrderList:USEROPERATIONHELP.currentUser.userId also:@"0" page:1 pageCount:-1 successBlock:^(id obj) {
-        _requestCount ++ ;
-        BaseTableViewSectionObject* section = [weakSelf.willDataSouce.sections objectAtIndex:0];
-        [section.items removeAllObjects];
-        [section.items addObjectsFromArray:obj];
-        [weakSelf.willTableView reloadData];
-        if(_requestCount == 2)
-        {
-            [weakSelf removeAllHUDViews:YES];
-        }
-    } failed:^(id error)
+    //判断是否存在子视图控制器
+    if(self.childViewControllers && self.childViewControllers.count > aIndex)
     {
-        _requestCount ++;
-        if(_requestCount == 2)
+        OrderListViewController *control = [self.childViewControllers objectAtIndex:aIndex];
+        
+        //判断是否点击的是当前的
+        if(_currentViewController == control)
         {
-            [weakSelf removeAllHUDViews:YES];
-            //[weakSelf dealWithError:error];
+            _currentViewController.view.frame = _currentViewController.view.frame;
+            return;
         }
-    }];
-    
-    [MyRequestManager getMemerOrderList:USEROPERATIONHELP.currentUser.userId also:@"1" page:1 pageCount:-1 successBlock:^(id obj) {
-        _requestCount ++ ;
-        BaseTableViewSectionObject* section = [weakSelf.redeemDataSouce.sections objectAtIndex:0];
-        [section.items removeAllObjects];
-        [section.items addObjectsFromArray:obj];
-        [weakSelf.redeemTableview reloadData];
-        if(_requestCount == 2)
-        {
-            [weakSelf removeAllHUDViews:YES];
-        }
-    } failed:^(id error)
-    {
-        _requestCount ++;
-        if(_requestCount == 2)
-        {
-            [weakSelf removeAllHUDViews:YES];
-            //[weakSelf dealWithError:error];
-        }
-    }];
-    
+        
+        control.view.frame  = CGRectMake(0, 50, self.view.width, self.view.height - 50);
+        
+        //切换child view controller
+        
+        [self transitionFromViewController:_currentViewController toViewController:control duration:0.00 options:UIViewAnimationOptionTransitionNone animations:^{
+        }completion:^(BOOL finished)
+         {
+             
+             [_currentViewController willMoveToParentViewController:nil];
+             _currentViewController = control;
+         }];
+        
+    }
 }
 
-
-
-- (void)dealloc
-{
-    _willTableView.dataSource = nil;
-    _willTableView.delegate = nil;
-    _redeemTableview.dataSource = nil;
-    _redeemTableview.delegate = nil;
-}
 
 - (void)switchShow:(UISegmentedControl*)segment
 {
-    switch (segment.selectedSegmentIndex)
-    {
-        case 0:
-            [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-            break;
-        case 1:
-            [_scrollView setContentOffset:CGPointMake(_scrollView.width, 0) animated:YES];
-            break;
-        default:
-            
-            break;
-    }
+    if(segment.selectedSegmentIndex == _index) return;
+    
+    _index = segment.selectedSegmentIndex;
+    [self itemSelected:_index];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSLog(@"sfd");
+    if(_viewController1 && _viewController1.isViewLoaded) [_viewController1 refresh];
+    if(_viewController2 && _viewController2.isViewLoaded) [_viewController2 refresh];
 }
 
-#pragma mark UITableView delegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    id <BaseTableViewDataSource> dataSource = (id <BaseTableViewDataSource> )tableView.dataSource;
-    
-    id    object = [dataSource tableView:tableView objectForRowAtIndexPath:indexPath];
-    Class cls = [dataSource tableView:tableView cellClassForObject:object];
-    
-    return [cls tableView:tableView rowHeightForObject:object];
-}
-
-
-#pragma OrderCellDelegate 
-- (void)deleteCell:(OrderRecordViewCell*)cell
-{
-    [self showChrysanthemumHUD:YES];
-    __weak typeof(self) weakSelf = self;
-    __weak OrderRecordViewCell* weakCell = cell;
-    
-     WillingObject* willingObject = (WillingObject*)cell.object;
-    [MyRequestManager deleteOrder:willingObject.orderId successBlock:^(id obj) {
-        [weakSelf removeAllHUDViews:YES];
-        BaseTableViewSectionObject* section = [_willDataSouce.sections objectAtIndex:0];
-        [section.items removeObjectAtIndex:weakCell.indexPath.row];
-        [weakSelf.willTableView reloadData];
-    } failed:^(id error) {
-        [weakSelf removeAllHUDViews:YES];
-        [weakSelf dealWithError:error];
-    }];
-}
-
-- (void)clickCell:(OrderRecordViewCell*)cell
-{
-    OrderInfoViewController* infoViewController = [[OrderInfoViewController alloc] init];
-    infoViewController.orderId = ((WillingObject*)cell.object).orderId;
-    infoViewController.isWilling = _segSwitch.selectedSegmentIndex == 0 ? YES : NO;
-    [self.navigationController pushViewController:infoViewController animated:YES];
-}
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "MyRequestManager.h"
 
 @interface SettingsViewController ()
 
@@ -33,7 +34,8 @@
     
     UISwitch* swith1 = [[UISwitch alloc] initWithFrame:CGRectMake(fristView.width - 10 - 50, (fristView.height - 30)/2, 50, 30)];
     [fristView addSubview:swith1];
-    
+    [swith1 setOn:USEROPERATIONHELP.currentUser.isRemind];
+    [swith1 addTarget:self action:@selector(remindSwitch:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:fristView];
     
     //////////////////////////////////
@@ -56,6 +58,20 @@
     /////////////////////////////////
    
     
+}
+
+- (void)remindSwitch:(UISwitch*)remindSwitch
+{
+    [self showChrysanthemumHUD:YES];
+    __weak typeof(self) weakSelf = self;
+    [MyRequestManager getFoliRemind:remindSwitch.isOn success:^(id obj) {
+        [weakSelf removeAllHUDViews:YES];
+        [weakSelf showTimedHUD:YES message:[obj objectForKey:@"msg"]];
+    } failed:^(id error) {
+        [weakSelf removeAllHUDViews:YES];
+        [weakSelf dealWithError:error];
+        [remindSwitch setOn:USEROPERATIONHELP.currentUser.isRemind];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

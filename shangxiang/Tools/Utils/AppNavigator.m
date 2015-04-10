@@ -11,6 +11,8 @@
 #import "OrderRecordViewController.h"
 #import "MyViewController.h"
 #import "Reachability.h"
+#import "LoginRequestManager.h"
+#import "SXGuideViewController.h"
 
 @interface AppNavigator()<UITabBarControllerDelegate>
 
@@ -28,10 +30,17 @@
         _homeTabBarController = (HomeTabBarViewController *)[storyboard instantiateInitialViewController];
         _homeTabBarController.delegate = self;
         self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
+        self.alertViewArray = [NSMutableArray array];
+        self.actionSheetArray = [NSMutableArray array];
     }
     return self;
 }
 
+-(void)openTutorialPage
+{
+    SXGuideViewController *tpv = [[SXGuideViewController alloc]init];
+    APPDELEGATE.window.rootViewController = tpv;
+}
 
 -(void)openDefaultMainViewController
 {
@@ -43,12 +52,15 @@
 
 - (void)calendarTurnWillingGuide
 {
+    NSInteger preIndex = self.homeTabBarController.selectedIndex;
     [self.homeTabBarController setSelectedIndex:0];
     self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
+    [self.currentContentNav popToRootViewControllerAnimated:NO];
 
-    UINavigationController* threeNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:2];
+    UINavigationController* threeNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:preIndex];
     [threeNavigationController popToRootViewControllerAnimated:NO];
 }
+
 
 - (void)turnToLoginGuide
 {
@@ -61,11 +73,22 @@
         }
         return;
     }
-    LoginViewController* loginViewController = [[LoginViewController alloc] init];
-    RootNavigationViewController *navigationController = [[RootNavigationViewController alloc] initWithRootViewController:loginViewController];
-    [self.currentContentNav presentViewController:navigationController animated:YES completion:^{
-        
+    [LoginRequestManager sendGetAllowThird:^(id obj) {
+        LoginViewController* loginViewController = [[LoginViewController alloc] init];
+        loginViewController.isShowThird = ([[obj objectForKey:@"allow"] integerValue] == 1) ? YES : NO;
+        RootNavigationViewController *navigationController = [[RootNavigationViewController alloc] initWithRootViewController:loginViewController];
+        [self.currentContentNav presentViewController:navigationController animated:YES completion:^{
+            
+        }];
+    } failed:^(id error) {
+        LoginViewController* loginViewController = [[LoginViewController alloc] init];
+        RootNavigationViewController *navigationController = [[RootNavigationViewController alloc] initWithRootViewController:loginViewController];
+        [self.currentContentNav presentViewController:navigationController animated:YES completion:^{
+            
+        }];
     }];
+    
+    
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
@@ -74,23 +97,22 @@
 }
 
 
-- (void)showAlert:(NSString*)title Message:(NSString*)msg
+-(void)switchToLivingTab:(NSInteger)index
 {
-    UIAlertView* viewAlert = [[UIAlertView alloc] init];
-    [viewAlert setTitle:title];
-    [viewAlert setMessage:msg];
-    [viewAlert addButtonWithTitle:@"确定"];
-    [viewAlert show];
-}
-
--(void)switchToLivingTab
-{
-    [self.homeTabBarController setSelectedIndex:0];
-    self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
+    [self.currentContentNav popToRootViewControllerAnimated:NO];
+    [self.homeTabBarController setSelectedIndex:index];
+    self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:index];
 }
 
 - (void)turnToOrderRecordPage
 {
+    NSInteger preIndex = self.homeTabBarController.selectedIndex;
+   if(preIndex != 3)
+   {
+       UINavigationController* currentNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:preIndex];
+       [currentNavigationController popToRootViewControllerAnimated:NO];
+   }
+    
     [self.homeTabBarController setSelectedIndex:3];
     self.currentContentNav = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:3];
     
@@ -111,6 +133,18 @@
         UINavigationController* firstNavigationController = (UINavigationController*)[_homeTabBarController.viewControllers objectAtIndex:0];
         [firstNavigationController popToRootViewControllerAnimated:NO];
     }
+}
+- (void)dismissWindow
+{
+    for (id item in APPNAVGATOR.actionSheetArray) {
+        [(UIActionSheet*)item dismissWithClickedButtonIndex:[(UIActionSheet*)item cancelButtonIndex] animated:YES];
+    }
+    
+    for (id item in APPNAVGATOR.alertViewArray) {
+        [(UIAlertView*)item dismissWithClickedButtonIndex:[(UIAlertView*)item cancelButtonIndex] animated:YES];
+    }
+    [APPNAVGATOR.actionSheetArray removeAllObjects];
+    [APPNAVGATOR.alertViewArray removeAllObjects];
 }
 
 @end

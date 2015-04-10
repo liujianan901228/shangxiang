@@ -13,6 +13,7 @@
 #import "OrderObject.h"
 #import "ShareView.h"
 #import "OrderInfoViewController.h"
+#import "OrderInfoObject.h"
 
 @interface ShareViewController ()<UITableViewDelegate,LookOrderDelegate>
 
@@ -69,11 +70,18 @@
     {
         if(!shareText || shareText.length == 0)
         {
-            [APPNAVGATOR showAlert:@"请输入分享内容" Message:nil];
+            [self showTimedHUD:YES message:@"请输入分享内容"];
         }
         else
         {
-            [weakSelf sendLinkContent:type text:shareText];
+            if(type == WxType_Weibo)
+            {
+                [weakSelf sendWeiboContent:shareText];
+            }
+            else
+            {
+                [weakSelf sendLinkContent:type text:shareText];
+            }
         }
     };
     
@@ -93,6 +101,42 @@
     [_shareView close];
 }
 
+
+- (void)sendWeiboContent:(NSString*)text
+{
+    
+    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
+    authRequest.redirectURI = kRedirectURI;
+    authRequest.scope = @"all";
+    
+    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:[self messageToShare:text]];
+    request.message = [self messageToShare:text];
+    request.userInfo = @{@"ShareMessageFrom": @"SendMessageToWeiboViewController",
+                         @"Other_Info_1": [NSNumber numberWithInt:123],
+                         @"Other_Info_2": @[@"obj1", @"obj2"],
+                         @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+    //    request.shouldOpenWeiboAppInstallPageIfNotInstalled = NO;
+    [WeiboSDK sendRequest:request];
+}
+
+
+- (WBMessageObject *)messageToShare:(NSString*)text
+{
+    WBMessageObject *message = [WBMessageObject message];
+    
+
+
+    WBWebpageObject *webpage = [WBWebpageObject object];
+    webpage.objectID = @"identifier1";
+    webpage.title = text;
+    webpage.description = @"上香";
+    webpage.thumbnailData = UIImageJPEGRepresentation([UIImage imageForKey:@"logo"], 0.7);
+    webpage.webpageUrl = @"http://shangxiang.com";
+    message.mediaObject = webpage;
+    
+    
+    return message;
+}
 
 - (void)sendLinkContent:(WxType)type text:(NSString*)shareText
 {
@@ -124,7 +168,7 @@
 
 - (void)shareButtonClicked:(UIButton*)button
 {
-    [_shareView showInWindow:self.view.window];
+    [_shareView showInWindow:self.view.window orderText:self.orderContentText];
 }
 
 - (void)loadData
@@ -184,10 +228,15 @@
     return [cls tableView:tableView rowHeightForObject:object];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [_shareView showInWindow:self.view.window orderText:self.orderContentText];
+}
+
 #pragma LookDelegate
 - (void)shareText:(LookOrderViewCell*)cell
 {
-    [_shareView showInWindow:self.view.window];
+    [_shareView showInWindow:self.view.window orderText:((OrderInfoObject*)cell.object).wishText];
 }
 
 - (void)dealloc
@@ -199,7 +248,14 @@
 
 - (void)goBack
 {
-    [APPNAVGATOR turnToOrderRecordPage];
+    if(USEROPERATIONHELP.isLogin)
+    {
+        [APPNAVGATOR turnToOrderRecordPage];
+    }
+    else
+    {
+        [APPNAVGATOR calendarTurnWillingGuide];
+    }
 }
 
 @end

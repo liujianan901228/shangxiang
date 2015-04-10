@@ -57,6 +57,8 @@
             weakSelf.selectIndex = index;
             [weakSelf->_buttonTitle setTitle:object.templeName forState:UIControlStateNormal];
             weakSelf->_tid = object.templeId;
+            weakSelf->_currentPage = 1;
+            weakSelf->_reloading = NO;
             [weakSelf requestRefreshData];
             [weakSelf.popView closePopView];
         }];
@@ -170,6 +172,7 @@
         [sectionObject.items addObjectsFromArray:obj];
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.taleviw reloadData];
+            [weakSelf.taleviw scrollToTopAnimated:NO];
         });
     } failed:^(id error) {
         [weakSelf removeAllHUDViews:YES];

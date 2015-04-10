@@ -6,10 +6,9 @@
 #import "SettingsViewController.h"
 #import "FeedbackViewController.h"
 #import "LoginRequestManager.h"
-#import "DiscoverViewController.h"
 #import "NotificationViewController.h"
 #import "Reachability.h"
-
+#import "BlessViewController.h"
 #define TAG_ACTIONSHEET 523
 
 
@@ -21,6 +20,8 @@
     UIButton* buttonDiscoverTotalTome;
     UIButton* buttonDiscoverTotalToother;
 }
+
+@property (nonatomic, strong) UIButton* closebutton;
 
 @end
 
@@ -331,15 +332,15 @@
     labelAbout.textColor = UIColorFromRGB(COLOR_FONT_NORMAL);
     [buttonAbout addSubview:labelAbout];
     
-    UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(-1, buttonAbout.bottom, self.view.width + 2, 44)];
-    button.backgroundColor = UIColorFromRGB(COLOR_BG_HIGHLIGHT);
-    button.layer.borderColor = UIColorFromRGB(COLOR_LINE_NORMAL).CGColor;
-    button.layer.borderWidth = 0.5;
-    [button setTitle:@"退出登录" forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(COLOR_FONT_NORMAL) forState:UIControlStateNormal];
-    [button setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [_contentScollView addSubview:button];
+    _closebutton = [[UIButton alloc] initWithFrame:CGRectMake(-1, buttonAbout.bottom, self.view.width + 2, 44)];
+    _closebutton.backgroundColor = UIColorFromRGB(COLOR_BG_HIGHLIGHT);
+    _closebutton.layer.borderColor = UIColorFromRGB(COLOR_LINE_NORMAL).CGColor;
+    _closebutton.layer.borderWidth = 0.5;
+    [_closebutton setTitle:@"退出登录" forState:UIControlStateNormal];
+    [_closebutton setTitleColor:UIColorFromRGB(COLOR_FONT_NORMAL) forState:UIControlStateNormal];
+    [_closebutton setTitleColor:UIColorFromRGB(COLOR_FONT_HIGHLIGHT) forState:UIControlStateHighlighted];
+    [_closebutton addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_contentScollView addSubview:_closebutton];
     
     _contentScollView.contentSize = CGSizeMake(fltViewWidth, fltBegin + fltCellHeight);
     _contentScollView.contentOffset = CGPointMake(0, 0);
@@ -360,9 +361,11 @@
             [weakSelf updateUserInfo:nil];
         } failed:^(id error) {
         }];
+        if(_closebutton) _closebutton.hidden = NO;
     }
     else
     {
+        if(_closebutton) _closebutton.hidden = YES;
         [self updateUserInfo:nil];
     }
 }
@@ -379,6 +382,7 @@
 {
     UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];
     actionsheet.tag = TAG_ACTIONSHEET;
+    [APPNAVGATOR.actionSheetArray addObject:actionsheet];
     [actionsheet showInView:APPDELEGATE.window];
 }
 
@@ -391,6 +395,10 @@
         USEROPERATIONHELP.currentUser = nil;
         [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:AppUserLogoutNotification object:nil];
     }
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [APPNAVGATOR.actionSheetArray removeObject:actionSheet];
 }
 
 
@@ -427,9 +435,8 @@
             }
             else if(USEROPERATIONHELP.isLogin)
             {
-                vcTarget = [[DiscoverViewController alloc] init];
-                ((DiscoverViewController*)vcTarget).blessType = BelssType_Dobless;
-                ((DiscoverViewController*)vcTarget).isNoFilter = YES;
+                vcTarget = [[BlessViewController alloc] init];
+                ((BlessViewController*)vcTarget).index = 0;
             }
             else
             {
@@ -447,9 +454,8 @@
             }
             else if(USEROPERATIONHELP.isLogin)
             {
-                vcTarget = [[DiscoverViewController alloc] init];
-                ((DiscoverViewController*)vcTarget).blessType = BelssType_Receive;
-                ((DiscoverViewController*)vcTarget).isNoFilter = YES;
+                vcTarget = [[BlessViewController alloc] init];
+                 ((BlessViewController*)vcTarget).index = 1;
             }
             else
             {
@@ -493,7 +499,22 @@
         }
             break;
         case 5:
-            vcTarget = [[SettingsViewController alloc] init];
+        {
+            if([[Reachability reachabilityWithHostName:@"www.shangxiang.com"] currentReachabilityStatus] == kNotReachable)
+            {
+                [self showTimedHUD:YES message:@"当前无网络连接，请检查您的网络"];
+                return;
+            }
+            else if(USEROPERATIONHELP.isLogin)
+            {
+                vcTarget = [[SettingsViewController alloc] init];
+            }
+            else
+            {
+                [APPNAVGATOR turnToLoginGuide];
+                return;
+            }
+        }
             break;
         case 7:
         {
@@ -523,7 +544,7 @@
             else
             {
                 vcTarget = [[BrowserViewController alloc] init];
-                ((BrowserViewController*)vcTarget).url = @"http://demo123.shangxiang.com/app_aboutus.html";
+                ((BrowserViewController*)vcTarget).url = @"http://218.244.131.126:812/app_aboutus.html";
             }
         }
             break;
@@ -542,6 +563,7 @@
 {
     if(USEROPERATIONHELP.isLogin)
     {
+        if(_closebutton) _closebutton.hidden = NO;
         _labelUsername.text = [LUtility getShowName];
         
         [_viewAvatar sd_setImageWithURL:[NSURL URLWithString:USEROPERATIONHELP.currentUser.headUrl] placeholderImage:[UIImage imageForKey:@"avatar_null"]];
@@ -563,6 +585,7 @@
     }
     else
     {
+        if(_closebutton) _closebutton.hidden = YES;
         _labelUsername.text = @"登录";
         [_viewAvatar setImage:[UIImage imageForKey:@"avatar_null"]];
         NSMutableAttributedString* attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"我的加持"]];

@@ -11,7 +11,9 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "APService.h"
 
-@interface AppDelegate ()<WeiboSDKDelegate>
+
+@interface AppDelegate ()<WeiboSDKDelegate,UIAlertViewDelegate>
+
 
 @end
 
@@ -39,7 +41,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-    [APPNAVGATOR openDefaultMainViewController];
+
+    if([UserGlobalSetting isFirstOpenApp] == NO) {
+        [APPNAVGATOR openTutorialPage];
+        [UserGlobalSetting setFirstOpenApp];
+    } else {
+        [APPNAVGATOR openDefaultMainViewController];
+    }
 
     [self.window makeKeyAndVisible];
     // Override point for customization after application launch.
@@ -55,10 +63,15 @@
                                          }];
         return YES;
     }
-    return ([WeiboSDK handleOpenURL:url delegate:self]
-            || [WXApi handleOpenURL:url delegate:self]
-            );
-
+    else if([[[url scheme]lowercaseString] isEqualToString:@"wx078a2a02ec9b0ac4"])
+    {
+        return [WXApi handleOpenURL:url delegate:self];
+    }
+    else if([url.scheme isEqualToString:@"wb2392815987"])
+    {
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }
+    return NO;
 }
 
 
@@ -95,6 +108,14 @@
             [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ShareSuccessNotification object:nil];
         }
     }
+    else if([resp isKindOfClass:[PayResp class]])
+    {
+        PayResp *response = (PayResp *)resp;
+        if(response)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:@"payNotification" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",response.errCode],@"errCode", nil]];
+        }
+    }
 }
 
 
@@ -114,14 +135,12 @@
 {
     if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
     {
-        NSString *title = @"发送结果";
-        NSString *message = [NSString stringWithFormat:@"响应状态: %d\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode, response.userInfo, response.requestUserInfo];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"确定"
-                                              otherButtonTitles:nil];
-        [alert show];
+        if(response.statusCode == 0)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:ShareSuccessNotification object:nil];
+        }
+        
+
     }
     else if ([response isKindOfClass:WBAuthorizeResponse.class])
     {
@@ -185,12 +204,74 @@ fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
+    [APPNAVGATOR dismissWindow];
+    NSInteger msgtype = 3;
+    if([userInfo objectForKey:@"msgtype"])
+    {
+        msgtype = [userInfo intForKey:@"msgtype" withDefault:3];
+    }
+    NSString* message = @"收到一条新的消息";
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    if(aps && ((NSString*)[aps valueForKey:@"alert"]).length > 0)
+    {
+        message = [aps valueForKey:@"alert"];
+    }
+    else if([userInfo objectForKey:@"msg"])
+    {
+        message = [userInfo stringForKey:@"msg" withDefault:@"收到一条新的消息"];
+    }
+    
+    if(application.applicationState == UIApplicationStateActive)
+    {
+        
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:nil message:message delegate:self cancelButtonTitle:@"算了" otherButtonTitles:@"去看看", nil];
+        [alertView setAssociateValue:@(msgtype) withKey:@"msgtype"];
+        [APPNAVGATOR.alertViewArray addObject:alertView];
+        [alertView show];
+    }
+    else
+    {
+        [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+        }];
+        [self changeByMsgType:msgtype];
+    }
+    
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)application:(UIApplication *)application
 didReceiveLocalNotification:(UILocalNotification *)notification {
     [APService showLocalNotificationAtFront:notification identifierKey:nil];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        NSInteger msgtype = [[alertView getAssociatedValueForKey:@"msgtype"] integerValue];
+        [self changeByMsgType:msgtype];
+    }
+}
+
+- (void)changeByMsgType:(NSInteger)msgtype
+{
+    if(msgtype == 1 || msgtype == 2)
+    {
+        [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+        }];
+        
+        [APPNAVGATOR switchToLivingTab:2];
+    }
+    else if(msgtype == 3)
+    {
+        [APPNAVGATOR.currentContentNav dismissViewControllerAnimated:NO completion:^{
+        }];
+        [APPNAVGATOR switchToLivingTab:0];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [APPNAVGATOR.alertViewArray removeObject:alertView];
 }
 
 // log NSSet with UTF8

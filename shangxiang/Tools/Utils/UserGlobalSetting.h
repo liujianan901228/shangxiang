@@ -16,4 +16,10 @@
 //获取全局的用户
 + (AppUser*)getCurrentUser;
 
+//>是否是第一次打开
++(BOOL)isFirstOpenApp;
+
+//>设置第一次打开
++(void)setFirstOpenApp;
+
 @end

@@ -9,6 +9,9 @@
 #ifndef shangxiang_EnumMarco_h
 #define shangxiang_EnumMarco_h
 
+#define Picker_Container_Height 255
+#define Picker_Header_Height    58
+
 #define HEIGHT_LINE 0.5f
 #define SIZE_FONT_DICOVER_CONTENT 14
 #define WIDTH_DICOVER_CONTENT 250

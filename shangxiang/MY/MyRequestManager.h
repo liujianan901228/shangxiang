@@ -56,4 +56,14 @@
 + (BaseRequest*)getNotificationList: (RequestSuccessBlock)successBlock
                           failed:(RequestErrorBlock)errorBlock;
 
+//获取微信支付token
++ (BaseRequest*)getWeixinAccessToken:(NSString*)orderPrice productName:(NSString*)productName orderNo:(NSString*)orderNo
+                             success: (RequestSuccessBlock)successBlock
+                              failed:(RequestErrorBlock)errorBlock;
+
+//获取佛历提醒
++ (BaseRequest*)getFoliRemind:(BOOL)isRemind
+                      success:(RequestSuccessBlock)successBlock
+                       failed:(RequestErrorBlock)errorBlock;
+
 @end

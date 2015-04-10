@@ -7,6 +7,7 @@
 //
 
 #import "LoginRequestManager.h"
+#import "APService.h"
 
 @implementation LoginRequestManager
 
@@ -17,7 +18,7 @@
     RequestSuccessBlock successBlockCopy = [successBlock copy];
     RequestErrorBlock errorBlockCopy = [errorBlock copy];
     
-    BaseRequest* request = [BaseRequest sendPostRequestWithMethod:@"regdo.php" parameters:@{@"mobile":mobile,@"password":password} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+    BaseRequest* request = [BaseRequest sendPostRequestWithMethod:@"regdo.php" parameters:@{@"mobile":mobile,@"password":password,@"jregid":[APService registrationID]} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
         if(errorMsg)
         {
             EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
@@ -38,7 +39,7 @@
     RequestSuccessBlock successBlockCopy = [successBlock copy];
     RequestErrorBlock errorBlockCopy = [errorBlock copy];
     
-    BaseRequest* request = [BaseRequest sendPostRequestWithMethod:@"logindo.php" parameters:@{@"mobile":mobile,@"password":password} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+    BaseRequest* request = [BaseRequest sendPostRequestWithMethod:@"logindo.php" parameters:@{@"mobile":mobile,@"password":password,@"jregid":[APService registrationID]} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
         if(errorMsg)
         {
             EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
@@ -166,7 +167,7 @@
 {
     RequestSuccessBlock successBlockCopy = [successBlock copy];
     RequestErrorBlock errorBlockCopy = [errorBlock copy];
-    NSDictionary* params = @{@"token":token,@"name":name,@"regtype":regtype,@"hf":headUrl,@"nname":nickName};
+    NSDictionary* params = @{@"token":token,@"name":name,@"regtype":regtype,@"hf":headUrl,@"nname":nickName,@"jregid":[APService registrationID]};
     BaseRequest* request = [BaseRequest sendPostRequestWithMethod:@"ologindo.php" parameters:params CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
         if(errorMsg)
         {
@@ -191,5 +192,25 @@
     return request;
 }
 
+
+//判断是否允许第三方登陆
++(BaseRequest*)sendGetAllowThird:(RequestSuccessBlock)successBlock
+                        failed:(RequestErrorBlock)errorBlock
+{
+    RequestSuccessBlock successBlockCopy = [successBlock copy];
+    RequestErrorBlock errorBlockCopy = [errorBlock copy];
+    
+    BaseRequest* request = [BaseRequest sendGetRequestWithMethod:@"isallowotherlogin.php" parameters:nil CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+        if(errorMsg)
+        {
+            EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
+        }
+        else
+        {
+            EXECUTE_BLOCK_SAFELY(successBlockCopy,info);
+        }
+    }];
+    return request;
+}
 
 @end

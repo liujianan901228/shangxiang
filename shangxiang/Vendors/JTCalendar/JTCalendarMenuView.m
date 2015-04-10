@@ -54,6 +54,7 @@
     self.decelerationRate = 0.2;
     self.bounces = NO;
     self.backgroundColor = UIColorFromRGB(0xf6f8f7);
+    
 //    NSLog(@"decelerationRate = %f %f",UIScrollViewDecelerationRateFast,UIScrollViewDecelerationRateNormal);
 //    
     for(int i = 0; i < NUMBER_PAGES_LOADED; ++i){

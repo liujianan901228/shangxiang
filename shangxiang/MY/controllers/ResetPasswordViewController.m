@@ -40,7 +40,7 @@
     [self.view addSubview:mobileSuperView];
     
     _mobileTextFiled = [[UITextField alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 20, 50)];
-    _mobileTextFiled.keyboardType = UIKeyboardTypeASCIICapable;
+    _mobileTextFiled.keyboardType = UIKeyboardTypeNumberPad;
     _mobileTextFiled.autocapitalizationType = NO;
     _mobileTextFiled.returnKeyType = UIReturnKeyDone;
     _mobileTextFiled.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -55,9 +55,10 @@
     UIButton* buttonSubmitCreateOrder = [[UIButton alloc] initWithFrame:CGRectMake(20, mobileSuperView.bottom + 20, self.view.width - 40, 40)];
     [buttonSubmitCreateOrder setTitle:@"下一步" forState:UIControlStateNormal];
     [buttonSubmitCreateOrder.layer setCornerRadius:3];
+    [buttonSubmitCreateOrder setClipsToBounds:YES];
     [buttonSubmitCreateOrder setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
-    [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)];
-    [buttonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_PRESSED)] forState:UIControlStateHighlighted];
+    [buttonSubmitCreateOrder setBackgroundColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_NORMAL)];
+    [buttonSubmitCreateOrder setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(COLOR_FORM_BG_BUTTON_HIGHLIGHT)] forState:UIControlStateHighlighted];
     [buttonSubmitCreateOrder addTarget:self action:@selector(submitCreateOrder) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonSubmitCreateOrder];
     

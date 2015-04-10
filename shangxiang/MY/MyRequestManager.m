@@ -23,7 +23,7 @@
     RequestSuccessBlock successBlockCopy = [successBlock copy];
     RequestErrorBlock errorBlockCopy = [errorBlock copy];
     
-    BaseRequest* request = [BaseRequest sendGetRequestWithMethod:@"getmemberorderlist.php" parameters:@{@"mid":mid,@"also":also} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+    BaseRequest* request = [BaseRequest sendGetRequestWithMethod:@"getmemberorderlist.php" parameters:@{@"mid":mid,@"also":also,@"p":@(page),@"pz":@(pageCount)} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
         if(errorMsg)
         {
             EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
@@ -228,6 +228,50 @@
             }
             
             EXECUTE_BLOCK_SAFELY(successBlockCopy,array);
+        }
+    }];
+    return request;
+}
+
+//获取微信支付token
++ (BaseRequest*)getWeixinAccessToken:(NSString*)orderPrice productName:(NSString*)productName orderNo:(NSString*)orderNo
+                            success: (RequestSuccessBlock)successBlock
+                              failed:(RequestErrorBlock)errorBlock
+{
+    RequestSuccessBlock successBlockCopy = [successBlock copy];
+    RequestErrorBlock errorBlockCopy = [errorBlock copy];
+    
+    BaseRequest* request = [BaseRequest sendGetOtherUrl:@"http://218.244.131.126:812/api/app_weixinpay/index.php" parameters:@{@"order_price":orderPrice,@"product_name":productName,@"order_no":orderNo} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+        if(errorMsg)
+        {
+            EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
+        }
+        else
+        {
+            EXECUTE_BLOCK_SAFELY(successBlockCopy,info);
+        }
+    }];
+    
+    return request;
+}
+
+//获取佛历提醒
++ (BaseRequest*)getFoliRemind:(BOOL)isRemind
+                      success:(RequestSuccessBlock)successBlock
+                             failed:(RequestErrorBlock)errorBlock
+{
+    RequestSuccessBlock successBlockCopy = [successBlock copy];
+    RequestErrorBlock errorBlockCopy = [errorBlock copy];
+    NSString* remind = isRemind ? @"1" : @"0";
+    BaseRequest* request = [BaseRequest sendGetRequestWithMethod:@"setupfolireminddo.php" parameters:@{@"remind":remind,@"mid":USEROPERATIONHELP.currentUser.userId} CompleteBlock:^(NSInteger errorNum, id info, ExError *errorMsg) {
+        if(errorMsg)
+        {
+            EXECUTE_BLOCK_SAFELY(errorBlockCopy,errorMsg);
+        }
+        else
+        {
+            
+            EXECUTE_BLOCK_SAFELY(successBlockCopy,info);
         }
     }];
     return request;

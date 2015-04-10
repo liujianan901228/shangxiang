@@ -10,4 +10,6 @@
 
 @interface LoginViewController : BaseViewController
 
+@property (nonatomic, assign) BOOL isShowThird;
+
 @end
